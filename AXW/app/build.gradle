@@ -4,6 +4,8 @@ android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
 
+    compileOptions.encoding = "GBK"
+
     defaultConfig {
         applicationId "com.aixinwu.axw"
         minSdkVersion 15

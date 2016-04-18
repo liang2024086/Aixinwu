@@ -144,9 +144,9 @@ public class ViewPageFragment extends Fragment {
     }
 
     public boolean isEnd() {
-        if (mPager.getCurrentItem() == pagerItemList.size() - 1)
+        /*if (mPager.getCurrentItem() == pagerItemList.size() - 1)
             return true;
-        else
+        else*/
             return false;
     }
 

@@ -18,6 +18,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.aixinwu.axw.activity.HelloWorld"
+            android:label="@string/hello_world">
+
+        </activity>
+
     </application>
 
 </manifest>
