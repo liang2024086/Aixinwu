@@ -6,4 +6,13 @@
     <string name="menu_settings">Settings</string>
     <string name="action_settings">actionSetting</string>
 
+    <string name="more">更多</string>
+
+    <string name="home">首页</string>
+
+    <string name="home_pic">爱心屋logo</string>
+    <string name="home_info">----  最新通知  ----</string>
+    <string name="home_commodity">----  新品上架  ----</string>
+    <string name="home_deal">----  人气物品  ----</string>
+
 </resources>

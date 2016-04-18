@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff" >
+    android:background="#F0F0F0" >
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/head_layout"
         android:padding="5dip"
-        android:background="#fff" >
+        android:background="#00cc00" >
 
         <!--
         <Button
@@ -37,7 +37,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:baselineAligned="true"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:background="#00cc00">
         <!-- 使用include标签，可以直接重用xml -->
         <include
             android:id="@+id/tab_home"
@@ -74,8 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/head_layout"
-        android:layout_above="@id/tabs_layout"
-        android:background="#B847FF" >
+        android:layout_above="@id/tabs_layout">
     </android.support.v4.view.ViewPager>
 
 </RelativeLayout>

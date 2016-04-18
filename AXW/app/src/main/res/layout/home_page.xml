@@ -1,16 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView1"
+        <LinearLayout
+            android:id="@+id/Images"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="#FFFFFFFF">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/home_pic"
+                android:src="@mipmap/aixinwu_logo"/>
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/home_pic"
+                android:src="@mipmap/aixinwu_logo"/>
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:contentDescription="@string/home_pic"
+                android:src="@mipmap/aixinwu_logo"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="首页"
-        android:textSize="40sp"
-        android:gravity="center" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_info"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                />
+
+            <RelativeLayout
+                android:id="@+id/home_info"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#FFFFFFFF">
+
+                <TextView
+                    android:id="@+id/info1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:textColor="@drawable/textselector"
+                    />
+
+                <TextView
+                    android:id="@+id/info2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/info1"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:textColor="@drawable/textselector"
+                    />
+
+                <TextView
+                    android:id="@+id/info3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/info2"
+                    android:text=""
+                    android:textSize="15sp"
+                    android:gravity="start"
+                    android:padding="5dp"
+                    android:textColor="@drawable/textselector"
+                    />
+
+                <TextView
+                    android:id="@+id/moreInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/more"
+                    android:textSize="15sp"
+                    android:textColor="@drawable/textselector"/>
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_commodity"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                />
+
+
+            <LinearLayout
+                android:id="@+id/home_commodity"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#FFFFFFFF">
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_deal"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                />
+
+
+            <RelativeLayout
+                android:id="@+id/home_deal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp">
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>
