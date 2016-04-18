@@ -4,7 +4,85 @@
     android:layout_height="fill_parent"
     android:background="@color/bg_color_deep" >
 
+<!-- Before Log in -->
     <LinearLayout
+        android:id = "@+id/before_login"
+        android:layout_width="200dp"
+        android:layout_height="fill_parent"
+        android:background="@color/bg_color_deep"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip" >
+<!-- 头像 -->
+            <ImageView
+                android:id="@+id/head_view_before"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/head_default" />
+
+            <TextView
+                android:id="@+id/name_textview_before"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="4dp"
+                android:layout_toRightOf="@+id/head_view_before"
+                android:text="请先登录"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+<!--
+            <TextView
+                android:id="@+id/grade_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/name_textview"
+                android:layout_below="@+id/name_textview"
+                android:text="用户名"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+            -->
+        </RelativeLayout>
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="登陆"
+            android:textColor="@color/text_color"
+            android:textSize="15sp" />
+
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="注册"
+            android:textColor="@color/text_color"
+            android:textSize="15sp" />
+    </LinearLayout>
+<!-- After Log in -->
+    <LinearLayout
+        android:id="@+id/after_login"
         android:layout_width="200dp"
         android:layout_height="fill_parent"
         android:background="@color/bg_color_deep"
@@ -30,7 +108,7 @@
                 android:layout_marginBottom="2dp"
                 android:layout_marginTop="4dp"
                 android:layout_toRightOf="@+id/head_view"
-                android:text="NAME"
+                android:text="昵称"
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
@@ -40,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/name_textview"
                 android:layout_below="@+id/name_textview"
-                android:text="月月鸟"
+                android:text="用户名"
                 android:textColor="@color/text_color"
                 android:textSize="12sp" />
         </RelativeLayout>
@@ -57,7 +135,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="我的任务"
+            android:text="爱心币余额：520"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
 
@@ -73,7 +151,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="已解决任务"
+            android:text="我的帖子"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
 
@@ -89,7 +167,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="我的收藏"
+            android:text="我的捐赠"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
 
@@ -105,7 +183,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="我的关注"
+            android:text="消息中心"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
 
@@ -121,7 +199,7 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="我的钱包"
+            android:text="交易记录"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
 
@@ -137,9 +215,25 @@
             android:layout_height="50dp"
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
-            android:text="草稿箱"
+            android:text="设置"
             android:textColor="@color/text_color"
             android:textSize="15sp" />
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="2px"
+            layout="@layout/line" >
+        </include>
+        <Button
+            android:id="@+id/my_about_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="关于"
+            android:textColor="@color/text_color"
+            android:textSize="15sp"
+            android:onClick="my_about_btn_Click"
+            />
     </LinearLayout>
 
 </ScrollView>

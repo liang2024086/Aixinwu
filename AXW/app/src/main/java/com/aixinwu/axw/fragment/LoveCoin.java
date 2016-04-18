@@ -13,8 +13,9 @@ import com.aixinwu.axw.R;
  */
 public class LoveCoin extends Fragment {
     @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
