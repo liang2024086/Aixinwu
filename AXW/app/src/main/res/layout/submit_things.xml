@@ -1,16 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <RelativeLayout
+        android:id="@+id/Layout_top"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="发布"
-        android:textSize="40sp"
-        android:gravity="center" />
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:gravity="center">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/name1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
 
-</LinearLayout>
+                android:gravity="center"
+                android:text="发布信息" />
+            <LinearLayout
+                android:id="@+id/name2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="25dp"></Spinner>
+                <Spinner
+                    android:id="@+id/neworold"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"></Spinner>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+
+                    android:gravity="center"
+                    android:text="预估价格/元" />
+                <EditText
+                    android:id="@+id/price"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:inputType="numberDecimal"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <!-- 底部按钮 -->
+    <RelativeLayout
+        android:id="@+id/Layout_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:gravity="center" >
+
+        <CheckBox
+            android:id="@+id/checkforaxw"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:text="是否捐赠给爱心屋"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:checked="false" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/checkforaxw"
+            android:textSize="18sp"
+            android:gravity="center_horizontal"
+            android:text="发布商品信息" />
+    </RelativeLayout>
+    <!-- 显示图片 -->
+    <RelativeLayout
+        android:id="@+id/Layout_mid"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        android:layout_above="@+id/Layout_bottom"
+        android:layout_below="@+id/Layout_top"
+
+
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="38dp">
+            <!-- 设置运行多行 设置圆角图形 黑色字体-->
+            <EditText
+                android:id="@+id/editText1"
+                android:layout_height="80dp"
+                android:layout_width="fill_parent"
+                android:textColor="#FFFFFF"
+                android:layout_margin="12dp"
+                android:textSize="20sp"
+                android:hint="随手说出你此刻的心声..."
+                android:maxLength="500"
+                android:singleLine="false"
+                android:background="@drawable/editview_shape" />
+            <!-- 网格显示图片 行列间距5dp 每列宽度90dp -->
+            <GridView
+                android:id="@+id/gridView1"
+                android:layout_width="fill_parent"
+                android:layout_height="200dp"
+                android:layout_margin="10dp"
+                android:background="#EFDFDF"
+                android:horizontalSpacing="5dp"
+                android:verticalSpacing="5dp"
+                android:numColumns="4"
+
+                android:columnWidth="80dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center" >
+            </GridView>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="(友情提示:只能添加9张图片,长按图片可以删除已添加图片)"
+                android:gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

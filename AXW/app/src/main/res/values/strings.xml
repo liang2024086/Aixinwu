@@ -6,6 +6,8 @@
     <string name="menu_settings">Settings</string>
     <string name="action_settings">actionSetting</string>
 
+    <string name="title_activity_buy">Buy</string>
+
     <string name="more">更多</string>
 
     <string name="home">首页</string>

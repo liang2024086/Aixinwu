@@ -11,6 +11,12 @@
     <color name="black_half">#50000000</color>
     <color name="red">#FFFF0000</color>
     <color name="gray">#FF888888</color>
+
+     <color name="myred">#eb4f38</color>
+    <color name="darkgray">#cccc</color>
+    <color name="color_white">#ffffff</color>
+    <color name="btn_press_color">#5677fc</color>
+    <color name="btn_pressed_color">#3ca0ec</color>
     
 
 </resources>

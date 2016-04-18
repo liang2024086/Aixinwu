@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
+    <com.aixinwu.axw.view.SearchView
+        android:id="@+id/main_search_layout"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="人人交易"
-        android:textSize="40sp"
-        android:gravity="center" />
-
+        android:layout_width="wrap_content"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_lv_search_results"
+        android:visibility="gone">
+    </ListView>
 </LinearLayout>
