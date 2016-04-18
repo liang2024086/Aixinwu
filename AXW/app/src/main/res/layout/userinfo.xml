@@ -5,6 +5,7 @@
     android:background="@color/bg_color_deep" >
 
 <!-- Before Log in -->
+
     <LinearLayout
         android:id = "@+id/before_login"
         android:layout_width="200dp"
@@ -81,6 +82,7 @@
             android:textSize="15sp" />
     </LinearLayout>
 <!-- After Log in -->
+    <!--
     <LinearLayout
         android:id="@+id/after_login"
         android:layout_width="200dp"
@@ -235,5 +237,5 @@
             android:onClick="my_about_btn_Click"
             />
     </LinearLayout>
-
+-->
 </ScrollView>
