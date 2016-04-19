@@ -101,7 +101,7 @@ public class HomePage extends Fragment {
         relativeLayout.setLayoutParams(relativeLayoutParams);
 
         TextView userInfo = new TextView(getActivity());
-        userInfo.setText("�����û�\n nСʱǰ����");
+        userInfo.setText("匿名用户\n n小时前发布");
         userInfo.setId(R.id.userinfo);
         RelativeLayout.LayoutParams userInfoLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         userInfoLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -155,7 +155,7 @@ public class HomePage extends Fragment {
         relativeLayout.addView(linearLayout, linearLayoutParams);
 
         TextView description = new TextView(getActivity());
-        description.setText("��Ʒ����\n     �����Ʒ�����ܺã���ҸϽ����򰡣�����");
+        description.setText("商品介绍\n     这件商品质量很好，大家快来买啊！！！");
         RelativeLayout.LayoutParams desLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         desLayoutParams.addRule(RelativeLayout.BELOW,linearLayout.getId());
         desLayoutParams.setMargins(0,0,0,30);
@@ -200,14 +200,14 @@ public class HomePage extends Fragment {
         relativeLayout.addView(linearLayout, linearLayoutParams);
 
         TextView text1 = new TextView(getActivity());
-        text1.setText("���ı�: "+coin);
+        text1.setText("爱心币: "+coin);
         //text1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         LinearLayout.LayoutParams text1LayoutParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         text1.setLayoutParams(text1LayoutParams);
         linearLayout.addView(text1, text1LayoutParams);
 
         TextView text2 = new TextView(getActivity());
-        text2.setText("���: "+ repertory);
+        text2.setText("库存: "+ repertory);
         //text1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         LinearLayout.LayoutParams text2LayoutParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         text2.setLayoutParams(text2LayoutParams);
