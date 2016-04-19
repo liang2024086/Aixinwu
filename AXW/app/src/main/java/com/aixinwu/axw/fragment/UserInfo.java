@@ -24,7 +24,7 @@ public class UserInfo extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        Button my_about_btn = (Button) getActivity().findViewById(R.id.my_about_btn);
+        Button my_about_btn = (Button) getActivity().findViewById(R.id.login);
 
         my_about_btn.setOnClickListener(new View.OnClickListener() {
             @Override

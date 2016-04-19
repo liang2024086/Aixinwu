@@ -65,9 +65,9 @@ public class HomePage extends Fragment {
         moreInfo = (TextView) view.findViewById(R.id.moreInfo);
         moreInfo.setOnClickListener(null);
 
-        info1.setText("-°®ĞÄ±ÒÖÚ³ï004ÆÚ¿ª½±Í¨Öª");
-        info2.setText("-°®ĞÄ±ÒÖÚ³ï004ÆÚÎ´ÂúÑÓÆÚÍ¨Öª");
-        info3.setText("-Å®Éñ½Ú¿ª½±¹«¸æ");
+        info1.setText("-çˆ±å¿ƒå¸ä¼—ç­¹004æœŸå¼€å¥–é€šçŸ¥Öª");
+        info2.setText("-çˆ±å¿ƒå¸ä¼—ç­¹004æœŸæœªæ»¡å»¶æœŸé€šçŸ¥Öª");
+        info3.setText("-å¥³ç¥èŠ‚å¼€å¥–å…¬å‘Š");
 
         newCommodity = (LinearLayout) view.findViewById(R.id.home_commodity);
         popCommodity = (RelativeLayout) view.findViewById(R.id.home_deal);
@@ -101,7 +101,7 @@ public class HomePage extends Fragment {
         relativeLayout.setLayoutParams(relativeLayoutParams);
 
         TextView userInfo = new TextView(getActivity());
-        userInfo.setText("ÄäÃûÓÃ»§\n nĞ¡Ê±Ç°·¢²¼");
+        userInfo.setText("ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½\n nĞ¡Ê±Ç°ï¿½ï¿½ï¿½ï¿½");
         userInfo.setId(R.id.userinfo);
         RelativeLayout.LayoutParams userInfoLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         userInfoLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -155,7 +155,7 @@ public class HomePage extends Fragment {
         relativeLayout.addView(linearLayout, linearLayoutParams);
 
         TextView description = new TextView(getActivity());
-        description.setText("ÉÌÆ·½éÉÜ\n     Õâ¼şÉÌÆ·ÖÊÁ¿ºÜºÃ£¬´ó¼Ò¸Ï½ôÀ´Âò°¡£¡£¡£¡");
+        description.setText("ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½\n     ï¿½ï¿½ï¿½ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ÜºÃ£ï¿½ï¿½ï¿½Ò¸Ï½ï¿½ï¿½ï¿½ï¿½ò°¡£ï¿½ï¿½ï¿½ï¿½ï¿½");
         RelativeLayout.LayoutParams desLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
         desLayoutParams.addRule(RelativeLayout.BELOW,linearLayout.getId());
         desLayoutParams.setMargins(0,0,0,30);
@@ -176,7 +176,7 @@ public class HomePage extends Fragment {
 
         RelativeLayout relativeLayout = new RelativeLayout(getActivity());
         relativeLayout.setPadding(0, 10, 0, 10);
-        relativeLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));//ÏÈÊÇ¿í¶È£¬ºóÊÇ¸ß¶È
+        relativeLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));//ï¿½ï¿½ï¿½Ç¿ï¿½È£ï¿½ï¿½ï¿½ï¿½Ç¸ß¶ï¿½
         /*LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) newCommodity.getLayoutParams();
         layoutParams.height = screenHalfWidth;
         layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;*/
@@ -200,14 +200,14 @@ public class HomePage extends Fragment {
         relativeLayout.addView(linearLayout, linearLayoutParams);
 
         TextView text1 = new TextView(getActivity());
-        text1.setText("°®ĞÄ±Ò: "+coin);
+        text1.setText("ï¿½ï¿½ï¿½Ä±ï¿½: "+coin);
         //text1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         LinearLayout.LayoutParams text1LayoutParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         text1.setLayoutParams(text1LayoutParams);
         linearLayout.addView(text1, text1LayoutParams);
 
         TextView text2 = new TextView(getActivity());
-        text2.setText("¿â´æ: "+ repertory);
+        text2.setText("ï¿½ï¿½ï¿½: "+ repertory);
         //text1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
         LinearLayout.LayoutParams text2LayoutParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         text2.setLayoutParams(text2LayoutParams);
@@ -223,7 +223,7 @@ public class HomePage extends Fragment {
 
         LinearLayout linearLayout = new LinearLayout(getActivity());
         linearLayout.setPadding(15, 10, 15, 10);
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));//ÏÈÊÇ¿í¶È£¬ºóÊÇ¸ß¶È
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));//ï¿½ï¿½ï¿½Ç¿ï¿½È£ï¿½ï¿½ï¿½ï¿½Ç¸ß¶ï¿½
 
         View line = new View(getActivity());
         line.setBackgroundColor(Color.GRAY);
