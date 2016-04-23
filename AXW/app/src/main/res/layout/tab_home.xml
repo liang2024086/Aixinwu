@@ -7,10 +7,10 @@
 
       <ImageView
         android:id="@+id/tab_icon1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
         android:layout_gravity="center"
-        android:src="@mipmap/home2_1"/>
+        android:src="@drawable/home_1"/>
 
         
     <TextView
@@ -20,5 +20,5 @@
         android:text="@string/home"
         android:textSize="12sp"
         android:gravity="center"
-        android:textColor="#FF00FF00"/>
+        android:textColor="#696969"/>
 </LinearLayout>

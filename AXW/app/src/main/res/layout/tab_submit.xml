@@ -6,10 +6,10 @@
 
     <ImageView
         android:id="@+id/tab_icon1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
         android:layout_gravity="center"
-        android:src="@mipmap/submit1"/>
+        android:src="@drawable/add_0"/>
         <TextView
         android:id="@+id/tab_text"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
         android:text="发布"
         android:textSize="12dp"
         android:gravity="center"
-        android:textColor="#808080"/>
+        android:textColor="#696969"/>
     
 
 </LinearLayout>

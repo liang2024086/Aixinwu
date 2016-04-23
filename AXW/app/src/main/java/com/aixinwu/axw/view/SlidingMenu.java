@@ -129,9 +129,9 @@ public class SlidingMenu extends RelativeLayout {
                     if (mSlidingView != null) {
                         mSlidingView.scrollTo(x, y);
                         if (x < 0)
-                            bgShade.scrollTo(x + 20, y);// ±³¾°ÒõÓ°ÓÒÆ«
+                            bgShade.scrollTo(x + 20, y);
                         else
-                            bgShade.scrollTo(x - 20, y);// ±³¾°ÒõÓ°×óÆ«
+                            bgShade.scrollTo(x - 20, y);
                     }
                 }
                 invalidate();
@@ -148,7 +148,7 @@ public class SlidingMenu extends RelativeLayout {
     }
 
 
-    /*À¹½ØtouchÊÂ¼þ*/
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
@@ -207,7 +207,7 @@ public class SlidingMenu extends RelativeLayout {
         return mIsBeingDragged;
     }
 
-    /*´¦ÀíÀ¹½ØºóµÄtouchÊÂ¼þ*/
+
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
         if (mVelocityTracker == null) {
@@ -286,7 +286,7 @@ public class SlidingMenu extends RelativeLayout {
                 if (mIsBeingDragged) {
                     final VelocityTracker velocityTracker = mVelocityTracker;
                     velocityTracker.computeCurrentVelocity(100);
-                    float xVelocity = velocityTracker.getXVelocity();// »¬¶¯µÄËÙ¶È
+                    float xVelocity = velocityTracker.getXVelocity();// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
                     int oldScrollX = mSlidingView.getScrollX();
                     int dx = 0;
                     if (oldScrollX <= 0 && canSlideLeft) {// left view
@@ -361,9 +361,7 @@ public class SlidingMenu extends RelativeLayout {
         invalidate();
     }
 
-    /*
-     * ÏÔÊ¾×ó²à±ßµÄview
-     * */
+
     public void showLeftView() {
         int menuWidth = mMenuView.getWidth();
         int oldScrollX = mSlidingView.getScrollX();
@@ -384,7 +382,6 @@ public class SlidingMenu extends RelativeLayout {
         }
     }
 
-    /*ÏÔÊ¾ÓÒ²à±ßµÄview*/
     public void showRightView() {
         int menuWidth = mDetailView.getWidth();
         int oldScrollX = mSlidingView.getScrollX();

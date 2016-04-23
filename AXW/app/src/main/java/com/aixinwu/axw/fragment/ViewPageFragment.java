@@ -71,27 +71,27 @@ public class ViewPageFragment extends Fragment {
                 ((TextView) tab_deal.findViewById(R.id.tab_text)).setTextColor(Color.GRAY);
                 ((TextView) tab_submit.findViewById(R.id.tab_text)).setTextColor(Color.GRAY);
                 ((TextView) tab_love_coin.findViewById(R.id.tab_text)).setTextColor(Color.GRAY);
-                ((ImageView) tab_home.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.home1_1);
-                ((ImageView) tab_love_coin.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.heart1);
-                ((ImageView) tab_submit.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.submit1);
-                ((ImageView) tab_deal.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.deal1);
+                ((ImageView) tab_home.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.home_0);
+                ((ImageView) tab_love_coin.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.coin_1);
+                ((ImageView) tab_submit.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.add_0);
+                ((ImageView) tab_deal.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.handshake_1);
 
                 switch (position) {
                     case 0:
-                        ((TextView) tab_home.findViewById(R.id.tab_text)).setTextColor(Color.GREEN);
-                        ((ImageView) tab_home.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.home2_1);
+                        ((TextView) tab_home.findViewById(R.id.tab_text)).setTextColor(getResources().getColor(R.color.black));
+                        ((ImageView) tab_home.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.home_1);
                         break;
                     case 1:
-                        ((TextView) tab_love_coin.findViewById(R.id.tab_text)).setTextColor(Color.GREEN);
-                        ((ImageView) tab_love_coin.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.heart2);
+                        ((TextView) tab_love_coin.findViewById(R.id.tab_text)).setTextColor(getResources().getColor(R.color.black));
+                        ((ImageView) tab_love_coin.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.coin_2);
                         break;
                     case 2:
-                        ((TextView) tab_submit.findViewById(R.id.tab_text)).setTextColor(Color.GREEN);
-                        ((ImageView) tab_submit.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.submit2);
+                        ((TextView) tab_submit.findViewById(R.id.tab_text)).setTextColor(getResources().getColor(R.color.black));
+                        ((ImageView) tab_submit.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.add_1);
                         break;
                     case 3:
-                        ((TextView) tab_deal.findViewById(R.id.tab_text)).setTextColor(Color.GREEN);
-                        ((ImageView) tab_deal.findViewById(R.id.tab_icon1)).setImageResource(R.mipmap.deal2);
+                        ((TextView) tab_deal.findViewById(R.id.tab_text)).setTextColor(getResources().getColor(R.color.black));
+                        ((ImageView) tab_deal.findViewById(R.id.tab_icon1)).setImageResource(R.drawable.handshake_0);
                         break;
                 }
 
