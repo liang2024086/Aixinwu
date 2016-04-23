@@ -5,18 +5,30 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.aixinwu.axw.R;
-
+import com.aixinwu.axw.tools.GlobalParameterApplication;
 /**
  * Created by liangyuding on 2016/4/15.
  */
 public class HelloWorld extends Activity{
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        setContentView(R.layout.helloworld2);
         Log.i("AAAAA", "WHY");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.helloworld);
+        GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+        if (gpa.getLogin_status() == 1) {
+            setContentView(R.layout.helloworld2);
+
+        }
+        else if (gpa.getLogin_status() == 0) {
+            setContentView(R.layout.helloworld);
+        }
+        //setContentView(R.layout.helloworld);
         
     }
 

@@ -16,5 +16,6 @@
     <string name="home_info">----  最新通知  ----</string>
     <string name="home_commodity">----  新品上架  ----</string>
     <string name="home_deal">----  人气物品  ----</string>
+    <string name="title_activity_singup">SingupActivity</string>
 
 </resources>
