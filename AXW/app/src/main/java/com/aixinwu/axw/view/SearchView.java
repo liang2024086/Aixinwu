@@ -103,7 +103,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
 
         ivDelete.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-
+/*
         etInput.addTextChangedListener(new EditChangedListener());
         etInput.setOnClickListener(this);
         etInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -115,7 +115,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 }
                 return true;
             }
-        });
+        });*/
     }
 
     /**
@@ -146,7 +146,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
      */
     /*public void setAutoCompleteAdapter(ArrayAdapter<String> adapter) {
         this.mAutoCompleteAdapter = adapter;
-    }*/
+    }
 
     private class EditChangedListener implements TextWatcher {
         @Override
@@ -165,13 +165,13 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 //更新autoComplete数据
                 /*if (mListener != null) {
                     mListener.onRefreshAutoComplete(charSequence + "");
-                }*/
+                }
             } else {
                 ivDelete.setVisibility(GONE);
-                /*if (mHintAdapter != null) {
+                if (mHintAdapter != null) {
                     lvTips.setAdapter(mHintAdapter);
                 }
-                lvTips.setVisibility(GONE);*/
+                lvTips.setVisibility(GONE);
             }
 
         }
@@ -180,7 +180,7 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
         public void afterTextChanged(Editable editable) {
         }
     }
-
+*/
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -192,9 +192,11 @@ public class SearchView extends LinearLayout implements View.OnClickListener {
                 ivDelete.setVisibility(GONE);
                 break;
             case R.id.search_btn_back:
-                ((Activity) mContext).finish();
+                notifyStartSearching(etInput.getText().toString());
+                //((Activity) mContext).finish();
                 break;
         }
+
     }
 
     /**

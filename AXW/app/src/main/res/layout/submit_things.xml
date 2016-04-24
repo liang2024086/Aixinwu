@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+<RelativeLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
@@ -7,7 +9,7 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:gravity="center">
         <LinearLayout
             android:orientation="vertical"
@@ -18,7 +20,7 @@
                 android:id="@+id/name1"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-
+                android:textSize="30sp"
                 android:gravity="center"
                 android:text="发布信息" />
             <LinearLayout
@@ -32,12 +34,13 @@
                     android:id="@+id/type"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="25dp"></Spinner>
+
+                    android:layout_height="40dp"></Spinner>
                 <Spinner
                     android:id="@+id/neworold"
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
-                    android:layout_height="25dp"></Spinner>
+                    android:layout_height="40dp"></Spinner>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -45,7 +48,7 @@
                 android:orientation="horizontal"
                 android:layout_weight="1">
                 <TextView
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
 
@@ -59,8 +62,71 @@
                     android:gravity="center"
                     android:inputType="numberDecimal"
                     />
-            </LinearLayout>
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+                <TextView
+
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="2"
+                    android:gravity="center"
+                    android:text="物品名称" />
+                <EditText
+                    android:id="@+id/itemname"
+                    android:layout_weight="1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+
+                    android:gravity="center"
+                    />
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <TextView
+                android:layout_weight="2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+
+                android:gravity="center"
+                android:text="物品数量" />
+            <EditText
+                android:id="@+id/itemnumber"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_weight="2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+
+                    android:gravity="center"
+                    android:text="Jaccount ID" />
+                <EditText
+                    android:id="@+id/jaccountID"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    />
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -68,9 +134,9 @@
     <!-- 底部按钮 -->
     <RelativeLayout
         android:id="@+id/Layout_bottom"
-        android:layout_alignParentBottom="true"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Layout_mid"
         android:gravity="center" >
 
         <CheckBox
@@ -96,7 +162,6 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
 
-        android:layout_above="@+id/Layout_bottom"
         android:layout_below="@+id/Layout_top"
 
 
@@ -110,19 +175,22 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="16dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="38dp">
+            android:layout_marginTop="38dp"
+            android:weightSum="1">
             <!-- 设置运行多行 设置圆角图形 黑色字体-->
             <EditText
                 android:id="@+id/editText1"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
                 android:layout_width="fill_parent"
-                android:textColor="#FFFFFF"
+                android:textColor="#000000"
                 android:layout_margin="12dp"
                 android:textSize="20sp"
                 android:hint="随手说出你此刻的心声..."
                 android:maxLength="500"
                 android:singleLine="false"
-                android:background="@drawable/editview_shape" />
+                android:background="@drawable/editview_shape"
+                android:layout_weight="0.69"
+                android:autoText="false" />
             <!-- 网格显示图片 行列间距5dp 每列宽度90dp -->
             <GridView
                 android:id="@+id/gridView1"
@@ -141,10 +209,12 @@
             <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="(友情提示:只能添加9张图片,长按图片可以删除已添加图片)"
-                android:gravity="center" />
+                android:text="(友情提示:只能添加7张图片,长按图片可以删除已添加图片)"
+                android:gravity="center"
+                android:layout_marginBottom="20dp" />
         </LinearLayout>
     </RelativeLayout>
 
 
 </RelativeLayout>
+</ScrollView>

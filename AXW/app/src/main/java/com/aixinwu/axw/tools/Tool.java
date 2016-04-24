@@ -1,42 +1,34 @@
 package com.aixinwu.axw.tools;
 
-import android.provider.MediaStore;
 
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.List;
+
 
 
 /**
  * Created by liangyuding on 2016/3/31.
  */
 public class Tool {
+
     public String genJson(String name, String psw) {
         JSONObject matadata = new JSONObject();
         matadata.put("TimeStamp", 123124233);
@@ -50,7 +42,44 @@ public class Tool {
         data.put("userinfo", userinfo);
         return data.toJSONString();
     }
-
+    public static byte[] readInputStream(InputStream inStream) throws Exception{
+        ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+        //创建一个Buffer字符串
+        byte[] buffer = new byte[1024];
+        //每次读取的字符串长度，如果为-1，代表全部读取完毕
+        int len = 0;
+        //使用一个输入流从buffer里把数据读取出来
+        while( (len=inStream.read(buffer)) != -1 ){
+            //用输出流往buffer里写入数据，中间参数代表从哪个位置开始读，len代表读取的长度
+            outStream.write(buffer, 0, len);
+        }
+        //关闭输入流
+        inStream.close();
+        //把outStream里的数据写入内存
+        return outStream.toByteArray();
+    }
+    public static Bitmap DownloadFile(String surl, String filename) throws IOException {
+        URL url = new URL(surl + "/api/img_get");
+        HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
+        conn1.setRequestMethod("POST");
+        conn1.setDoOutput(true);
+        conn1.setRequestProperty("Content-Type", "application/json");
+        JSONObject data = new JSONObject();
+        data.put("imageID", filename);
+        conn1.getOutputStream().write(data.toJSONString().getBytes());
+        InputStream inStream = conn1.getInputStream();
+        byte[] data1 = new byte[0];
+        try {
+            data1 = readInputStream(inStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        BitmapFactory.Options options=new BitmapFactory.Options();
+        options.inSampleSize = 8;
+        //new一个文件对象用来保存图片，默认保存当前工程根目录
+        Bitmap bmp = BitmapFactory.decodeByteArray(data1,0,data1.length,options);
+        return bmp;
+    }
     public java.lang.String getToken(String surl, String name, String psw) throws IOException {
         String jsonstr = genJson(name, psw);
         URL url = new URL(surl + "/login");
@@ -79,7 +108,8 @@ public class Tool {
     }
 
     public String sendFile(String surl, String filename) throws IOException {
-        URL url = new URL(surl + "/upload");
+        int i;
+        URL url = new URL(surl + "/img_upload");
         String charset = "UTF-8";
         String CRLF = "\r\n";
         String boundary = Long.toHexString(System.currentTimeMillis());

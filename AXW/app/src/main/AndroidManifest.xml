@@ -31,7 +31,10 @@
             android:label="@string/hello_world" />
         <activity android:name=".activity.LoginActivity" />
 
+		<activity android:name="com.aixinwu.axw.activity.Buy"
+            android:label="@string/app_name">
 
+        </activity>
         <activity android:name=".activity.SignupActivity" />
     </application>
 

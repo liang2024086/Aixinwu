@@ -1,6 +1,7 @@
 package com.aixinwu.axw.fragment;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.app.AlertDialog.Builder;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -11,12 +12,14 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Message;
 import android.preference.DialogPreference;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.EventLogTags;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,11 +55,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
+
 /**
  * Created by liangyuding on 2016/4/6.
  */
 public class SubmitThings extends Fragment {
 
+    public String imageSet;
     private GridView mGridView;
     private Button buttonPublish;
     private EditText doc;
@@ -74,19 +79,27 @@ public class SubmitThings extends Fragment {
     private Spinner spinner1;
     private String TypeName;
     private Spinner spinner2;
-    private String HowNew;
+    private Handler handler;
+    private int HowNew;
     private CheckBox checkBox;
     private boolean YesorNo;
     private EditText price;
     private int money;
+    private EditText itemname;
+    private String ItemName;
+    private EditText itemnumber;
+    private int itemnum;
+    private EditText jaccount;
+    private String JaccountID;
     private ArrayAdapter<String> type;
     private ArrayAdapter<String> neworold;
-    private final String surl = "59.78.47.168:12345";
+    private final String surl = "http://202.120.47.213:12345/api";
     public  java.lang.String MyToken;
     private long NumPhoto = 0;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        handler=new Handler();
 
     }
 
@@ -144,12 +157,16 @@ public class SubmitThings extends Fragment {
         //适配器动态显示图片
         if(!TextUtils.isEmpty(pathImage)){
             Toast.makeText(getActivity(),pathImage,Toast.LENGTH_LONG).show();
-            Bitmap addbmp=BitmapFactory.decodeFile(pathImage);
+            BitmapFactory.Options cc = new BitmapFactory.Options();
+            cc.inSampleSize=8;
+
+            Bitmap addbmp=BitmapFactory.decodeFile(pathImage,cc);
             HashMap<String, Object> map = new HashMap<String, Object>();
             map.put("itemImage", addbmp);
             map.put("pathImage", pathImage);
             imageItem.add(map);
             SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),
+
                     imageItem, R.layout.griditem_addpic,
                     new String[] { "itemImage"}, new int[] { R.id.imageView1});
             //接口载入图片
@@ -176,12 +193,7 @@ public class SubmitThings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.submit_things,null);
 
-        try {
 
-            MyToken = am.getToken(surl,"name","pwd");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         mGridView = (GridView)view.findViewById(R.id.gridView1);
         buttonPublish = (Button)view.findViewById(R.id.button1);
         doc = (EditText)view.findViewById(R.id.editText1);
@@ -189,6 +201,9 @@ public class SubmitThings extends Fragment {
         spinner2 = (Spinner)view.findViewById(R.id.neworold);
         checkBox = (CheckBox)view.findViewById(R.id.checkforaxw);
         price = (EditText)view.findViewById(R.id.price);
+        itemname=(EditText)view.findViewById(R.id.itemname);
+        itemnumber=(EditText)view.findViewById(R.id.itemnumber);
+        jaccount=(EditText)view.findViewById(R.id.jaccountID);
         String[] mType=getResources().getStringArray(R.array.spinner1name);
         String[] mNew=getResources().getStringArray(R.array.spinner2name);
         type = new ArrayAdapter<String>(getActivity(),R.layout.spinner_textview,mType);
@@ -199,25 +214,23 @@ public class SubmitThings extends Fragment {
         buttonPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Descrip = doc.getText().toString();
                 TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
                 TypeName = v.getText().toString();
                 v = (TextView)spinner2.getSelectedView().findViewById(R.id.item);
-                HowNew = v.getText().toString();
+                HowNew = Integer.parseInt(v.getText().toString());
                 YesorNo = checkBox.isChecked();
+                ItemName = itemname.getText().toString();
+                if (!itemnumber.getText().toString().isEmpty())
+                    itemnum = Integer.parseInt(itemnumber.getText().toString());
+                JaccountID = jaccount.getText().toString();
                 if (!price.getText().toString().isEmpty()) money = Integer.parseInt(price.getText().toString());
                 if (imageItem.size() == 1) {
                     Toast.makeText(getActivity(), "No Picture", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TypeName.isEmpty()){
-                    Toast.makeText(getActivity(), "No Type", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (HowNew.isEmpty()){
-                    Toast.makeText(getActivity(), "No How New", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+
                 if (Descrip.isEmpty()){
                     Toast.makeText(getActivity(), "No Discription", Toast.LENGTH_SHORT).show();
                     return;
@@ -227,9 +240,11 @@ public class SubmitThings extends Fragment {
                     return;
                 }
                 Descrip = Descrip + "  " + HowNew;
+                ItemName = ItemName+"*"+itemnum;
                // String itemID = AddItem(TypeName,money,Descrip,YesorNo);
-
-                ArrayList<String> imageSet = uploadPic(imageItem);
+                if (!YesorNo)
+                    new Thread(runnable).start();
+                else new Thread(runnable1).start();
 //                Toast.makeText(getActivity(), "Upload Successful", Toast.LENGTH_SHORT).show();
                 /*
                 AddImage 部分 将itemID和imageID绑定上传
@@ -275,7 +290,35 @@ public class SubmitThings extends Fragment {
 
 
         return view;
-    }/*
+    }
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+
+            /*try {
+
+                MyToken = am.getToken(surl,"name","pwd");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+            imageSet = uploadPic(imageItem);
+            try {
+                MyToken = am.getToken(surl,"CrossLife","fyc19931009");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String ss= AddItem(HowNew,money,Descrip,imageSet);
+            Log.i("UPLOAD",ss);
+        }
+    };
+    Runnable runnable1 = new Runnable() {
+        @Override
+        public void run() {
+
+
+        }
+    };
+    /*
     protected void DeleteDialog(final int position){
         AlertDialog.Builder builder = new Builder(getActivity());
         builder.setMessage("Can I delete the image?");
@@ -347,24 +390,25 @@ public class SubmitThings extends Fragment {
         builder.create().show();
 
     }
-    protected String AddItem(String Type, int Money, String Doc, boolean flag){
+    protected String AddItem(int Type, int Money, String Doc, String picstr){
         String result = null;
         JSONObject matadata = new JSONObject();
 
         matadata.put("timestamp","12312312213");
         JSONObject iteminfo = new JSONObject();
-        iteminfo.put("Type",Type);
-        iteminfo.put("Price",Money);
-        iteminfo.put("Description",Doc);
+        iteminfo.put("status",Type);
+        iteminfo.put("price",Money);
+        iteminfo.put("description",Doc);
+        iteminfo.put("images",picstr);
         //iteminfo.put("Check",flag);
         JSONObject data = new JSONObject();
-        data.put("MataData",matadata);
+        //data.put("mataData",matadata);
         data.put("token",MyToken);
-        data.put("ItemInfo",iteminfo);
+        data.put("itemInfo",iteminfo);
         String jsonstr = data.toJSONString();
         URL url  = null;
         try {
-            url = new URL(surl + "/item/new");
+            url = new URL(surl + "/item_add");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -402,7 +446,7 @@ public class SubmitThings extends Fragment {
 
         try{
             outjson = new org.json.JSONObject(ostr);
-            result = outjson.getJSONObject("ItemInfo").getString("ItemID");
+            result = outjson.getJSONObject("itemInfo").getString("ID");
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -410,15 +454,18 @@ public class SubmitThings extends Fragment {
         return result;
 
     }
-    protected  ArrayList<String> uploadPic(ArrayList<HashMap<String,Object>> adapter){
-        ArrayList<String> Picset = new ArrayList<String>();
+    protected  String uploadPic(ArrayList<HashMap<String,Object>> adapter){
+        String Picset = "";
         for (int i = 1; i < imageItem.size(); i++){
             String ss=(String)imageItem.get(i).get("pathImage");
+         //   Toast.makeText(getActivity(),"Begin transication",Toast.LENGTH_SHORT).show();
 
             try {
                 String imageID = am.sendFile(surl,ss);
-                Toast.makeText(getActivity(),imageID,Toast.LENGTH_SHORT).show();
-                Picset.add(imageID);
+
+                if (i>1) Picset=Picset+","+imageID;
+                else Picset = imageID;
+          //      Toast.makeText(getActivity(),Picset.size(),Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
