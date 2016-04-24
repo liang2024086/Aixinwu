@@ -9,7 +9,15 @@ import android.app.Application;
 public class GlobalParameterApplication extends Application{
     private int login_status = 0;
     private String user_name;
+    private String token;
 
+    public void setToken (String token) {
+        this.token = token;
+    }
+
+    public String getToken () {
+        return token;
+    }
     public int getLogin_status () {
         return login_status;
     }

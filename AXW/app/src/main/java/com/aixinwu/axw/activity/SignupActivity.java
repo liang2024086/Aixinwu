@@ -15,6 +15,16 @@ import butterknife.Bind;
 
 import com.aixinwu.axw.R;
 
+import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.InterfaceAddress;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
@@ -69,17 +79,31 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.show();
 
         String name = _nameText.getText().toString();
+
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
-
         // TODO: Implement your own signup logic here.
+
+        RegisterThread registerThread = new RegisterThread(email, password);
+
+        registerThread.start();
+
+        try{
+            registerThread.join();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
                         // On complete call either onSignupSuccess or onSignupFailed
                         // depending on success
-                        onSignupSuccess();
+
+
+                            onSignupSuccess();
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
@@ -129,4 +153,84 @@ public class SignupActivity extends AppCompatActivity {
 
         return valid;
     }
+
+
+    protected int AddUser (String username, String password){
+        String result = null;
+        JSONObject matadata = new JSONObject();
+
+        matadata.put("timestamp","12312312213");
+
+        JSONObject userinfo = new JSONObject();
+        userinfo.put("username", username);
+        userinfo.put("password", password);
+
+        String jsonstr = userinfo.toJSONString();
+        URL url  = null;
+        try {
+            url = new URL("http://202.120.47.213:12345/api/usr_add");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            conn.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+        conn.setDoOutput(true);
+        //conn.setConnectTimeout(1000);
+        //conn.setReadTimeout(1000);
+        conn.setRequestProperty("Content-Type","application/json");
+        conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
+        try {
+            conn.getOutputStream().write(jsonstr.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String ostr = null;
+        try {
+            ostr = IOUtils.toString(conn.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(ostr);
+/*
+        org.json.JSONObject outjson = null;
+
+        try{
+            outjson = new org.json.JSONObject(ostr);
+            result = outjson.getJSONObject("itemInfo").getString("ID");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+*/
+        return 1;
+
+    }
+
+    class RegisterThread extends Thread{
+
+        private String email,password;
+        public RegisterThread(String email,String password){
+            this.email = email;
+            this.password = password;
+        }
+
+        @Override
+        public void run(){
+            AddUser(email, password);
+        }
+    }
+
 }
+
+
+
+

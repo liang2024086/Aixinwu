@@ -19,6 +19,14 @@ import butterknife.Bind;
 
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 
+import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONObject;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -80,27 +88,33 @@ public class LoginActivity extends AppCompatActivity {
 
         // TODO: Implement your own authentication logic here.
 
-        GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
-        gpa.setLogin_status(1);
+        LoginThread loginThread = new LoginThread(email,password);
+
+        loginThread.start();
+
+        try{
+            loginThread.join();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
         //end
 
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
                         GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
-                        if (gpa.getLogin_status() == 1) {
-                            gpa.setUser_name(_emailText.getText().toString());
+                        int login_status = gpa.getLogin_status();
+                        if (login_status == 1)
                             onLoginSuccess();
-
-
-                        }
                         else
                             onLoginFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
+
     }
 
 
@@ -156,4 +170,84 @@ public class LoginActivity extends AppCompatActivity {
 
         return valid;
     }
+
+    class LoginThread extends Thread{
+
+        private String email,password;
+        public LoginThread(String email,String password){
+            this.email = email;
+            this.password = password;
+        }
+
+        @Override
+        public void run(){
+            try {
+                String token = getToken("http://202.120.47.213:12345/api", email, password);
+                if (token.length() == 0) {
+
+                }
+                else {
+                    GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+                    gpa.setLogin_status(1);
+                    gpa.setToken(token);
+
+
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public String genJson(String name, String psw) {
+        JSONObject matadata = new JSONObject();
+        matadata.put("TimeStamp", 123124233);
+        matadata.put("Device", "android");
+        JSONObject userinfo = new JSONObject();
+        userinfo.put("username", name);
+        userinfo.put("password", psw);
+
+        JSONObject data = new JSONObject();
+        data.put("mataData", matadata);
+        data.put("userinfo", userinfo);
+        return data.toJSONString();
+    }
+
+
+    public String getToken(String surl, String name, String psw) throws IOException {
+        String jsonstr = genJson(name, psw);
+        URL url = new URL(surl + "/login");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setConnectTimeout(1000);
+        conn.setReadTimeout(1000);
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
+        conn.getOutputStream().write(jsonstr.getBytes());
+
+        String ostr = IOUtils.toString(conn.getInputStream());
+        //System.out.println(ostr);
+
+        org.json.JSONObject outjson = null;
+        String result = null;
+        try {
+            outjson = new org.json.JSONObject(ostr);
+            result = outjson.getString("token");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return result;
+    }
+
+
+
+
+
+
+
 }

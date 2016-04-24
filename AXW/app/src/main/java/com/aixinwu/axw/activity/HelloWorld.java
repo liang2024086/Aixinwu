@@ -23,6 +23,8 @@ public class HelloWorld extends Activity{
         GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
         if (gpa.getLogin_status() == 1) {
             setContentView(R.layout.helloworld2);
+            TextView a = (TextView) findViewById(R.id.helloworld2);
+            a.setText(gpa.getToken());
 
         }
         else if (gpa.getLogin_status() == 0) {
