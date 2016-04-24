@@ -1,16 +1,18 @@
 package com.aixinwu.axw.tools;
 
+import android.graphics.Bitmap;
+
 import java.util.Iterator;
 
 /**
  * Created by Cross_Life on 2016/4/18.
  */
 public class Bean {
-    private int picId;
+    private Bitmap picId;
     private String type;
     private String doc;
     private int itemId;
-    public Bean(int itemId, int picId, String type, String doc) {
+    public Bean(int itemId, Bitmap picId, String type, String doc) {
         this.picId = picId;
         this.itemId = itemId;
         this.type = type;
@@ -22,11 +24,11 @@ public class Bean {
     public int getItemId(){
         return itemId;
     }
-    public int getPicId() {
+    public Bitmap getPicId() {
         return picId;
     }
 
-    public void setIconId(int picId) {
+    public void setIconId(Bitmap picId) {
         this.picId = picId;
     }
 

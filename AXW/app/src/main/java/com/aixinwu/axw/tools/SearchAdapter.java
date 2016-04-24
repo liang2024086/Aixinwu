@@ -18,7 +18,7 @@ public class SearchAdapter extends CommonAdapter<Bean> {
 
     @Override
     public void convert(ViewHolder holder, int position) {
-        holder.setImageResource(R.id.item_search_iv_icon,mData.get(position).getPicId())
+        holder.setImageBitmap(R.id.item_search_iv_icon,mData.get(position).getPicId())
                 .setText(R.id.item_search_tv_title,mData.get(position).getType())
                 .setText(R.id.item_search_tv_content,mData.get(position).getDoc());
     }

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,12 +41,14 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
+
+import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.tools.Tool;
 /**
  * Created by liangyuding on 2016/4/15.
  */
 public class Buy extends Activity{
-    private final String surl = "http://202.120.47.213:12345/api";
+    private final String surl = GlobalParameterApplication.getSurl();
     public  java.lang.String MyToken;
     private Tool am = new Tool();
     private boolean flag;
@@ -98,8 +101,10 @@ public class Buy extends Activity{
         commentsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 commentwords = commentword.getText().toString();
                 if(commentwords!=null)
+                    if(GlobalParameterApplication.getLogin_status()==1)
                 new Thread(new Runnable() {
                     @Override
                     public void run(){
@@ -119,17 +124,21 @@ public class Buy extends Activity{
                             e.printStackTrace();
                         }
                         conn.setDoOutput(true);
-                            conn.setRequestProperty("Content-Type","application/json");
+                            conn.setRequestProperty("Content-Type", "application/json");
                             JSONObject data = new JSONObject();
-                            data.put("token",MyToken);
+                            data.put("token", MyToken);
                             JSONObject comment = new JSONObject();
-                            comment.put("itemID",itemID);
-                            comment.put("content",commentwords);
-                            data.put("comment",comment);
+                            comment.put("itemID", itemID);
+                            comment.put("content", commentwords);
+                            data.put("comment", comment);
 
                             conn.getOutputStream().write(data.toJSONString().getBytes());
                             String ostr = IOUtils.toString(conn.getInputStream());
                             System.out.println(ostr);
+                            GetComments(itemID);
+                            Message Msg = new Message();
+                            Msg.what = 231123;
+                            nhandler.sendMessage(Msg);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -142,11 +151,7 @@ public class Buy extends Activity{
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    MyToken = am.getToken(surl,"CrossLife","fyc19931009");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                MyToken=GlobalParameterApplication.getToken();
                 GetComments(itemID);
                 GetInfo(itemID);
                 /*
@@ -161,7 +166,7 @@ public class Buy extends Activity{
                 for (int i = 0; i < picts.length; i++){
                     HashMap<String,Object> map = new HashMap<String, Object>();
                     try {
-                        map.put("image", am.DownloadFile("http://202.120.47.213:12345",picts[i]));
+                        map.put("image", am.DownloadFile(surl,picts[i],10));
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -227,6 +232,7 @@ Handler nhandler = new Handler(){
 
                     ViewGroup.LayoutParams params = comments.getLayoutParams();
                     params.height = totalHeight + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
+                    params.height = 5* params.height;
                     comments.setLayoutParams(params);
                         String [] from = {"image"};
                         int [] to = {R.id.buyimage};System.out.println("---------------"+pic_list.size()+"----------------");
@@ -256,10 +262,14 @@ Handler nhandler = new Handler(){
                     }
 
                     params = pics.getLayoutParams();
-                    params.height = totalHeight + (pics.getDividerHeight() * (sim_adapter.getCount() - 1));
+                    params.height = totalHeight + (pics.getDividerHeight() * (sim_adapter.getCount()));
                     pics.setLayoutParams(params);
                     break;
+                case 231123:
 
+                    com_adapter.notifyDataSetChanged();
+
+                    break;
             }
             }
 
@@ -268,14 +278,14 @@ Handler nhandler = new Handler(){
     };
     public void onStart(){
         super.onStart();
-        Toast.makeText(this,"UUonStart",Toast.LENGTH_LONG).show();
+       // han'd.makeText(this,"UUonStart",Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
 
-        Toast.makeText(this,"UUonResumekengbi",Toast.LENGTH_LONG).show();;
+        //Toast.makeText(this,"UUonResumekengbi",Toast.LENGTH_LONG).show();;
 
     }
 
@@ -283,7 +293,7 @@ Handler nhandler = new Handler(){
     @Override
     public void onPause(){
         super.onPause();
-        Toast.makeText(this,"UUonPause",Toast.LENGTH_LONG).show();;
+        //Toast.makeText(this,"UUonPause",Toast.LENGTH_LONG).show();;
     }
     public void GetComments(int itemID){
         URL url = null;
@@ -310,6 +320,7 @@ Handler nhandler = new Handler(){
                 org.json.JSONObject outjson = new org.json.JSONObject(ostr);
                 result=outjson.getJSONArray("comment");
                 org.json.JSONObject outt=null;
+                Comments.clear();
                 for (int i = 0; i < result.length();i++){
                     {
                         outt=result.getJSONObject(i);
@@ -339,7 +350,7 @@ Handler nhandler = new Handler(){
             conn.setDoOutput(true);
             conn.setRequestProperty("Content-Type","application/json");
             JSONObject data = new JSONObject();
-            data.put("token",MyToken);
+            //data.put("token",MyToken);
             JSONObject iteminfo = new JSONObject();
             iteminfo.put("ID",itemID);
             data.put("itemInfo",iteminfo);

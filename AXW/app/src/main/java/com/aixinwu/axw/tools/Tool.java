@@ -58,8 +58,8 @@ public class Tool {
         //把outStream里的数据写入内存
         return outStream.toByteArray();
     }
-    public static Bitmap DownloadFile(String surl, String filename) throws IOException {
-        URL url = new URL(surl + "/api/img_get");
+    public static Bitmap DownloadFile(String surl, String filename,int samplerate) throws IOException {
+        URL url = new URL(surl + "/img_get");
         HttpURLConnection conn1 = (HttpURLConnection) url.openConnection();
         conn1.setRequestMethod("POST");
         conn1.setDoOutput(true);
@@ -75,7 +75,7 @@ public class Tool {
             e.printStackTrace();
         }
         BitmapFactory.Options options=new BitmapFactory.Options();
-        options.inSampleSize = 8;
+        options.inSampleSize = samplerate;
         //new一个文件对象用来保存图片，默认保存当前工程根目录
         Bitmap bmp = BitmapFactory.decodeByteArray(data1,0,data1.length,options);
         return bmp;

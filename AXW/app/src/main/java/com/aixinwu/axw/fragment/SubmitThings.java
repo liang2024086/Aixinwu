@@ -39,6 +39,7 @@ import android.widget.SimpleAdapter;
 import android.widget.SimpleAdapter.ViewBinder;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.MainActivity;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.tools.Tool;
 
 import org.apache.commons.io.IOUtils;
@@ -65,8 +66,7 @@ public class SubmitThings extends Fragment {
     private GridView mGridView;
     private Button buttonPublish;
     private EditText doc;
-    private String Descrip;
-    private ArrayList<HashMap<String, Object>> imageItem;
+    private String Descrip;    private ArrayList<HashMap<String, Object>> imageItem;
     private Bitmap bmp;
     public SimpleAdapter simpleAdapeter;
     private final int IMAGE_OPEN = 1;      //打开图片标记
@@ -93,7 +93,7 @@ public class SubmitThings extends Fragment {
     private String JaccountID;
     private ArrayAdapter<String> type;
     private ArrayAdapter<String> neworold;
-    private final String surl = "http://202.120.47.213:12345/api";
+    private final String surl = GlobalParameterApplication.getSurl();
     public  java.lang.String MyToken;
     private long NumPhoto = 0;
     @Override
@@ -214,7 +214,9 @@ public class SubmitThings extends Fragment {
         buttonPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
+                if(gpa.getLogin_status()==0)Toast.makeText(getActivity(),"你跪了",Toast.LENGTH_LONG).show();
+                else{
                 Descrip = doc.getText().toString();
                 TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
                 TypeName = v.getText().toString();
@@ -226,12 +228,12 @@ public class SubmitThings extends Fragment {
                     itemnum = Integer.parseInt(itemnumber.getText().toString());
                 JaccountID = jaccount.getText().toString();
                 if (!price.getText().toString().isEmpty()) money = Integer.parseInt(price.getText().toString());
-                if (imageItem.size() == 1) {
+                if (imageItem.size() == 1 && !YesorNo) {
                     Toast.makeText(getActivity(), "No Picture", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (Descrip.isEmpty()){
+                if (Descrip.isEmpty()&& !YesorNo){
                     Toast.makeText(getActivity(), "No Discription", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -244,7 +246,8 @@ public class SubmitThings extends Fragment {
                // String itemID = AddItem(TypeName,money,Descrip,YesorNo);
                 if (!YesorNo)
                     new Thread(runnable).start();
-                else new Thread(runnable1).start();
+                else new Thread(runnable1).start();}
+
 //                Toast.makeText(getActivity(), "Upload Successful", Toast.LENGTH_SHORT).show();
                 /*
                 AddImage 部分 将itemID和imageID绑定上传
@@ -279,11 +282,11 @@ public class SubmitThings extends Fragment {
                         Toast.makeText(getActivity(), "Picture is enough", Toast.LENGTH_SHORT).show();
                     }
                     else if (position == 0){
-                        Toast.makeText(getActivity(), "Add", Toast.LENGTH_SHORT).show();
+                     //   Toast.makeText(getActivity(), "Add", Toast.LENGTH_SHORT).show();
                         AddImageDialog();
                     }
                     else {
-                        Toast.makeText(getActivity(), "Del", Toast.LENGTH_SHORT).show();//DeleteDialog(position);
+                //        Toast.makeText(getActivity(), "Del", Toast.LENGTH_SHORT).show();//DeleteDialog(position);
                     }
                 }
             });
@@ -302,11 +305,7 @@ public class SubmitThings extends Fragment {
                 e.printStackTrace();
             }*/
             imageSet = uploadPic(imageItem);
-            try {
-                MyToken = am.getToken(surl,"CrossLife","fyc19931009");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MyToken=GlobalParameterApplication.getToken();
             String ss= AddItem(HowNew,money,Descrip,imageSet);
             Log.i("UPLOAD",ss);
         }
@@ -314,6 +313,30 @@ public class SubmitThings extends Fragment {
     Runnable runnable1 = new Runnable() {
         @Override
         public void run() {
+
+            MyToken=GlobalParameterApplication.getToken();
+            JSONObject data = new JSONObject();
+            JSONObject iteminfo = new JSONObject();
+            iteminfo.put("jacount_id",JaccountID);
+            iteminfo.put("desc",ItemName);
+            data.put("itemInfo",iteminfo);
+            data.put("token",MyToken);
+            try {
+                URL url = new URL(surl + "/item_add_aixinwu");
+                try {
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.getOutputStream().write(data.toJSONString().getBytes());
+                    java.lang.String oss = IOUtils.toString(conn.getInputStream());
+                    System.out.println(oss);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
 
         }
@@ -332,7 +355,7 @@ public class SubmitThings extends Fragment {
 
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("No", new DialogIn1terface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -427,7 +450,7 @@ public class SubmitThings extends Fragment {
         conn.setConnectTimeout(1000);
         conn.setReadTimeout(1000);
         conn.setRequestProperty("Content-Type","application/json");
-        conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
+        //conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
         try {
             conn.getOutputStream().write(jsonstr.getBytes());
         } catch (IOException e) {
