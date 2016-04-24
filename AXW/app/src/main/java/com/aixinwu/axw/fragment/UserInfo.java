@@ -67,6 +67,23 @@ public class UserInfo extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+
+        TextView logoff_btn = (TextView) getActivity().findViewById(R.id.logoff);
+        logoff_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
+                gpa.setToken("");
+                gpa.setLogin_status(0);
+
+
+                ly_logininfo.setVisibility(View.VISIBLE);
+                ly_personalinfo.setVisibility(View.GONE);
+
+
+            }
+        });
+
         super.onStart();
     }
 }
