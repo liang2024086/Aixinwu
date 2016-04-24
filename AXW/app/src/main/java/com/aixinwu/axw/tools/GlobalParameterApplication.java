@@ -10,6 +10,14 @@ public class GlobalParameterApplication extends Application{
     private int login_status = 0;
     private String user_name;
     private String token;
+    private String surl = "http://202.120.47.213:12345/api";
+
+
+    public String getSurl () {
+        return surl;
+    }
+
+
 
     public void setToken (String token) {
         this.token = token;

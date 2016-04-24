@@ -181,13 +181,14 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void run(){
+            GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+
             try {
-                String token = getToken("http://202.120.47.213:12345/api", email, password);
+                String token = getToken(gpa.getSurl(), email, password);
                 if (token.length() == 0) {
 
                 }
                 else {
-                    GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
                     gpa.setLogin_status(1);
                     gpa.setToken(token);
 

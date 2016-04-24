@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.Bind;
 
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
 
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
@@ -156,6 +157,8 @@ public class SignupActivity extends AppCompatActivity {
 
 
     protected int AddUser (String username, String password){
+        GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+
         String result = null;
         JSONObject matadata = new JSONObject();
 
@@ -168,7 +171,7 @@ public class SignupActivity extends AppCompatActivity {
         String jsonstr = userinfo.toJSONString();
         URL url  = null;
         try {
-            url = new URL("http://202.120.47.213:12345/api/usr_add");
+            url = new URL(gpa.getSurl()+"/usr_add");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -184,8 +187,8 @@ public class SignupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         conn.setDoOutput(true);
-        //conn.setConnectTimeout(1000);
-        //conn.setReadTimeout(1000);
+        conn.setConnectTimeout(1000);
+        conn.setReadTimeout(1000);
         conn.setRequestProperty("Content-Type","application/json");
         conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
         try {
@@ -201,16 +204,7 @@ public class SignupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         System.out.println(ostr);
-/*
-        org.json.JSONObject outjson = null;
 
-        try{
-            outjson = new org.json.JSONObject(ostr);
-            result = outjson.getJSONObject("itemInfo").getString("ID");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-*/
         return 1;
 
     }
