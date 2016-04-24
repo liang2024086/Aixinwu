@@ -1,18 +1,23 @@
 package com.aixinwu.axw.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.aixinwu.axw.Adapter.ProductAdapter;
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.activity.HelloWorld;
+import com.aixinwu.axw.activity.ProductDetailActivity;
 import com.aixinwu.axw.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.Toast;
 
 /**
  * Created by liangyuding on 2016/4/6.
@@ -55,6 +60,16 @@ public class LoveCoin extends Fragment {
         );
         GridView gridView1 = (GridView) getActivity().findViewById(R.id.grid1);
         gridView1.setAdapter (adapter1);
+        gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Product product = productList.get(i);
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                intent.putExtra("param1",product.getProduct_name());
+                getActivity().startActivity(intent);
+
+            }
+        });
         GridView gridView2 = (GridView) getActivity().findViewById(R.id.grid2);
         gridView2.setAdapter (adapter2);
         GridView gridView3 = (GridView) getActivity().findViewById(R.id.grid3);

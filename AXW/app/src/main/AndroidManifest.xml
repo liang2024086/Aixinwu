@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.aixinwu.axw">
+    package="com.aixinwu.axw" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 申明权限 操作SD卡 -->
@@ -10,16 +10,14 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
-
-        android:name="com.aixinwu.axw.tools.GlobalParameterApplication"
-
+        android:name=".tools.GlobalParameterApplication"
         android:allowBackup="true"
         android:icon="@mipmap/aixinwu"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,12 +28,13 @@
             android:name=".activity.HelloWorld"
             android:label="@string/hello_world" />
         <activity android:name=".activity.LoginActivity" />
-
-		<activity android:name="com.aixinwu.axw.activity.Buy"
-            android:label="@string/app_name">
-
+        <activity
+            android:name=".activity.Buy"
+            android:label="@string/app_name" >
         </activity>
         <activity android:name=".activity.SignupActivity" />
+        <activity android:name=".activity.ProductDetailActivity" >
+        </activity>
     </application>
 
 </manifest>
