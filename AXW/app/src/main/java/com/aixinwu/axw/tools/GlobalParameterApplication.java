@@ -7,39 +7,39 @@ package com.aixinwu.axw.tools;
 import android.app.Application;
 
 public class GlobalParameterApplication extends Application{
-    private int login_status = 0;
-    private String user_name;
-    private String token;
-    private String surl = "http://202.120.47.213:12345/api";
+    private static int login_status = 0;
+    private static String user_name;
+    private static String token;
+    private static String surl = "http://192.168.1.118:12345/api";
 
 
-    public String getSurl () {
+    public static String getSurl () {
         return surl;
     }
 
 
 
-    public void setToken (String token) {
-        this.token = token;
+    public static void setToken (String _token) {
+        token = _token;
     }
 
-    public String getToken () {
+    public static String getToken () {
         return token;
     }
-    public int getLogin_status () {
+    public static int getLogin_status () {
         return login_status;
     }
 
-    public void setLogin_status (int s) {
-        this.login_status = s;
+    public static void setLogin_status (int s) {
+        login_status = s;
     }
 
 
-    public void setUser_name (String s) {
-        this.user_name = s;
+    public static void setUser_name (String s) {
+        user_name = s;
     }
 
-    public String getUser_name () {
+    public static String getUser_name () {
         return user_name;
 
     }

@@ -105,8 +105,8 @@ public class LoginActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
-                        int login_status = gpa.getLogin_status();
+                        //GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+                        int login_status = GlobalParameterApplication.getLogin_status();
                         if (login_status == 1)
                             onLoginSuccess();
                         else
@@ -181,16 +181,16 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         public void run(){
-            GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+            //GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
 
             try {
-                String token = getToken(gpa.getSurl(), email, password);
+                String token = getToken(GlobalParameterApplication.getSurl(), email, password);
                 if (token.length() == 0) {
 
                 }
                 else {
-                    gpa.setLogin_status(1);
-                    gpa.setToken(token);
+                    GlobalParameterApplication.setLogin_status(1);
+                    GlobalParameterApplication.setToken(token);
 
 
                 }

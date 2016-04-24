@@ -40,12 +40,12 @@ public class UserInfo extends Fragment {
 
     @Override
     public void onStart () {
-        GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
-        if (gpa.getLogin_status() == 1) {
+        //GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
+        if (GlobalParameterApplication.getLogin_status() == 1) {
             ly_logininfo.setVisibility(View.GONE);
             ly_personalinfo.setVisibility(View.VISIBLE);
         }
-        else if (gpa.getLogin_status() == 0) {
+        else if (GlobalParameterApplication.getLogin_status() == 0) {
             ly_logininfo.setVisibility(View.VISIBLE);
             ly_personalinfo.setVisibility(View.GONE);
         }
@@ -72,9 +72,9 @@ public class UserInfo extends Fragment {
         logoff_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
-                gpa.setToken("");
-                gpa.setLogin_status(0);
+                //GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
+                GlobalParameterApplication.setToken("");
+                GlobalParameterApplication.setLogin_status(0);
 
 
                 ly_logininfo.setVisibility(View.VISIBLE);

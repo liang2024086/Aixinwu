@@ -157,9 +157,9 @@ public class SignupActivity extends AppCompatActivity {
 
 
     protected int AddUser (String username, String password){
-        GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+        //GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
 
-        String result = null;
+        //String result = null;
         JSONObject matadata = new JSONObject();
 
         matadata.put("timestamp","12312312213");
@@ -171,7 +171,7 @@ public class SignupActivity extends AppCompatActivity {
         String jsonstr = userinfo.toJSONString();
         URL url  = null;
         try {
-            url = new URL(gpa.getSurl()+"/usr_add");
+            url = new URL(GlobalParameterApplication.getSurl()+"/usr_add");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

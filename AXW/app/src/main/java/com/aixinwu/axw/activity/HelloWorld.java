@@ -20,14 +20,14 @@ public class HelloWorld extends Activity{
         setContentView(R.layout.helloworld2);
         Log.i("AAAAA", "WHY");
         super.onCreate(savedInstanceState);
-        GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
-        if (gpa.getLogin_status() == 1) {
+        //GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+        if (GlobalParameterApplication.getLogin_status() == 1) {
             setContentView(R.layout.helloworld2);
             TextView a = (TextView) findViewById(R.id.helloworld2);
-            a.setText(gpa.getToken());
+            a.setText(GlobalParameterApplication.getToken());
 
         }
-        else if (gpa.getLogin_status() == 0) {
+        else if (GlobalParameterApplication.getLogin_status() == 0) {
             setContentView(R.layout.helloworld);
         }
         //setContentView(R.layout.helloworld);
