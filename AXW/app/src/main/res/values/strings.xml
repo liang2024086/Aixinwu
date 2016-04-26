@@ -18,4 +18,6 @@
     <string name="home_deal">----  人气物品  ----</string>
     <string name="title_activity_singup">SingupActivity</string>
 
+    <string name="pressAgain">再按一次退出程序</string>
+
 </resources>
