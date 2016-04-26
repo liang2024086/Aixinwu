@@ -3,6 +3,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="服务交大师生，创建和谐校园"
+        android:textSize="24dp"
+        android:gravity="center" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,16 +59,6 @@
                 android:id="@+id/grid3"
                 android:numColumns="2">
             </GridView>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="服务交大师生，创建和谐校园"
-        android:textSize="40sp"
-        android:gravity="center" />
 
 </LinearLayout>
 
