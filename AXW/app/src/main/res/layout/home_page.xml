@@ -5,41 +5,31 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@color/white" >
+
+        <com.aixinwu.axw.view.BaseViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </com.aixinwu.axw.view.BaseViewPager>
 
         <LinearLayout
-            android:id="@+id/Images"
-            android:layout_width="fill_parent"
+            android:id="@+id/layout_viewpager_indicator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/view_small_padding"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:background="#FFFFFFFF">
-
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/home_pic"
-                android:src="@mipmap/aixinwu_logo"/>
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/home_pic"
-                android:src="@mipmap/aixinwu_logo"/>
-            <ImageView
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:contentDescription="@string/home_pic"
-                android:src="@mipmap/aixinwu_logo"/>
-
+            android:paddingBottom="@dimen/view_padding"
+            android:paddingRight="@dimen/view_padding" >
         </LinearLayout>
-    </ScrollView>
+    </RelativeLayout>
 
     <ScrollView
         android:orientation="vertical"
@@ -163,4 +153,5 @@
         </LinearLayout>
 
     </ScrollView>
+
 </LinearLayout>

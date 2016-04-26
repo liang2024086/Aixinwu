@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.HelloWorld;
+import com.aixinwu.axw.view.BaseViewPager;
+import com.aixinwu.axw.view.CycleViewPager;
 
 
 import org.w3c.dom.Text;
@@ -26,7 +29,7 @@ import org.w3c.dom.Text;
 /**
  * Created by liangyuding on 2016/4/6.
  */
-public class HomePage extends Fragment {
+public class HomePage extends CycleViewPager {
 
     private TextView info1,info2,info3,moreInfo;
     private LinearLayout newCommodity;
@@ -40,6 +43,19 @@ public class HomePage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.home_page,null);
+
+        //继承自父类
+        viewPager = (BaseViewPager) view.findViewById(R.id.viewPager);
+        indicatorLayout = (LinearLayout) view
+                .findViewById(R.id.layout_viewpager_indicator);
+
+        viewPagerFragmentLayout = (FrameLayout) view
+                .findViewById(R.id.layout_viewager_content);
+
+        setViewPagerScrollSpeed(1000);//设置滑动速度
+        init();
+
+        //自己的
 
         info1 = (TextView) view.findViewById(R.id.info1);
         info1.setOnClickListener(new View.OnClickListener() {

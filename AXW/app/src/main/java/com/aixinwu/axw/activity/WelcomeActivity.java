@@ -15,7 +15,7 @@ import com.aixinwu.axw.R;
  */
 public class WelcomeActivity extends Activity {
 
-    private final long SPLASH_LENGTH = 2000;
+    private final long SPLASH_LENGTH = 4000;
     Handler handler = new Handler();
     private TextView time;
     private MyCountDownTimer mc;

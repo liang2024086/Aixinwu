@@ -6,17 +6,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="180dp"
         android:background="@color/white" >
 
         <com.aixinwu.axw.view.BaseViewPager
-            android:id="@+id/viewPager"
+            android:id="@+id/viewPager1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </com.aixinwu.axw.view.BaseViewPager>
 
         <LinearLayout
-            android:id="@+id/layout_viewpager_indicator"
+            android:id="@+id/layout_viewpager_indicator1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
