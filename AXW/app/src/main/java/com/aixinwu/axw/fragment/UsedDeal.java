@@ -224,6 +224,7 @@ public class UsedDeal extends Fragment implements SearchView.SearchViewListener{
 
         } else {
             resultData.clear();
+            if (text ==null) resultData.addAll(dbData);else
             for (int i = 0; i < dbData.size(); i++){
                 if ((dbData.get(i).getDoc()+dbData.get(i).getType()).contains(text.trim())){
                     resultData.add(dbData.get(i));

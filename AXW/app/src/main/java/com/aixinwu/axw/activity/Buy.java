@@ -52,6 +52,7 @@ public class Buy extends Activity{
     public  java.lang.String MyToken;
     private Tool am = new Tool();
     private boolean flag;
+    private boolean flag1 = false;
     private int itemID;
     private String OwnerID;
     private String Desc;
@@ -136,6 +137,12 @@ public class Buy extends Activity{
                             String ostr = IOUtils.toString(conn.getInputStream());
                             System.out.println(ostr);
                             GetComments(itemID);
+                            comment_list.clear();
+                            for (int i = 0; i < Comments.size();i++){
+                                HashMap<String,Object> map = new HashMap<String, Object>();
+                                map.put("comment",Comments.get(i));
+                                comment_list.add(map);
+                            }
                             Message Msg = new Message();
                             Msg.what = 231123;
                             nhandler.sendMessage(Msg);
@@ -174,6 +181,7 @@ public class Buy extends Activity{
                    // map.put("image",R.drawable.icon);
                     pic_list.add(map);
                 }
+                comment_list.clear();
                 for (int i = 0; i < Comments.size();i++){
                     HashMap<String,Object> map = new HashMap<String, Object>();
                     map.put("comment",Comments.get(i));
@@ -232,7 +240,7 @@ Handler nhandler = new Handler(){
 
                     ViewGroup.LayoutParams params = comments.getLayoutParams();
                     params.height = totalHeight + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
-                    params.height = 5* params.height;
+                   // params.height = params.height;
                     comments.setLayoutParams(params);
                         String [] from = {"image"};
                         int [] to = {R.id.buyimage};System.out.println("---------------"+pic_list.size()+"----------------");
@@ -260,15 +268,29 @@ Handler nhandler = new Handler(){
                             listItem.measure(0, 0);
                             totalHeight += listItem.getMeasuredHeight();
                     }
+                    ViewGroup.LayoutParams params1;
 
-                    params = pics.getLayoutParams();
-                    params.height = totalHeight + (pics.getDividerHeight() * (sim_adapter.getCount()));
-                    pics.setLayoutParams(params);
+                    params1 = pics.getLayoutParams();
+                    params1.height = totalHeight + (pics.getDividerHeight() * (sim_adapter.getCount()));
+                    pics.setLayoutParams(params1);
                     break;
                 case 231123:
+                    //comments.setAdapter(com_adapter);
+                    int totalHeight1 = 0;
+                    for (int i = 0; i < com_adapter.getCount(); i++) {
+                        View listItem = com_adapter.getView(i, null, pics);
+                        listItem.measure(0, 0);
+                        totalHeight1 += listItem.getMeasuredHeight();
+                    }
 
+                    ViewGroup.LayoutParams params11 = comments.getLayoutParams();
+                    params11.height = totalHeight1 + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
+                    //params11.height = 5* params11.height;
+                    comments.setLayoutParams(params11);
                     com_adapter.notifyDataSetChanged();
-
+                    //comments.setVisibility(View.VISIBLE);
+                    //flag1 = true;
+                   // Toast.makeText(mContext,"We have1 "+comment_list.size()+"comments",Toast.LENGTH_LONG).show();
                     break;
             }
             }
@@ -284,7 +306,12 @@ Handler nhandler = new Handler(){
     @Override
     protected void onResume(){
         super.onResume();
+      //  if (flag1){
+    //        flag1 = false;
 
+      //      Toast.makeText(mContext,"We have "+com_adapter.getCount()+"comments",Toast.LENGTH_LONG).show();
+
+     //   }
         //Toast.makeText(this,"UUonResumekengbi",Toast.LENGTH_LONG).show();;
 
     }

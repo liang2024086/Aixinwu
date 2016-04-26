@@ -22,19 +22,8 @@
         android:layout_height="match_parent">
     </ListView>
 </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:textSize="15sp"
-        android:layout_height="wrap_content"
-        android:id="@+id/shuoming"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:textSize="15sp"
-        android:layout_height="wrap_content"
-        android:id="@+id/desc"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        android:stretchMode="spacingWidth"/>
+
+
     <TextView
         android:id="@+id/price3"
         android:textSize="15sp"
@@ -59,15 +48,17 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="提交评论"/>
-        <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        android:id="@+id/shuoming"/>
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
             <ListView
                 android:id="@+id/comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"></ListView>
-        </LinearLayout>
+
 
 </LinearLayout>
 
