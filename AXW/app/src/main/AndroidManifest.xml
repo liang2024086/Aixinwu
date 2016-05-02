@@ -9,6 +9,9 @@
     <!-- 申请拍照权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!--设置悬浮控件-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:name=".tools.GlobalParameterApplication"
         android:allowBackup="true"

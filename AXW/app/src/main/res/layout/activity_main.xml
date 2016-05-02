@@ -7,26 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/head_layout"
-        android:padding="5dip"
-        android:background="#D3D3D3" >
-
-        <!--
-        <Button
-            android:id="@+id/showLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:text="ShowLeft" />
-            -->
-
-        <ImageView
-            android:id="@+id/showLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:src="@mipmap/menu"
-            />
+        android:id="@+id/head_layout">
 
     </RelativeLayout>
 

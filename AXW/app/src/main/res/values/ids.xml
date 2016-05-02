@@ -17,4 +17,11 @@
     <item name="pop2" type="id"/>
     <item name="pop3" type="id"/>
 
+    <item name="firstCommodity" type="id"/>
+    <item name="secondCommodity" type="id"/>
+    <item name="thirdCommodity" type="id"/>
+    <item name="forthCommodity" type="id"/>
+    <item name="fifthCommodity" type="id"/>
+    <item name="sixthCommodity" type="id"/>
+
 </resources>

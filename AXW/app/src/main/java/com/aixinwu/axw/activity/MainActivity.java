@@ -103,7 +103,7 @@ public class MainActivity extends FragmentActivity{
         // Disable going back to the MainActivity
         //moveTaskToBack(true);
         if (mBackKeyPressedTimes == 0) {
-            Toast.makeText(this, "press again to exit", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getString(R.string.pressAgain), Toast.LENGTH_SHORT).show();
             mBackKeyPressedTimes = 1;
             new Thread() {
                 @Override
@@ -129,6 +129,10 @@ public class MainActivity extends FragmentActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode,Intent data){
+
+        if (requestCode == 1){
+            mFragments[0].onActivityResult(requestCode,resultCode,data);
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

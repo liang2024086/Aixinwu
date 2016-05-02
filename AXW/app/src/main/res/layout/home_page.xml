@@ -1,157 +1,399 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@color/white" >
-
-        <com.aixinwu.axw.view.BaseViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </com.aixinwu.axw.view.BaseViewPager>
-
-        <LinearLayout
-            android:id="@+id/layout_viewpager_indicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/view_small_padding"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/view_padding"
-            android:paddingRight="@dimen/view_padding" >
-        </LinearLayout>
-    </RelativeLayout>
-
-    <ScrollView
+    <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/home_info"
-                android:textSize="20sp"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                />
-
-            <RelativeLayout
-                android:id="@+id/home_info"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="#FFFFFFFF">
-
-                <TextView
-                    android:id="@+id/info1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="15sp"
-                    android:gravity="start"
-                    android:padding="5dp"
-                    android:textColor="@drawable/textselector"
-                    />
-
-                <TextView
-                    android:id="@+id/info2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/info1"
-                    android:text=""
-                    android:textSize="15sp"
-                    android:gravity="start"
-                    android:padding="5dp"
-                    android:textColor="@drawable/textselector"
-                    />
-
-                <TextView
-                    android:id="@+id/info3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/info2"
-                    android:text=""
-                    android:textSize="15sp"
-                    android:gravity="start"
-                    android:padding="5dp"
-                    android:textColor="@drawable/textselector"
-                    />
-
-                <TextView
-                    android:id="@+id/moreInfo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentTop="true"
-                    android:text="@string/more"
-                    android:textSize="15sp"
-                    android:textColor="@drawable/textselector"/>
-
-
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/home_commodity"
-                android:textSize="20sp"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                />
-
+        <com.aixinwu.axw.view.MyScrollView
+            android:id="@+id/homepageScroll"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/home_commodity"
-                android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="#FFFFFFFF">
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/homepage_search"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="5dp"
+                    android:drawableLeft="@drawable/search_icon"
+                    android:drawablePadding="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/search_edittext_shape"
+                    android:textSize="16sp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:focusable="false"
+                    android:hint="@string/homepageSearch"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:background="@color/white" >
+
+                    <com.aixinwu.axw.view.BaseViewPager
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+                    </com.aixinwu.axw.view.BaseViewPager>
+
+                    <LinearLayout
+                        android:id="@+id/layout_viewpager_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="@dimen/view_small_padding"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/view_padding"
+                        android:paddingRight="@dimen/view_padding" >
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:id="@+id/homepage_guide"
+                    android:numColumns="4"
+                    android:background="@color/white">
+                </GridView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="商品推荐"
+                    android:textSize="18dp"
+                    android:textColor="@color/red"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"/>
+                <RelativeLayout
+                    android:id="@+id/show_commodity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="爱心屋数据"
+                    android:textSize="18dp"
+                    android:textColor="@color/red"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"/>
+                <LinearLayout
+                    android:id="@+id/data_analyze"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:background="@color/white">
+
+                        <RelativeLayout
+                            android:layout_width="150dp"
+                            android:layout_height="100dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="物品捐赠量(本月)"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginEnd="3dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/number4"
+                                android:gravity="center"
+                                android:text="36000"
+                                android:textColor="@color/red"
+                                android:textSize="40sp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="15dp"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#F0F0F0"/>
+
+                        <RelativeLayout
+                            android:layout_width="150dp"
+                            android:layout_height="100dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="物品流转量(本月)"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginEnd="3dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/number3"
+                                android:gravity="center"
+                                android:text="94562"
+                                android:textColor="@color/red"
+                                android:textSize="40sp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="15dp"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:orientation="horizontal"
+                        android:padding="5dp"
+                        android:background="@color/white">
+
+                        <RelativeLayout
+                            android:layout_width="150dp"
+                            android:layout_height="100dp">
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/donation1"
+                                android:gravity="center"
+                                android:text="物品捐赠量(累计)"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginRight="3dp"
+                                android:layout_marginEnd="3dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/number1"
+                                android:gravity="center"
+                                android:text="776697"
+                                android:textColor="@color/red"
+                                android:textSize="40sp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="15dp"/>
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#F0F0F0"/>
+
+                        <RelativeLayout
+                            android:layout_width="150dp"
+                            android:layout_height="100dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="物品流转量(累计)"
+                                android:paddingLeft="5dp"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/number2"
+                                android:gravity="center"
+                                android:text="25386"
+                                android:textColor="@color/red"
+                                android:textSize="40sp"
+                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="15dp"/>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
 
+                </LinearLayout>
+
+
+    <!--
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_info"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    />
+
+                <RelativeLayout
+                    android:id="@+id/home_info"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="#FFFFFFFF">
+
+                    <TextView
+                        android:id="@+id/info1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="15sp"
+                        android:gravity="start"
+                        android:padding="5dp"
+                        android:textColor="@drawable/textselector"
+                        />
+
+                    <TextView
+                        android:id="@+id/info2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/info1"
+                        android:text=""
+                        android:textSize="15sp"
+                        android:gravity="start"
+                        android:padding="5dp"
+                        android:textColor="@drawable/textselector"
+                        />
+
+                    <TextView
+                        android:id="@+id/info3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/info2"
+                        android:text=""
+                        android:textSize="15sp"
+                        android:gravity="start"
+                        android:padding="5dp"
+                        android:textColor="@drawable/textselector"
+                        />
+
+                    <TextView
+                        android:id="@+id/moreInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:text="@string/more"
+                        android:textSize="15sp"
+                        android:textColor="@drawable/textselector"/>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_commodity"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/home_commodity"
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="#FFFFFFFF">
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_deal"
+                    android:textSize="20sp"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    />
+
+
+                <RelativeLayout
+                    android:id="@+id/home_deal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+
+                </RelativeLayout>
+    -->
             </LinearLayout>
 
+        </com.aixinwu.axw.view.MyScrollView>
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/home_deal"
-                android:textSize="20sp"
-                android:gravity="center_horizontal"
-                android:padding="5dp"
-                />
+    </LinearLayout>
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:id="@+id/searchHomePage">
+        <View
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/homepage_search_icon"/>
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/whitecircle"
+            android:layout_marginLeft="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"/>
 
-            <RelativeLayout
-                android:id="@+id/home_deal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/aaa"
+            android:src="@drawable/search_icon"
+            android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"/>
+    </FrameLayout>
 
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>
