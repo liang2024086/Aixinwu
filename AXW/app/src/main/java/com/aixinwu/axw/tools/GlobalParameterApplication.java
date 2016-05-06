@@ -41,7 +41,6 @@ public class GlobalParameterApplication extends Application{
 
     public static String getUser_name () {
         return user_name;
-
     }
 
 

@@ -21,11 +21,11 @@ import com.aixinwu.axw.tools.GlobalParameterApplication;
 public class UserInfo extends Fragment {
 
 
-    private LinearLayout ly_personalinfo;
+    private RelativeLayout ly_personalinfo;
     private LinearLayout ly_logininfo;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.userinfo, null);
+        View view = inflater.inflate(R.layout.personalinfo, null);
         return view;
     }
 
@@ -33,24 +33,29 @@ public class UserInfo extends Fragment {
 
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        ly_logininfo = (LinearLayout) getActivity().findViewById(R.id.before_login);
-        ly_personalinfo = (LinearLayout) getActivity().findViewById(R.id.after_login);
+
+        ly_logininfo = (LinearLayout) getActivity().findViewById(R.id.login);
+        ly_personalinfo = (RelativeLayout) getActivity().findViewById(R.id.personal);
+
     }
 
 
     @Override
     public void onStart () {
         //GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
+
         if (GlobalParameterApplication.getLogin_status() == 1) {
             ly_logininfo.setVisibility(View.GONE);
             ly_personalinfo.setVisibility(View.VISIBLE);
+            //ly_otherinfo.setVisibility(View.VISIBLE);
         }
         else if (GlobalParameterApplication.getLogin_status() == 0) {
             ly_logininfo.setVisibility(View.VISIBLE);
             ly_personalinfo.setVisibility(View.GONE);
+            //ly_otherinfo.setVisibility(View.GONE);
         }
 
-        TextView login_btn = (TextView) getActivity().findViewById(R.id.login);
+        Button login_btn = (Button) getActivity().findViewById(R.id.personal_login_button);
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +63,7 @@ public class UserInfo extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-
+/*
         TextView signup_btn = (TextView) getActivity().findViewById(R.id.signup);
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +72,8 @@ public class UserInfo extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-
-        TextView logoff_btn = (TextView) getActivity().findViewById(R.id.logoff);
+*/
+        Button logoff_btn = (Button) getActivity().findViewById(R.id.personal_exit);
         logoff_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,6 +87,7 @@ public class UserInfo extends Fragment {
 
 
             }
+
         });
 
         super.onStart();
