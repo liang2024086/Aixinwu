@@ -132,6 +132,8 @@ public class MainActivity extends FragmentActivity{
 
         if (requestCode == 1){
             mFragments[0].onActivityResult(requestCode,resultCode,data);
+        } else if (requestCode == 2){
+            mFragments[3].onActivityResult(requestCode,resultCode,data);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -203,25 +205,25 @@ public class MainActivity extends FragmentActivity{
             infos.add(info);
         }
 
-        // ½«×îºóÒ»¸öImageViewÌí¼Ó½øÀ´
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ImageViewï¿½ï¿½Ó½ï¿½ï¿½ï¿½
         views.add(ViewFactory.getImageView(this, infos.get(infos.size() - 1).getUrl()));
         for (int i = 0; i < infos.size(); i++) {
             views.add(ViewFactory.getImageView(this, infos.get(i).getUrl()));
         }
-        // ½«µÚÒ»¸öImageViewÌí¼Ó½øÀ´
+        // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ImageViewï¿½ï¿½Ó½ï¿½ï¿½ï¿½
         views.add(ViewFactory.getImageView(this, infos.get(0).getUrl()));
 
-        // ÉèÖÃÑ­»·£¬ÔÚµ÷ÓÃsetData·½·¨Ç°µ÷ÓÃ
+        // ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½setDataï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
         ((CycleViewPager)mFragments[0]).setCycle(true);
 
-        // ÔÚ¼ÓÔØÊý¾ÝÇ°ÉèÖÃÊÇ·ñÑ­»·
+        // ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½Ñ­ï¿½ï¿½
         ((CycleViewPager)mFragments[0]).setData(views, infos, mAdCycleViewListener);
-        //ÉèÖÃÂÖ²¥
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½
         ((CycleViewPager)mFragments[0]).setWheel(true);
 
-        // ÉèÖÃÂÖ²¥Ê±¼ä£¬Ä¬ÈÏ5000ms
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Ö²ï¿½Ê±ï¿½ä£¬Ä¬ï¿½ï¿½5000ms
         ((CycleViewPager)mFragments[0]).setTime(2000);
-        //ÉèÖÃÔ²µãÖ¸Ê¾Í¼±ê×é¾ÓÖÐÏÔÊ¾£¬Ä¬ÈÏ¿¿ÓÒ
+        //ï¿½ï¿½ï¿½ï¿½Ô²ï¿½ï¿½Ö¸Ê¾Í¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ä¬ï¿½Ï¿ï¿½ï¿½ï¿½
         ((CycleViewPager)mFragments[0]).setIndicatorCenter();
     }
 
@@ -241,18 +243,18 @@ public class MainActivity extends FragmentActivity{
     };
 
     /**
-     * ÅäÖÃImageLoder
+     * ï¿½ï¿½ï¿½ï¿½ImageLoder
      */
     private void configImageLoader() {
-        // ³õÊ¼»¯ImageLoader
+        // ï¿½ï¿½Ê¼ï¿½ï¿½ImageLoader
         @SuppressWarnings("deprecation")
-        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.drawable.icon_stub) // ÉèÖÃÍ¼Æ¬ÏÂÔØÆÚ¼äÏÔÊ¾µÄÍ¼Æ¬
-                .showImageForEmptyUri(R.drawable.icon_empty) // ÉèÖÃÍ¼Æ¬UriÎª¿Õ»òÊÇ´íÎóµÄÊ±ºòÏÔÊ¾µÄÍ¼Æ¬
-                .showImageOnFail(R.drawable.icon_error) // ÉèÖÃÍ¼Æ¬¼ÓÔØ»ò½âÂë¹ý³ÌÖÐ·¢Éú´íÎóÏÔÊ¾µÄÍ¼Æ¬
-                .cacheInMemory(true) // ÉèÖÃÏÂÔØµÄÍ¼Æ¬ÊÇ·ñ»º´æÔÚÄÚ´æÖÐ
-                .cacheOnDisc(true) // ÉèÖÃÏÂÔØµÄÍ¼Æ¬ÊÇ·ñ»º´æÔÚSD¿¨ÖÐ
-                        // .displayer(new RoundedBitmapDisplayer(20)) // ÉèÖÃ³ÉÔ²½ÇÍ¼Æ¬
-                .build(); // ´´½¨ÅäÖÃ¹ýµÃDisplayImageOption¶ÔÏó
+        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.drawable.icon_stub) // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Í¼Æ¬
+                .showImageForEmptyUri(R.drawable.icon_empty) // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬UriÎªï¿½Õ»ï¿½ï¿½Ç´ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Í¼Æ¬
+                .showImageOnFail(R.drawable.icon_error) // ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Í¼Æ¬
+                .cacheInMemory(true) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½Í¼Æ¬ï¿½Ç·ñ»º´ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½ï¿½
+                .cacheOnDisc(true) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½Í¼Æ¬ï¿½Ç·ñ»º´ï¿½ï¿½ï¿½SDï¿½ï¿½ï¿½ï¿½
+                        // .displayer(new RoundedBitmapDisplayer(20)) // ï¿½ï¿½ï¿½Ã³ï¿½Ô²ï¿½ï¿½Í¼Æ¬
+                .build(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½DisplayImageOptionï¿½ï¿½ï¿½ï¿½
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(options)
                 .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
