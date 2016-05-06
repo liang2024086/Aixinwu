@@ -63,7 +63,7 @@ import java.util.Objects;
  * Created by liangyuding on 2016/4/6.
  */
 public class SubmitThings extends Fragment {
-
+    private int iii;
     private Button axw;
     private Button people;
     @Override
