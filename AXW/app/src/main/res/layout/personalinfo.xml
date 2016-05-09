@@ -18,7 +18,7 @@
             android:layout_height="320dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="-100dp"
-            android:background="@drawable/my_personal_not_login_bg"/>
+            android:background="@drawable/splash_bg"/>
 
         <ScrollView
             android:id="@+id/personal_scrollView"
@@ -216,6 +216,8 @@
                         </RelativeLayout>
                     </LinearLayout>
 
+
+                    <!-- ====================================================
                     <TextView
                         style="@style/PersonalCenterText"
                         android:text="personal_account_center" />
@@ -315,10 +317,10 @@
                                 android:src="@drawable/android_list_idex" />
                         </RelativeLayout>
                     </LinearLayout>
-
+-->
                     <TextView
                         style="@style/PersonalCenterText"
-                        android:text="personal_customer_service" />
+                        android:text="设置" />
 
 
                     <!--  *********************  用户中心 *************************** -->
@@ -336,13 +338,30 @@
                             <TextView
                                 style="@style/PersonalTextStyle"
                                 android:layout_toRightOf="@id/personal_icon_09"
-                                android:text="personal_return_back" />
+                                android:text="个人资料设置" />
 
                             <ImageView
                                 style="@style/PersonalRightIconStyle"
                                 android:src="@drawable/android_list_idex" />
                         </RelativeLayout>
+                        <View style="@style/PersonalLine" />
 
+                        <RelativeLayout style="@style/PersonalNormalStyle" >
+
+                            <ImageView
+                                android:id="@+id/personal_icon_05"
+                                style="@style/PersonalIconStyle"
+                                android:src="@drawable/android_my_jd_discuss" />
+
+                            <TextView
+                                style="@style/PersonalTextStyle"
+                                android:layout_toRightOf="@id/personal_icon_05"
+                                android:text="应用设置" />
+
+                            <ImageView
+                                style="@style/PersonalRightIconStyle"
+                                android:src="@drawable/android_list_idex" />
+                        </RelativeLayout>
                         <View style="@style/PersonalLine" />
 
                         <RelativeLayout
@@ -358,13 +377,8 @@
                                 android:id="@+id/personal_service"
                                 style="@style/PersonalTextStyle"
                                 android:layout_toRightOf="@id/personal_icon_10"
-                                android:text="personal_infomation_service" />
+                                android:text="关于爱心屋" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toRightOf="@id/personal_service"
-                                android:src="@drawable/color_shopping_new" />
 
                             <ImageView
                                 style="@style/PersonalRightIconStyle"

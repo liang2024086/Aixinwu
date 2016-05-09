@@ -12,6 +12,7 @@ import android.widget.*;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.LoginActivity;
+import com.aixinwu.axw.activity.PersonalDetailActivity;
 import com.aixinwu.axw.activity.SignupActivity;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 
@@ -23,6 +24,7 @@ public class UserInfo extends Fragment {
 
     private RelativeLayout ly_personalinfo;
     private LinearLayout ly_logininfo;
+    private Button btn_logoff;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.personalinfo, null);
@@ -36,6 +38,7 @@ public class UserInfo extends Fragment {
 
         ly_logininfo = (LinearLayout) getActivity().findViewById(R.id.login);
         ly_personalinfo = (RelativeLayout) getActivity().findViewById(R.id.personal);
+        btn_logoff = (Button) getActivity().findViewById(R.id.personal_exit);
 
     }
 
@@ -47,12 +50,12 @@ public class UserInfo extends Fragment {
         if (GlobalParameterApplication.getLogin_status() == 1) {
             ly_logininfo.setVisibility(View.GONE);
             ly_personalinfo.setVisibility(View.VISIBLE);
-            //ly_otherinfo.setVisibility(View.VISIBLE);
+            btn_logoff.setVisibility(View.VISIBLE);
         }
         else if (GlobalParameterApplication.getLogin_status() == 0) {
             ly_logininfo.setVisibility(View.VISIBLE);
             ly_personalinfo.setVisibility(View.GONE);
-            //ly_otherinfo.setVisibility(View.GONE);
+            btn_logoff.setVisibility(View.GONE);
         }
 
         Button login_btn = (Button) getActivity().findViewById(R.id.personal_login_button);
@@ -84,8 +87,17 @@ public class UserInfo extends Fragment {
 
                 ly_logininfo.setVisibility(View.VISIBLE);
                 ly_personalinfo.setVisibility(View.GONE);
+                btn_logoff.setVisibility(View.GONE);
 
+            }
 
+        });
+
+        ly_personalinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PersonalDetailActivity.class);
+                getActivity().startActivity(intent);
             }
 
         });
