@@ -64,8 +64,8 @@ import java.util.Objects;
  */
 public class SubmitThings extends Fragment {
     private int iii;
-    private Button axw;
-    private Button people;
+    private View axw;
+    private View people;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -77,8 +77,8 @@ public class SubmitThings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.submit_things,null);
-        axw = (Button)view.findViewById(R.id.button3);
-        people = (Button)view.findViewById(R.id.button);
+        axw = view.findViewById(R.id.button3);
+        people = view.findViewById(R.id.button);
         axw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
