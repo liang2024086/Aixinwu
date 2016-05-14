@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.widget.TextView;
 
 import com.aixinwu.axw.R;
@@ -25,6 +26,7 @@ public class WelcomeActivity extends Activity {
         setContentView(R.layout.welcome);
 
         time = (TextView)findViewById(R.id.time);
+
 
         mc = new MyCountDownTimer(3000, 1000);
         mc.start();

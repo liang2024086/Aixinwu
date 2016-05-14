@@ -56,10 +56,10 @@ public class PersonalDetailActivity extends Activity implements PullScrollView.O
         layoutParams.bottomMargin = 10;
         layoutParams.topMargin = 10;
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             TableRow tableRow = new TableRow(this);
             TextView textView = new TextView(this);
-            textView.setText("Test pull down scroll view " + i);
+            textView.setText("与" + i + "的聊天");
             textView.setTextSize(20);
             textView.setPadding(15, 15, 15, 15);
 
