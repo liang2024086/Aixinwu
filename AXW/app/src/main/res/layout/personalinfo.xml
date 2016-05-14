@@ -132,7 +132,7 @@
                                 android:textColor="#FFF8E8" />
 
                             <TextView
-                                android:id="@+id/dept"
+                                android:id="@+id/coins"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="爱心币   100"

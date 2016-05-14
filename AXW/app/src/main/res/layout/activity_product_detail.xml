@@ -1,13 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.aixinwu.axw.activity.ProductDetailActivity">
+    android:orientation="vertical"
 
-</RelativeLayout>
+    >
+
+    <ImageView
+        android:id="@+id/img_activity_product"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/lottery_head_1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:minHeight="50dp"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="7dp">
+
+            <TextView
+                android:id="@+id/tv_activity_product_details_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="11dp"
+                android:text="￥0"
+                android:textColor="#ff606461"/>
+
+            <TextView
+                android:id="@+id/tv_activity_product_details_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="11dp"
+                android:text="￥0"
+                android:textColor="#ffea1a15"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_activity_product_details_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_weight="1"
+            android:gravity="right|center_vertical"
+            android:padding="7dp"
+            android:paddingRight="11dp"
+            android:text="已售出159件"
+            android:textColor="#ff606461"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_activity_product_details_details"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:padding="7dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_activity_product_details_add_to_cart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffea811a"
+            android:gravity="center"
+            android:text="加入购物车"
+            android:textColor="#ffffffff"/>
+
+        <Button
+            android:id="@+id/btn_activity_product_details_buy_now"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ffea0c23"
+            android:gravity="center"
+            android:text="马上买"
+            android:textColor="#ffffffff"/>
+    </LinearLayout>
+
+
+</LinearLayout>
+
