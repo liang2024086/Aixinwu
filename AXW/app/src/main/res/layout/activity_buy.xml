@@ -39,15 +39,26 @@
         android:verticalSpacing="5dp"
         android:stretchMode="spacingWidth"/>
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/commentword"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
         <Button
             android:id="@+id/commentsubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="提交评论"/>
+        <Button
+            android:id="@+id/chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="聊天"/>
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:textSize="15sp"

@@ -1,6 +1,8 @@
 package com.aixinwu.axw.tools;
 
 import android.graphics.Bitmap;
+import android.media.Image;
+import android.widget.ImageView;
 
 import java.util.Iterator;
 
@@ -8,11 +10,11 @@ import java.util.Iterator;
  * Created by Cross_Life on 2016/4/18.
  */
 public class Bean {
-    private Bitmap picId;
+    private String picId;
     private String type;
     private String doc;
     private int itemId;
-    public Bean(int itemId, Bitmap picId, String type, String doc) {
+    public Bean(int itemId, String picId, String type, String doc) {
         this.picId = picId;
         this.itemId = itemId;
         this.type = type;
@@ -24,11 +26,11 @@ public class Bean {
     public int getItemId(){
         return itemId;
     }
-    public Bitmap getPicId() {
+    public String getPicId() {
         return picId;
     }
 
-    public void setIconId(Bitmap picId) {
+    public void setIconId(String picId) {
         this.picId = picId;
     }
 

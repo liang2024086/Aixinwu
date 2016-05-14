@@ -23,6 +23,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aixinwu.axw.Adapter.PicAdapter;
 import com.aixinwu.axw.R;
 
 import java.io.IOException;
@@ -34,6 +35,7 @@ import java.net.URLConnection;
 import java.nio.channels.GatheringByteChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -67,9 +69,10 @@ public class Buy extends Activity{
     private String CommentWord;
     private Button commentsubmit;
     private ListView comments;
+    private Button button2;
     private String[] picts;
-    private ArrayList<HashMap<String, Object>> pic_list;
-    private SimpleAdapter sim_adapter;
+    private List<String> pic_list;
+    private PicAdapter sim_adapter;
     private SimpleAdapter com_adapter;
     private Context mContext;
     private String commentwords;
@@ -83,9 +86,10 @@ public class Buy extends Activity{
         Log.i("AAAAA", "WHY");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
-        Intent intent=getIntent();
+        final Intent intent=getIntent();
         Bundle out = intent.getExtras();
         itemID=(int)out.get("itemId");
+        button2=(Button)findViewById(R.id.chat);
         textView1 = (TextView)findViewById(R.id.ownerid);
         textView2 = (TextView)findViewById(R.id.desc);
         textView3 = (TextView)findViewById(R.id.price3);
@@ -94,11 +98,21 @@ public class Buy extends Activity{
         commentsubmit = (Button)findViewById(R.id.commentsubmit);
         comments = (ListView)findViewById(R.id.comments);
         pics = (ListView)findViewById(R.id.picdetail);
-        pic_list = new ArrayList<HashMap<String, Object>>();
+        pic_list = new ArrayList<String>();
         comment_list=new ArrayList<HashMap<String, Object>>();
         mContext = this;
         flag=false;
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(Buy.this,Chat.class);
+                //intent.setClass();
+                intent2.putExtra("itemID",itemID);
+                intent2.putExtra("To",OwnerID);
+                startActivity(intent2);
 
+            }
+        });
         commentsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,15 +185,9 @@ public class Buy extends Activity{
                 picts = Picset.split(",");
                 pic_list.clear();
                 for (int i = 0; i < picts.length; i++){
-                    HashMap<String,Object> map = new HashMap<String, Object>();
-                    try {
-                        map.put("image", am.DownloadFile(surl,picts[i],10));
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                   // map.put("image",R.drawable.icon);
-                    pic_list.add(map);
+
+                    pic_list.add("http://202.120.47.213:12345/img/"+picts[i]);
                 }
                 comment_list.clear();
                 for (int i = 0; i < Comments.size();i++){
@@ -242,24 +250,11 @@ Handler nhandler = new Handler(){
                     params.height = totalHeight + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
                    // params.height = params.height;
                     comments.setLayoutParams(params);
-                        String [] from = {"image"};
-                        int [] to = {R.id.buyimage};System.out.println("---------------"+pic_list.size()+"----------------");
-
-                        sim_adapter = new SimpleAdapter(mContext,pic_list,R.layout.picitem,from,to);
-
-                    sim_adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
-                            @Override
-                            public boolean setViewValue(View view, Object o, String s) {
-                                if (view instanceof ImageView && o instanceof Bitmap){
-                                    ImageView i = (ImageView)view;
-                                    i.setImageBitmap((Bitmap) o);
-                                    return true;
-                                }
-                                return false;
-                            }
 
 
-                        });
+                        sim_adapter = new PicAdapter(mContext,pic_list,R.layout.picitem);
+
+
                         pics.setAdapter(sim_adapter);
                         pics.setVisibility(View.VISIBLE);
                         totalHeight = 0;
@@ -278,7 +273,7 @@ Handler nhandler = new Handler(){
                     //comments.setAdapter(com_adapter);
                     int totalHeight1 = 0;
                     for (int i = 0; i < com_adapter.getCount(); i++) {
-                        View listItem = com_adapter.getView(i, null, pics);
+                        View listItem = com_adapter.getView(i, null, comments);
                         listItem.measure(0, 0);
                         totalHeight1 += listItem.getMeasuredHeight();
                     }
@@ -390,7 +385,7 @@ Handler nhandler = new Handler(){
                 OwnerID = outjson.getJSONObject("itemInfo").getString("ownerID");
 
                 Desc = outjson.getJSONObject("itemInfo").getString("description");
-                Price = outjson.getJSONObject("itemInfo").getString("price");
+                Price = outjson.getJSONObject("itemInfo").getString("estimatedPriceByUser");
                 Picset = outjson.getJSONObject("itemInfo").getString("images");
              System.out.println("---------------"+Picset+"----------------");
             } catch (JSONException e) {

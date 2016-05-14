@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:com.aixinwu.axw.view.RefreshableViewandroid="http://schemas.android.com/tools"
+    xmlns:com.aixinwu.axw.view.RefreshableView="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <com.aixinwu.axw.view.MyScrollView
+        <com.handmark.pulltorefresh.library.PullToRefreshScrollView
             android:id="@+id/homepageScroll2"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -81,18 +81,18 @@
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="20dp"
                     android:background="@color/white"/>
+
                 <ListView
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/main_lv_search_results"
-                    android:visibility="gone">
+                    android:id="@+id/main_lv_search_results">
                 </ListView>
 
                 
             </LinearLayout>
 
-        </com.aixinwu.axw.view.MyScrollView>
+        </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
     </LinearLayout>
 

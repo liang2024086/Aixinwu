@@ -123,7 +123,7 @@ public class SendToPeople extends AppCompatActivity {
                         Toast.makeText(SendToPeople.this, "No Money", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    Descrip = Descrip + "  " + HowNew;
+
 
                     // String itemID = AddItem(TypeName,money,Descrip,YesorNo);
 
@@ -353,8 +353,9 @@ public class SendToPeople extends AppCompatActivity {
 
         matadata.put("timestamp","12312312213");
         JSONObject iteminfo = new JSONObject();
-        iteminfo.put("status",Type);
-        iteminfo.put("price",Money);
+        iteminfo.put("category",1);
+        iteminfo.put("itemCondition",HowNew);
+        iteminfo.put("estimatedPriceByUser",Money);
         iteminfo.put("description",Doc);
         iteminfo.put("images",picstr);
         //iteminfo.put("Check",flag);
