@@ -47,12 +47,12 @@ public class UserInfo extends Fragment {
     public void onStart () {
         //GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
 
-        if (GlobalParameterApplication.getLogin_status() == 1) {
+        if (GlobalParameterApplication.getLogin_status() == 0) {
             ly_logininfo.setVisibility(View.GONE);
             ly_personalinfo.setVisibility(View.VISIBLE);
             btn_logoff.setVisibility(View.VISIBLE);
         }
-        else if (GlobalParameterApplication.getLogin_status() == 0) {
+        else if (GlobalParameterApplication.getLogin_status() == 1) {
             ly_logininfo.setVisibility(View.VISIBLE);
             ly_personalinfo.setVisibility(View.GONE);
             btn_logoff.setVisibility(View.GONE);

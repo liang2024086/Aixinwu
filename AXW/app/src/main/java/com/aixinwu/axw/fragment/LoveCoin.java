@@ -13,10 +13,13 @@ import com.aixinwu.axw.Adapter.ProductAdapter;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.HelloWorld;
 import com.aixinwu.axw.activity.ProductDetailActivity;
+import com.aixinwu.axw.activity.ProductListActivity;
 import com.aixinwu.axw.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -65,15 +68,27 @@ public class LoveCoin extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Product product = productList.get(i);
                 Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
-                intent.putExtra("param1",product.getProduct_name());
+                intent.putExtra("param1", product.getProduct_name());
                 getActivity().startActivity(intent);
-
             }
         });
         GridView gridView2 = (GridView) getActivity().findViewById(R.id.grid2);
-        gridView2.setAdapter (adapter2);
+        gridView2.setAdapter(adapter2);
         GridView gridView3 = (GridView) getActivity().findViewById(R.id.grid3);
-        gridView3.setAdapter (adapter3);
+        gridView3.setAdapter(adapter3);
+
+
+        ImageView productlist = (ImageView) getActivity().findViewById(R.id.imageButton_1);
+        productlist.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProductListActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+
+
         super.onStart();
     }
 
