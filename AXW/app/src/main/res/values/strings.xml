@@ -29,13 +29,12 @@
 
     <string name="homepageSearch">商品搜索</string>
 
-<<<<<<< HEAD
+
     <string name="submit_head">发布界面</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-=======
+
     <!-- TODO: Remove or change this placeholder text -->
->>>>>>> origin/master
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
