@@ -45,6 +45,8 @@
         <activity android:name=".activity.SignupActivity" />
         <activity android:name=".activity.ProductDetailActivity" >
         </activity>
+        <activity android:name=".activity.Chat" >
+        </activity>
         <activity android:name=".activity.SendToPeople" /> <activity android:name=".activity.SendToAXw" />
         <activity android:name=".activity.PersonalDetailActivity"/>
     </application>

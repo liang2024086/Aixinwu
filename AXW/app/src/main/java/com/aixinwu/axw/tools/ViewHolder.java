@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 
 /**
  * Created by yetwish on 2015-05-11
@@ -81,9 +83,9 @@ public class ViewHolder {
     /**
      *  set image bitmap
      */
-    public ViewHolder setImageBitmap(int viewId,Bitmap bitmap){
+    public ViewHolder setImageBitmap(int viewId,String bitmap){
         ImageView iv = getView(viewId);
-        iv.setImageBitmap(bitmap);
+        ImageLoader.getInstance().displayImage(bitmap,iv);
         return this;
     }
 }

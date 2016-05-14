@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:appcompat-v7:22.2.0'
@@ -30,4 +31,5 @@ dependencies {
     compile files('libs/json-20160212.jar')
     compile 'com.jakewharton:butterknife:7.0.1'
     compile files('libs/universal-image-loader-1.9.2-SNAPSHOT-with-sources.jar')
+    compile project(':PullToRefresh')
 }

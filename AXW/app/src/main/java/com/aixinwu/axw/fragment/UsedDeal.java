@@ -7,10 +7,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +49,11 @@ import com.aixinwu.axw.tools.ViewFactory;
 import com.aixinwu.axw.view.BaseViewPager;
 import com.aixinwu.axw.view.CycleViewPager;
 import com.aixinwu.axw.view.MyScrollView;
+import com.aixinwu.axw.view.RefreshableView;
 import com.aixinwu.axw.view.SearchView;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -70,7 +77,9 @@ import java.util.List;
 /**
  * Created by liangyuding on 2016/4/6.
  */
-public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewListener{
+public class UsedDeal extends CycleViewPager {
+
+    private RefreshableView refreshableView;
 
     public boolean needtochange = false;
     private int start = 0;
@@ -100,6 +109,7 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
     View search;
     private ListView lvResults;
     private int searchTouchTime = 0;
+    private PullToRefreshScrollView mPullRefreshScrollView;
 
     private ArrayList<HomepageGuide> homepageGuides = new ArrayList<HomepageGuide>();
 
@@ -113,18 +123,55 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
         View view = inflater.inflate(R.layout.used_deal,null);
 
         //获取屏幕宽度
+        /*refreshableView = (RefreshableView) view.findViewById(R.id.refreshable_view);
+        refreshableView.setOnRefreshListener(new RefreshableView.PullToRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                    mThread.start();
+                try {
+                    mThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                refreshableView.finishRefreshing();
+
+
+            }
+        }, 0);*/
         metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screenHalfWidth = metrics.widthPixels / 2;
         lvResults = (ListView) view.findViewById(R.id.main_lv_search_results);
+        mPullRefreshScrollView = (PullToRefreshScrollView)view.findViewById(R.id.homepageScroll2);
+        mPullRefreshScrollView.getLoadingLayoutProxy().setLastUpdatedLabel("lastUpdateLabel");
+        mPullRefreshScrollView.getLoadingLayoutProxy().setPullLabel("PULLLABLE");
+        mPullRefreshScrollView.getLoadingLayoutProxy().setRefreshingLabel("refreshingLabel");
+        mPullRefreshScrollView.getLoadingLayoutProxy().setReleaseLabel("releaseLabel");
+        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+
+        //上拉监听函数
+        mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                //执行刷新函数
+                new GetDataTask().execute();
+            }
+        });
         lvResults.setVisibility(View.VISIBLE);
+        dbData=new ArrayList<Bean>();
+        mThread.start();
+        resultAdapter = new SearchAdapter(getActivity(), dbData, R.layout.item_bean_list);
+        lvResults.setAdapter(resultAdapter);
+      //  lvResults.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         lvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //  Toast.makeText(getActivity(), i + " is what you want!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent();
-                intent.putExtra("itemId", resultData.get(i).getItemId());
+                intent.putExtra("itemId", dbData.get(i).getItemId());
 
                 intent.setClass(getActivity(), Buy.class);
                 startActivity(intent);
@@ -132,10 +179,8 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
 
             }
         });
-        dbData=new ArrayList<Bean>();
-        mThread.start();
-        resultAdapter = new SearchAdapter(getActivity(), dbData, R.layout.item_bean_list);
-        lvResults.setAdapter(resultAdapter);
+
+
         //继承自父类
         viewPager = (BaseViewPager) view.findViewById(R.id.viewPager2);
         indicatorLayout = (LinearLayout) view
@@ -167,8 +212,8 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
 
         //自己的
 
-        scrollView = (MyScrollView) view.findViewById(R.id.homepageScroll2);
-        scrollView.setScrollViewListener(this);
+      //  scrollView = (MyScrollView) view.findViewById(R.id.homepageScroll2);
+     //   scrollView.setScrollViewListener(this);
 
         searchHomePage = view.findViewById(R.id.searchHomePage2);
         searchHomePage.setVisibility(View.INVISIBLE);
@@ -221,7 +266,24 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
         //����Բ��ָʾͼ���������ʾ��Ĭ�Ͽ���
         setIndicatorCenter();
     }
-
+    private class MyTask extends AsyncTask<Void, Void, List<Bean>> {
+        @Override
+        protected List<Bean> doInBackground(Void... params) {
+            try {
+                Thread.sleep(2000);//睡眠2秒，延迟加载数据
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            getDbData();
+            return dbData;
+        }
+        @Override
+        protected void onPostExecute(List<Bean> result) {
+            resultAdapter.notifyDataSetChanged();
+       //     lvResults.onRefreshComplete();//数据加载到适配器完成后，刷新完成，
+            super.onPostExecute(result);
+        }
+    }
     private CycleViewPager.ImageCycleViewListener mAdCycleViewListener = new CycleViewPager.ImageCycleViewListener() {
 
         @Override
@@ -236,7 +298,46 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
         }
 
     };
+    private class GetDataTask extends AsyncTask<Void, Void, LinearLayout> {
 
+        @Override
+        protected LinearLayout doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                getDbData();
+                Thread.sleep(4000);
+
+            } catch (InterruptedException e) {
+                Log.e("msg","GetDataTask:" + e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(LinearLayout result) {
+            // Do some stuff here
+
+            int totalHeight = 0;
+            for (int i = 0; i < resultAdapter.getCount(); i++) {
+                View listItem = resultAdapter.getView(i, null, lvResults);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+
+            ViewGroup.LayoutParams params = lvResults.getLayoutParams();
+            params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount() - 1));
+            // params.height = params.height;
+            lvResults.setLayoutParams(params);
+
+            resultAdapter.notifyDataSetChanged();
+
+
+            mPullRefreshScrollView.onRefreshComplete();
+
+
+            super.onPostExecute(result);
+        }
+    }
     /**
      * ����ImageLoder
      */
@@ -257,7 +358,7 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
         ImageLoader.getInstance().init(config);
     }
 
-    @Override
+   // @Override
     public void onScrollChanged(MyScrollView scrollView, int x, int y, int oldx, int oldy){
 
         if (y > search.getHeight()){
@@ -311,7 +412,8 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
         @Override
         public void run() {
             getDbData();
-            start += 10;
+
+
             Message msg= new Message();
             msg.what = 23212;
             handler.sendMessage(msg);
@@ -323,6 +425,19 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
             super.handleMessage(msg);
             switch (msg.what){
                 case 23212:
+   //                 lvResults.onRefreshComplete();
+                    int totalHeight = 0;
+                    for (int i = 0; i < resultAdapter.getCount(); i++) {
+                        View listItem = resultAdapter.getView(i, null, lvResults);
+                        listItem.measure(0, 0);
+                        totalHeight += listItem.getMeasuredHeight();
+                    }
+
+                    ViewGroup.LayoutParams params = lvResults.getLayoutParams();
+                    params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount() - 1));
+                    // params.height = params.height;
+                    lvResults.setLayoutParams(params);
+
                     resultAdapter.notifyDataSetChanged();
                     break;
             }
@@ -332,8 +447,8 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
     private void getDbData(){
         MyToken=GlobalParameterApplication.getToken();
         JSONObject data = new JSONObject();
-        data.put("startPos",start);
-        data.put("length",10);
+        data.put("startAt",start);
+        data.put("length",2);
         {
 
             Log.i("UsedDeal", "get");
@@ -359,9 +474,9 @@ public class UsedDeal extends CycleViewPager implements MyScrollView.ScrollViewL
                             if (rr[0]=="") {
                                 BitmapFactory.Options cc = new BitmapFactory.Options();
                                 cc.inSampleSize = 20;
-                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"), BitmapFactory.decodeResource(getResources(), R.drawable.icon, cc), result.getJSONObject(i).getString("ownerID"), result.getJSONObject(i).getString("description")));
+                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("ownerID"), result.getJSONObject(i).getString("description")));
                             } else
-                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"), am.DownloadFile(surl, rr[0], 20), result.getJSONObject(i).getString("ownerID"), result.getJSONObject(i).getString("description")));
+                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/"+rr[0], result.getJSONObject(i).getString("ownerID"), result.getJSONObject(i).getString("description")));
                         }
 
                     } catch (JSONException e) {
