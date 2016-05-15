@@ -5,6 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="捐赠界面"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:background="@color/green"
+        android:padding="10dp"
+        android:layout_marginBottom="20dp"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -48,6 +60,29 @@
             />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+
+            android:gravity="center"
+            android:text="评估价值（总）" />
+        <EditText
+            android:id="@+id/donationPrice"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            />
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="50dp"
@@ -76,5 +111,6 @@
         android:layout_below="@+id/checkforaxw"
         android:textSize="18sp"
         android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:text="提交给爱心屋" />
 </LinearLayout>
