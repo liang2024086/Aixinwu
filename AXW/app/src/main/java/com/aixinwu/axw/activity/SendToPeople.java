@@ -107,7 +107,7 @@ public class SendToPeople extends AppCompatActivity {
                     TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
                     TypeName = v.getText().toString();
                     v = (TextView)spinner2.getSelectedView().findViewById(R.id.item);
-                    HowNew = Integer.parseInt(v.getText().toString());
+                    HowNew = gpa.getNewOldInt(v.getText().toString());//Integer.parseInt(v.getText().toString());
 
                     if (!price.getText().toString().isEmpty()) money = Integer.parseInt(price.getText().toString());
                     if (imageItem.size() == 1) {
