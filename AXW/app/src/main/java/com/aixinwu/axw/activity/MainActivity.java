@@ -89,9 +89,9 @@ public class MainActivity extends FragmentActivity{
 
 
 
-        sharedPreferences = getSharedPreferences("GLOBE", MODE_PRIVATE);
+     //   sharedPreferences = getSharedPreferences("GLOBE", MODE_PRIVATE);
 
-        mThread.start();
+   //     mThread.start();
         init();
         configImageLoader();
         initialize();
@@ -161,10 +161,10 @@ public class MainActivity extends FragmentActivity{
     @Override
     public void onDestroy(){
         super.onDestroy();
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("Chat_Num"+GlobalParameterApplication.getUserID(),GlobalParameterApplication.getChat_Num());
-        editor.commit();
-        GlobalParameterApplication.setPause(false);
+   //     SharedPreferences.Editor editor = sharedPreferences.edit();
+  //      editor.putInt("Chat_Num"+GlobalParameterApplication.getUserID(),GlobalParameterApplication.getChat_Num());
+   //     editor.commit();
+    //    GlobalParameterApplication.setPause(false);
     }
 
     public Handler nHandler = new Handler(){

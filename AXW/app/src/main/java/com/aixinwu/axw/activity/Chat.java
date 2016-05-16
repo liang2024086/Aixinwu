@@ -60,8 +60,11 @@ import com.aixinwu.axw.tools.Tool;
  */
 public class Chat extends Activity{
     public int start = -1;
+    private TextView chatt;
     ArrayList<HashMap<String,Object>> chatList=null;
     public ArrayList<String> OtherMsg = new ArrayList<String>();
+    public ArrayList<String> cont = new ArrayList<String>();
+    public ArrayList<Integer> who = new ArrayList<Integer>();
     String[] from={"name","text"};
     int[] to={R.id.chatlist_image_me,R.id.chatlist_text_me,R.id.chatlist_image_other,R.id.chatlist_text_other};
     int[] layout={R.layout.chat_listitem_me,R.layout.chat_listitem_other};
@@ -82,7 +85,7 @@ public class Chat extends Activity{
     protected ListView chatListView=null;
     protected Button chatSendButton=null;
     protected EditText editText=null;
-
+    public int num = 0;
     protected MyChatAdapter adapter=null;
     private int ItemID;
     private int To;
@@ -96,12 +99,14 @@ public class Chat extends Activity{
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
         Bundle out = intent.getExtras();
-        GlobalParameterApplication.setAllowChatThread(false);
+        GlobalParameterApplication.setPause(true);
+      //  GlobalParameterApplication.setAllowChatThread(false);
         ItemID=(int)out.get("itemID");
         From=(int)out.get("To");
-
+        chatt =(TextView)findViewById(R.id.chat_contact_name);
+        chatt.setText("商品"+ItemID+" -----"+" 用户"+From);
         To = GlobalParameterApplication.getUserID();
-        FileName = To+"$"+From+"$"+ItemID+".txt";
+/*        FileName = To+"$"+From+"$"+ItemID+".txt";
         String[] sss = fileList();
         boolean exist=false;
         for (int i = 0; i < sss.length;i++){
@@ -109,12 +114,12 @@ public class Chat extends Activity{
                 exist=true;
                 break;
             }
-        }
+        }*/
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_chat);
         chatList=new ArrayList<HashMap<String,Object>>();
 
-        if(exist){
+       /* if(exist){
         FileInputStream inStream = null;
         try {
             inStream = openFileInput(FileName);
@@ -147,8 +152,109 @@ public class Chat extends Activity{
 			if (ss[i].charAt(0)=='0')addTextToList(ss[i].substring(2),0);
             else addTextToList(ss[i].substring(2),1);
 		}
-        }
-        mThread.start();
+        }*/
+        num = 0;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (GlobalParameterApplication.getPause()) {
+                    if (GlobalParameterApplication.getLogin_status() == 1/*&& !GlobalParameterApplication.getAllowChatThread()*/) {
+                        //  while (!GlobalParameterApplication.getEnd());
+                        //     GlobalParameterApplication.setEnd(false);
+                        Message msg = new Message();
+                        msg.what = 22234;
+                        msg.arg1 = 0;
+                        int UserID = GlobalParameterApplication.getUserID();
+                        JSONObject data = new JSONObject();
+
+                        try {
+                            URL url = new URL(surl + "/item_get_chart");
+                            try {
+                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+
+
+                                data.put("token", GlobalParameterApplication.getToken());
+                                conn.setRequestMethod("POST");
+                                conn.setDoOutput(true);
+                                conn.setConnectTimeout(1000);
+                                conn.setReadTimeout(1000);
+                                conn.setRequestProperty("Content-Type", "application/json");
+                                conn.setRequestProperty("Content-Length", String.valueOf(data.toJSONString().length()));
+                                conn.getOutputStream().write(data.toJSONString().getBytes());
+
+                                String ostr = IOUtils.toString(conn.getInputStream());
+                                System.out.println("chat" + ostr);
+
+                                org.json.JSONObject outjson = null;
+                                org.json.JSONArray result = null;
+                                try {
+                                    outjson = new org.json.JSONObject(ostr);
+                                    result = outjson.getJSONArray("chat");
+
+                                   // int chat_num = GlobalParameterApplication.getChat_Num();
+                                    //  while (!GlobalParameterApplication.getChat_othermsg());
+                                   // GlobalParameterApplication.setChat_othermsg(false);
+                                 //   System.out.println(chat_num+"++++++++++"+result.length());
+                                    if (num < result.length()) {
+                                   //     System.out.println(chat_num+"++++++++++"+result.length());
+                                        //GlobalParameterApplication.setAllowChatThread(false);
+                                        cont.clear();
+                                        who.clear();
+                                        for (int i = 0; i < result.length(); i++)
+                                        if ((result.getJSONObject(i).getInt("itemID")==ItemID)&&((From+To)==(result.getJSONObject(i).getInt("publisher_id")+result.getJSONObject(i).getInt("buyer_id"))))
+                                        {
+                                            org.json.JSONObject now = (org.json.JSONObject) result.get(i);
+                                            int To = now.getInt("buyer_id");
+                                            int From = now.getInt("publisher_id");
+                                           // int itemID = now.getInt("itemID");
+                                            String content = now.getString("content");
+                                            if (To == UserID) {
+                                                cont.add(content);
+                                                who.add(OTHER);
+                                            }else{
+                                                cont.add(content);
+                                                who.add(ME);
+                                            }
+                                            //String FileName1 = To + "$" + From + "$" + itemID + ".txt";
+                                           // if (FileName1.equals(FileName)) {
+                                           //     OtherMsg.add("$$" + 1 + "$" + content);
+                                           // } else {
+                                             //   FileOutputStream fos = openFileOutput(FileName1, MODE_APPEND);
+                                               // fos.write(("$$" + 1 + "$" + content).getBytes());
+                                               // fos.close();
+                                           // }
+                                        }
+
+                                        //                                  GlobalParameterApplication.setChat_Num(result.length());
+                                        num = result.length();
+                                        //msg.arg1 = 1;
+                                        nHandler.sendMessage(msg);
+                                        //GlobalParameterApplication.setEnd(true);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+        }).start();
         chatSendButton=(Button)findViewById(R.id.chat_bottom_sendbutton);
         editText=(EditText)findViewById(R.id.chat_bottom_edittext);
         chatListView=(ListView)findViewById(R.id.chat_list);
@@ -210,8 +316,8 @@ public class Chat extends Activity{
                                     result = outjson.getJSONObject("status").getInt("code");
                                     uploadSuccessful = result==0?true:false;
                                    // while (!GlobalParameterApplication.getChat_othermsg());
-                                    GlobalParameterApplication.setChat_othermsg(false);
-                                    if (uploadSuccessful && !OtherMsg.isEmpty()){
+           //                         GlobalParameterApplication.setChat_othermsg(false);
+                                    /*if (uploadSuccessful && !OtherMsg.isEmpty()){
                                         FileOutputStream fos = openFileOutput(FileName,MODE_APPEND);
                                         for (int i = 0; i < OtherMsg.size(); i++){
                                             fos.write(OtherMsg.get(i).getBytes());
@@ -219,11 +325,11 @@ public class Chat extends Activity{
                                         fos.close();
                                         OtherMsg.clear();
                                         start = -1;
-                                    }
-                                    GlobalParameterApplication.setChat_othermsg(true);
+                                    }*/
+       //                             GlobalParameterApplication.setChat_othermsg(true);
                                     Message msg = new Message();
                                     msg.what=233333;
-                                    nHandler.sendMessage(msg);
+                                  //  nHandler.sendMessage(msg);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -248,11 +354,11 @@ public class Chat extends Activity{
     }
     @Override
     public void onDestroy(){
-        GlobalParameterApplication.setEnd(true);
+       // GlobalParameterApplication.setEnd(true);
         //while (!GlobalParameterApplication.getEnd());
-        GlobalParameterApplication.setChat_othermsg(true);
-		GlobalParameterApplication.setAllowChatThread(true);
-        if (!OtherMsg.isEmpty()){
+       // GlobalParameterApplication.setChat_othermsg(true);
+	//	GlobalParameterApplication.setAllowChatThread(true);
+     /*   if (!OtherMsg.isEmpty()){
                 FileOutputStream out = null;
                 try {
                     out = openFileOutput(FileName,MODE_APPEND);
@@ -271,110 +377,21 @@ public class Chat extends Activity{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
+            }*/
+        GlobalParameterApplication.setPause(false);
         super.onDestroy();
         }
 
 
 
-    public Thread mThread=new Thread(new Runnable() {
-        @Override
-        public void run() {
 
-            while (GlobalParameterApplication.getPause()) {
-                if (GlobalParameterApplication.getLogin_status() == 1 && !GlobalParameterApplication.getAllowChatThread()) {
-                  //  while (!GlobalParameterApplication.getEnd());
-                    GlobalParameterApplication.setEnd(false);
-                    Message msg = new Message();
-                    msg.what = 22234;
-                    msg.arg1 = 0;
-                    int UserID = GlobalParameterApplication.getUserID();
-                    JSONObject data = new JSONObject();
-
-                    try {
-                        URL url = new URL(surl + "/item_get_chart");
-                        try {
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-
-
-                            data.put("token", GlobalParameterApplication.getToken());
-                            conn.setRequestMethod("POST");
-                            conn.setDoOutput(true);
-                            conn.setConnectTimeout(1000);
-                            conn.setReadTimeout(1000);
-                            conn.setRequestProperty("Content-Type", "application/json");
-                            conn.setRequestProperty("Content-Length", String.valueOf(data.toJSONString().length()));
-                            conn.getOutputStream().write(data.toJSONString().getBytes());
-
-                            String ostr = IOUtils.toString(conn.getInputStream());
-                            System.out.println("chat" + ostr);
-
-                            org.json.JSONObject outjson = null;
-                            org.json.JSONArray result = null;
-                            try {
-                                outjson = new org.json.JSONObject(ostr);
-                                result = outjson.getJSONArray("chat");
-
-                                int chat_num = GlobalParameterApplication.getChat_Num();
-                              //  while (!GlobalParameterApplication.getChat_othermsg());
-                                GlobalParameterApplication.setChat_othermsg(false);
-                                System.out.println(chat_num+"++++++++++"+result.length());
-                                if (chat_num < result.length()) {
-                                    System.out.println(chat_num+"++++++++++"+result.length());
-                                    //GlobalParameterApplication.setAllowChatThread(false);
-
-                                    for (int i = chat_num; i < result.length(); i++) {
-                                        org.json.JSONObject now = (org.json.JSONObject) result.get(i);
-                                        int To = now.getInt("buyer_id");
-                                        int From = now.getInt("publisher_id");
-                                        int itemID = now.getInt("itemID");
-                                        String content = now.getString("content");
-                                        String FileName1 = To + "$" + From + "$" + itemID + ".txt";
-                                        if (FileName1.equals(FileName)) {
-                                            OtherMsg.add("$$" + 1 + "$" + content);
-                                        } else {
-                                            FileOutputStream fos = openFileOutput(FileName1, MODE_APPEND);
-                                            fos.write(("$$" + 1 + "$" + content).getBytes());
-                                            fos.close();
-                                        }
-                                    }
-
-                                    GlobalParameterApplication.setChat_Num(result.length());
-
-                                    msg.arg1 = 1;
-                                    nHandler.sendMessage(msg);
-                                    GlobalParameterApplication.setEnd(true);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
-            }
-        }
-    });
 
     public Handler nHandler = new Handler(){public void handleMessage(Message msg) {
         super.handleMessage(msg);
 
         switch (msg.what) {
             case 22234:
-                if (msg.arg1 == 1){
+                /*if (msg.arg1 == 1){
                     if (OtherMsg.size()-1>=start+1){
                         for (int i = start+1; i < OtherMsg.size();i++){
                             addTextToList(OtherMsg.get(i).substring(4,OtherMsg.get(i).length()),OTHER);
@@ -382,12 +399,18 @@ public class Chat extends Activity{
                         start = OtherMsg.size()-1;
                     }
 
-                        GlobalParameterApplication.setChat_othermsg(true);
+      //                  GlobalParameterApplication.setChat_othermsg(true);
                     adapter.notifyDataSetChanged();
                     chatListView.setSelection(chatList.size()-1);
 
                     Toast.makeText(Chat.this,"You have new message!!!",Toast.LENGTH_LONG);
+                }*/
+                chatList.clear();
+                for (int i = 0; i < cont.size();i++){
+                    addTextToList(cont.get(i),who.get(i));
                 }
+                adapter.notifyDataSetChanged();
+                chatListView.setSelection(chatList.size()-1);
                 break;
             case 233333:
                 if(uploadSuccessful) {
@@ -424,7 +447,7 @@ public class Chat extends Activity{
     protected void addTextToList(String text, int who){
         HashMap<String,Object> map=new HashMap<String,Object>();
         map.put("person",who );
-        map.put("name", who==ME?"Me":From);
+        map.put("name", who==ME?"Me":"用户" + From);
         map.put("text", text);
         chatList.add(map);
     }
