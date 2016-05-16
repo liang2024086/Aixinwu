@@ -22,7 +22,8 @@
         android:layout_height="80dp"
         android:text="服务交大师生，创建和谐校园"
         android:textSize="24dp"
-        android:gravity="center" />
+        android:gravity="center"
+        />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -50,7 +51,7 @@
                     android:layout_height="fill_parent"
                     android:orientation="horizontal">
                     <GridView android:id="@+id/grid1"
-                        android:layout_width="800dp"
+                        android:layout_width="700dp"
                         android:layout_height="fill_parent"
                         android:gravity="center"
                         android:numColumns="4"/>
@@ -73,7 +74,7 @@
                     android:layout_height="fill_parent"
                     android:orientation="horizontal">
                     <GridView android:id="@+id/grid2"
-                        android:layout_width="800dp"
+                        android:layout_width="700dp"
                         android:layout_height="fill_parent"
                         android:gravity="center"
                         android:numColumns="4"/>
@@ -96,13 +97,34 @@
                     android:layout_height="fill_parent"
                     android:orientation="horizontal">
                     <GridView android:id="@+id/grid3"
-                        android:layout_width="800dp"
+                        android:layout_width="700dp"
                         android:layout_height="fill_parent"
                         android:gravity="center"
                         android:numColumns="4"/>
                 </LinearLayout>
             </HorizontalScrollView>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton_4"
+                android:scaleType="fitCenter"
+                android:src="@drawable/yellow4"/>
 
+            <HorizontalScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="176dp"
+                android:scrollbars="none">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal">
+                    <GridView android:id="@+id/grid4"
+                        android:layout_width="700dp"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:numColumns="4"/>
+                </LinearLayout>
+            </HorizontalScrollView>
 </LinearLayout>
 
     </ScrollView>

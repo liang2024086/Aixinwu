@@ -192,7 +192,7 @@ public Thread mThread = new Thread(new Runnable() {
         conn.setDoOutput(true);
         conn.setConnectTimeout(1000);
         conn.setReadTimeout(1000);
-        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Content-Typkie", "application/json");
         conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
         conn.getOutputStream().write(jsonstr.getBytes());
 

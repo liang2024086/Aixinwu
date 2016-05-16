@@ -30,25 +30,22 @@
         <activity
             android:name=".activity.MainActivity"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustPan|stateHidden"></activity>
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".activity.HelloWorld"
             android:label="@string/hello_world" />
         <activity android:name=".activity.LoginActivity" />
         <activity
             android:name=".activity.Buy"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity android:name=".activity.SignupActivity" />
-
-
-        <activity android:name=".activity.ProductListActivity"></activity>
-
-        <activity android:name=".activity.ProductDetailActivity" >
-        </activity>
-        <activity android:name=".activity.Chat" >
-        </activity>
-        <activity android:name=".activity.SendToPeople" /> <activity android:name=".activity.SendToAXw" />
-        <activity android:name=".activity.PersonalDetailActivity"/>
+        <activity android:name=".activity.ProductListActivity" />
+        <activity android:name=".activity.ProductDetailActivity"></activity>
+        <activity android:name=".activity.Chat"></activity>
+        <activity android:name=".activity.SendToPeople" />
+        <activity android:name=".activity.SendToAXw" />
+        <activity android:name=".activity.PersonalDetailActivity" />
+        <activity android:name=".activity.ShoppingCartActivity"></activity>
     </application>
 
 </manifest>

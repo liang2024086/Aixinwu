@@ -78,6 +78,7 @@ public class LoveCoin extends Fragment {
         gridView3.setAdapter(adapter3);
 
 
+
         ImageView productlist = (ImageView) getActivity().findViewById(R.id.imageButton_1);
         productlist.setOnClickListener (new View.OnClickListener() {
             @Override

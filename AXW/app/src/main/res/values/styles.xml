@@ -186,4 +186,51 @@
     </style>
 
 
+
+    <!--Style from Cart-->
+    <!--  为Activity统一设置打开关闭动画 -->
+    <style name="activity_animation_style" parent="AppTheme">
+        <item name="android:windowAnimationStyle">@style/AnimationActivity</item>
+    </style>
+
+    <style name="AnimationActivity" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_bottom_to_top</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_top_to_bottom</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+    </style>
+
+    <style name="PopupWindowStyle" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/activity_bottom_to_top</item>
+        <item name="android:windowExitAnimation">@anim/activity_top_to_bottom</item>
+    </style>
+
+    <!-- 为程序或者活动应用的主题样式 -->
+    <style name="CustomActionBarTheme"
+        parent="AppTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+
+        <!-- 兼容支持库 -->
+        <item name="windowActionBarOverlay">true</item>
+        <!--<item name="actionBarStyle">@style/MyActionBar</item>-->
+    </style>
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/actionbar_background</item>
+        <item name="android:backgroundSplit">@color/actionbar_background</item>
+        <item name="android:backgroundStacked">#346c36</item>
+        <item name="android:titleTextStyle">@style/MyActionBarTitleText</item>
+
+        <item name="background">@color/actionbar_background</item>
+        <item name="backgroundSplit">@color/actionbar_background</item>
+        <item name="backgroundStacked">#346c36</item>
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+    </style>
+
+    <style name="MyActionBarTitleText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#e4282828</item>
+    </style>
+
+
 </resources>

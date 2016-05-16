@@ -9,11 +9,15 @@ public class Product {
     private int price;
     private String description;
     private int image_id;
+    private String id;
+
 
     public Product (String name, int price, int image_id) {
         this.product_name = name;
         this.price = price;
         this.image_id = image_id;
+        this.id = "0001";
+        this.description = "des";
     }
 
     public String getProduct_name () {
@@ -28,6 +32,7 @@ public class Product {
         return image_id;
     }
 
-
+    public String getId () {return id;}
+    public String getDescription () {return description;}
 
 }

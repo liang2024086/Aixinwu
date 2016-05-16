@@ -186,6 +186,7 @@ public class SendToPeople extends AppCompatActivity {
             imageSet = uploadPic(imageItem);
             MyToken=GlobalParameterApplication.getToken();
             String ss= AddItem(HowNew,money,Descrip,imageSet);
+
             Log.i("UPLOAD",ss);
         }
     };
