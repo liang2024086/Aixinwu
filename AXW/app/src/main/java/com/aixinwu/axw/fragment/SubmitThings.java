@@ -86,7 +86,7 @@ public class SubmitThings extends Fragment {
                 if (GlobalParameterApplication.getLogin_status()==1){
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), SendToAXw.class);
-                startActivity(intent);
+                startActivityForResult(intent,12);
                 }
                 else {
                     Intent intent = new Intent();
@@ -102,7 +102,7 @@ public class SubmitThings extends Fragment {
                 if (GlobalParameterApplication.getLogin_status()==1) {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), SendToPeople.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,11);
                 } else {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), LoginActivity.class);
@@ -117,7 +117,30 @@ public class SubmitThings extends Fragment {
 
         return view;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 11){
+            if (resultCode == Activity.RESULT_OK) {
+                Toast.makeText(getActivity(), "人人商品发布成功", Toast.LENGTH_LONG);
+                new  AlertDialog.Builder(getActivity())
+                        .setTitle("消息" )
+                        .setMessage("人人商品发布成功" )
+                        .setPositiveButton("确定",null)
+                        .show();
+            }
 
+        }    else if (requestCode==12){
+            if (resultCode == Activity.RESULT_OK){
+                new  AlertDialog.Builder(getActivity())
+                        .setTitle("消息" )
+                        .setMessage("爱心屋捐赠成功" )
+                        .setPositiveButton("确定",null)
+                        .show();
+            Toast.makeText(getActivity(),"爱心屋捐赠成功",Toast.LENGTH_LONG);}
+        }
+
+    }
 
 
 

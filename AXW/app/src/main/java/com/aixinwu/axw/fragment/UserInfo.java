@@ -14,6 +14,7 @@ import android.widget.*;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.ChatList;
+import com.aixinwu.axw.activity.ItemList;
 import com.aixinwu.axw.activity.LoginActivity;
 import com.aixinwu.axw.activity.PersonalDetailActivity;
 import com.aixinwu.axw.activity.SignupActivity;
@@ -140,6 +141,15 @@ public class UserInfo extends Fragment {
 
 
         RelativeLayout ly_message = (RelativeLayout)getActivity().findViewById(R.id.message);
+        RelativeLayout ly_myitem = (RelativeLayout)getActivity().findViewById(R.id.myitem);
+        ly_myitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==1){
+                Intent intent = new Intent(getActivity(), ItemList.class);
+                startActivity(intent);}
+            }
+        });
         ly_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

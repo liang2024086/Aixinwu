@@ -281,6 +281,7 @@ public class Buy extends Activity{
                         break;
                     case 231123:
                         //comments.setAdapter(com_adapter);
+                        commentword.setText("");
                         int totalHeight1 = 0;
                         for (int i = 0; i < com_adapter.getCount(); i++) {
                             View listItem = com_adapter.getView(i, null, comments);

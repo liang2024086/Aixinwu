@@ -158,7 +158,8 @@
 
                     <LinearLayout style="@style/PersonalMainLayoutStyle" >
 
-                        <RelativeLayout style="@style/PersonalTopStyle" >
+                        <RelativeLayout style="@style/PersonalTopStyle"
+                            android:id="@+id/myitem">
 
                             <ImageView
                                 android:id="@+id/personal_icon_01"

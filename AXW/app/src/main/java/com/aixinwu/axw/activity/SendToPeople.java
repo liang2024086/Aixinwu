@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -189,7 +190,21 @@ public class SendToPeople extends AppCompatActivity {
             imageSet = uploadPic(imageItem);
             MyToken=GlobalParameterApplication.getToken();
             String ss= AddItem(HowNew,money,Descrip,imageSet,_caption);
+            Message msg = new Message();
+            msg.what = 133;
+            nHandler.sendMessage(msg);
             Log.i("UPLOAD",ss);
+        }
+    };
+    public Handler nHandler = new Handler(){
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 133:
+                    SendToPeople.this.setResult(RESULT_OK);
+                    finish();
+                    break;
+            }
         }
     };
     @Override

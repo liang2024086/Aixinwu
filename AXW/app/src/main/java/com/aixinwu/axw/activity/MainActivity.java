@@ -281,6 +281,12 @@ public class MainActivity extends FragmentActivity{
             mFragments[0].onActivityResult(requestCode,resultCode,data);
         } else if (requestCode == 2){
             mFragments[3].onActivityResult(requestCode,resultCode,data);
+        }else if (requestCode == 11){
+
+            mFragments[2].onActivityResult(requestCode,resultCode,data);
+
+        }else if (requestCode == 12){
+            mFragments[2].onActivityResult(requestCode,resultCode,data);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
