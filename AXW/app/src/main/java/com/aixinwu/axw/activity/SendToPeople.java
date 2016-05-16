@@ -61,6 +61,8 @@ public class SendToPeople extends AppCompatActivity {
     private String pathTakePhoto;
     private Uri imageUri;
     private String TypeName;
+    private EditText Caption;
+    private String _caption;
     String pathImage;
     private Tool am = new Tool();
     private Spinner spinner1;
@@ -89,7 +91,7 @@ public class SendToPeople extends AppCompatActivity {
         spinner1 = (Spinner)findViewById(R.id.type);
         spinner2 = (Spinner)findViewById(R.id.neworold);
         price = (EditText)findViewById(R.id.price);
-
+        Caption = (EditText)findViewById(R.id.commodity_title);
         String[] mType=getResources().getStringArray(R.array.spinner1name);
         String[] mNew=getResources().getStringArray(R.array.spinner2name);
         type = new ArrayAdapter<String>(this,R.layout.spinner_textview,mType);
@@ -103,6 +105,7 @@ public class SendToPeople extends AppCompatActivity {
                 GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
                 if(gpa.getLogin_status()==0)Toast.makeText(SendToPeople.this,"你跪了",Toast.LENGTH_LONG).show();
                 else{
+                    _caption = Caption.getText().toString();
                     Descrip = doc.getText().toString();
                     TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
                     TypeName = v.getText().toString();
@@ -185,7 +188,7 @@ public class SendToPeople extends AppCompatActivity {
             }*/
             imageSet = uploadPic(imageItem);
             MyToken=GlobalParameterApplication.getToken();
-            String ss= AddItem(HowNew,money,Descrip,imageSet);
+            String ss= AddItem(HowNew,money,Descrip,imageSet,_caption);
             Log.i("UPLOAD",ss);
         }
     };
@@ -347,7 +350,7 @@ public class SendToPeople extends AppCompatActivity {
            builder.create().show();
 
        }
-    protected String AddItem(int Type, int Money, String Doc, String picstr){
+    protected String AddItem(int Type, int Money, String Doc, String picstr, String caption){
         String result = null;
         JSONObject matadata = new JSONObject();
 
@@ -358,6 +361,7 @@ public class SendToPeople extends AppCompatActivity {
         iteminfo.put("estimatedPriceByUser",Money);
         iteminfo.put("description",Doc);
         iteminfo.put("images",picstr);
+        iteminfo.put("caption",caption);
         //iteminfo.put("Check",flag);
         JSONObject data = new JSONObject();
         //data.put("mataData",matadata);

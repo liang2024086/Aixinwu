@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.activity.ChatList;
 import com.aixinwu.axw.activity.LoginActivity;
 import com.aixinwu.axw.activity.PersonalDetailActivity;
 import com.aixinwu.axw.activity.SignupActivity;
@@ -138,6 +139,14 @@ public class UserInfo extends Fragment {
 
 
 
+        RelativeLayout ly_message = (RelativeLayout)getActivity().findViewById(R.id.message);
+        ly_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChatList.class);
+                startActivity(intent);
+            }
+        });
 
         super.onStart();
     }

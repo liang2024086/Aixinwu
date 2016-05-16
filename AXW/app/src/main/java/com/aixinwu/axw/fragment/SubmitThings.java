@@ -38,6 +38,7 @@ import android.widget.Toast;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleAdapter.ViewBinder;
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.activity.LoginActivity;
 import com.aixinwu.axw.activity.MainActivity;
 import com.aixinwu.axw.activity.SendToAXw;
 import com.aixinwu.axw.activity.SendToPeople;
@@ -82,17 +83,32 @@ public class SubmitThings extends Fragment {
         axw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==1){
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), SendToAXw.class);
                 startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+
+                }
             }
         });
         people.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), SendToPeople.class);
-                startActivity(intent);
+                if (GlobalParameterApplication.getLogin_status()==1) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), SendToPeople.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+
+                }
             }
         });
 

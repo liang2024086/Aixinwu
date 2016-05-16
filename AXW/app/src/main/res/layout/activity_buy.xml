@@ -7,23 +7,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/caption"
+        android:textSize="30dp"
+
+        />
+    <TextView
         android:id="@+id/ownerid"
         android:textSize="15sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <ListView
-        android:id="@+id/picdetail"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-    </ListView>
-</LinearLayout>
-
-
     <TextView
         android:id="@+id/price3"
         android:textSize="15sp"
@@ -38,6 +32,19 @@
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
         android:stretchMode="spacingWidth"/>
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <ListView
+        android:id="@+id/picdetail"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+    </ListView>
+</LinearLayout>
+
+
+
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

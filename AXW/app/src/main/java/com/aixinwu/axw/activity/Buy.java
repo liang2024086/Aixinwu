@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -56,9 +57,9 @@ public class Buy extends Activity{
     private boolean flag;
     private boolean flag1 = false;
     private int itemID;
-    private String OwnerID;
+    private int OwnerID;
     private String Desc;
-    private String Price;
+    private int Price;
     private String Picset;
     private ListView pics;
     private TextView textView1;
@@ -80,6 +81,8 @@ public class Buy extends Activity{
     private ArrayList<String> TimeStamp;
     private ArrayList<String> Comments = new ArrayList<String>();
     private ArrayList<HashMap<String,Object>> comment_list;
+    private TextView Caption;
+    private String _caption;
     //private Handler nhandler;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -89,6 +92,7 @@ public class Buy extends Activity{
         final Intent intent=getIntent();
         Bundle out = intent.getExtras();
         itemID=(int)out.get("itemId");
+        _caption = out.getString("caption");
         button2=(Button)findViewById(R.id.chat);
         textView1 = (TextView)findViewById(R.id.ownerid);
         textView2 = (TextView)findViewById(R.id.desc);
@@ -98,6 +102,8 @@ public class Buy extends Activity{
         commentsubmit = (Button)findViewById(R.id.commentsubmit);
         comments = (ListView)findViewById(R.id.comments);
         pics = (ListView)findViewById(R.id.picdetail);
+        Caption = (TextView)findViewById(R.id.caption);
+        Caption.setText(_caption);
         pic_list = new ArrayList<String>();
         comment_list=new ArrayList<HashMap<String, Object>>();
         mContext = this;
@@ -105,11 +111,15 @@ public class Buy extends Activity{
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent2 = new Intent(Buy.this,Chat.class);
-                //intent.setClass();
-                intent2.putExtra("itemID",itemID);
-                intent2.putExtra("To",OwnerID);
-                startActivity(intent2);
+                if (GlobalParameterApplication.getLogin_status()==0){
+                    Intent intent3 = new Intent(Buy.this, LoginActivity.class);
+                    startActivity(intent3);
+                } else {
+                    Intent intent2 = new Intent(Buy.this,Chat.class);
+                    //intent.setClass();
+                    intent2.putExtra("itemID",itemID);
+                    intent2.putExtra("To",OwnerID);
+                    startActivity(intent2);}
 
             }
         });
@@ -120,53 +130,53 @@ public class Buy extends Activity{
                 commentwords = commentword.getText().toString();
                 if(commentwords!=null)
                     if(GlobalParameterApplication.getLogin_status()==1)
-                new Thread(new Runnable() {
-                    @Override
-                    public void run(){
-                        URL url = null;
-                        try {
-                            url = new URL(surl + "/item_add_comment");
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run(){
+                                URL url = null;
+                                try {
+                                    url = new URL(surl + "/item_add_comment");
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                }
 
-                        try {
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                        try {
+                                try {
+                                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                                    try {
 
-                            conn.setRequestMethod("POST");
-                        } catch (ProtocolException e) {
-                            e.printStackTrace();
-                        }
-                        conn.setDoOutput(true);
-                            conn.setRequestProperty("Content-Type", "application/json");
-                            JSONObject data = new JSONObject();
-                            data.put("token", MyToken);
-                            JSONObject comment = new JSONObject();
-                            comment.put("itemID", itemID);
-                            comment.put("content", commentwords);
-                            data.put("comment", comment);
+                                        conn.setRequestMethod("POST");
+                                    } catch (ProtocolException e) {
+                                        e.printStackTrace();
+                                    }
+                                    conn.setDoOutput(true);
+                                    conn.setRequestProperty("Content-Type", "application/json");
+                                    JSONObject data = new JSONObject();
+                                    data.put("token", MyToken);
+                                    JSONObject comment = new JSONObject();
+                                    comment.put("itemID", itemID);
+                                    comment.put("content", commentwords);
+                                    data.put("comment", comment);
 
-                            conn.getOutputStream().write(data.toJSONString().getBytes());
-                            String ostr = IOUtils.toString(conn.getInputStream());
-                            System.out.println(ostr);
-                            GetComments(itemID);
-                            comment_list.clear();
-                            for (int i = 0; i < Comments.size();i++){
-                                HashMap<String,Object> map = new HashMap<String, Object>();
-                                map.put("comment",Comments.get(i));
-                                comment_list.add(map);
+                                    conn.getOutputStream().write(data.toJSONString().getBytes());
+                                    String ostr = IOUtils.toString(conn.getInputStream());
+                                    System.out.println(ostr);
+                                    GetComments(itemID);
+                                    comment_list.clear();
+                                    for (int i = 0; i < Comments.size();i++){
+                                        HashMap<String,Object> map = new HashMap<String, Object>();
+                                        map.put("comment",Comments.get(i));
+                                        comment_list.add(map);
+                                    }
+                                    Message Msg = new Message();
+                                    Msg.what = 231123;
+                                    nhandler.sendMessage(Msg);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
                             }
-                            Message Msg = new Message();
-                            Msg.what = 231123;
-                            nhandler.sendMessage(Msg);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-
-                    }
-                }).start();
+                        }).start();
             }
         });
         new Thread(new Runnable() {
@@ -204,20 +214,20 @@ public class Buy extends Activity{
         }).start();
         //while(!flag);
 //        textView1.setText("用户："+OwnerID);
-  //      textView2.setText("描述："+Desc);
-      //  textView3.setText("价格："+Price);
-    //    textView4.setText("留言：");
+        //      textView2.setText("描述："+Desc);
+        //  textView3.setText("价格："+Price);
+        //    textView4.setText("留言：");
 
 
 
 
     }
-Handler nhandler = new Handler(){
+    Handler nhandler = new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if(textView1!=null){
-            switch (msg.what) {
-                case 2310231:
+                switch (msg.what) {
+                    case 2310231:
 
                         flag=false;
                         textView1.setText("用户："+OwnerID);
@@ -238,18 +248,18 @@ Handler nhandler = new Handler(){
                             }
                         });
                         comments.setAdapter(com_adapter);
-                    comments.setVisibility(View.VISIBLE);
-                    int totalHeight = 0;
-                    for (int i = 0; i < com_adapter.getCount(); i++) {
-                        View listItem = com_adapter.getView(i, null, pics);
-                        listItem.measure(0, 0);
-                        totalHeight += listItem.getMeasuredHeight();
-                    }
+                        comments.setVisibility(View.VISIBLE);
+                        int totalHeight = 0;
+                        for (int i = 0; i < com_adapter.getCount(); i++) {
+                            View listItem = com_adapter.getView(i, null, pics);
+                            listItem.measure(0, 0);
+                            totalHeight += listItem.getMeasuredHeight();
+                        }
 
-                    ViewGroup.LayoutParams params = comments.getLayoutParams();
-                    params.height = totalHeight + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
-                   // params.height = params.height;
-                    comments.setLayoutParams(params);
+                        ViewGroup.LayoutParams params = comments.getLayoutParams();
+                        params.height = totalHeight + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
+                        // params.height = params.height;
+                        comments.setLayoutParams(params);
 
 
                         sim_adapter = new PicAdapter(mContext,pic_list,R.layout.picitem);
@@ -262,32 +272,32 @@ Handler nhandler = new Handler(){
                             View listItem = sim_adapter.getView(i, null, pics);
                             listItem.measure(0, 0);
                             totalHeight += listItem.getMeasuredHeight();
-                    }
-                    ViewGroup.LayoutParams params1;
+                        }
+                        ViewGroup.LayoutParams params1;
 
-                    params1 = pics.getLayoutParams();
-                    params1.height = totalHeight + (pics.getDividerHeight() * (sim_adapter.getCount()));
-                    pics.setLayoutParams(params1);
-                    break;
-                case 231123:
-                    //comments.setAdapter(com_adapter);
-                    int totalHeight1 = 0;
-                    for (int i = 0; i < com_adapter.getCount(); i++) {
-                        View listItem = com_adapter.getView(i, null, comments);
-                        listItem.measure(0, 0);
-                        totalHeight1 += listItem.getMeasuredHeight();
-                    }
+                        params1 = pics.getLayoutParams();
+                        params1.height = totalHeight + (pics.getDividerHeight() * (sim_adapter.getCount()));
+                        pics.setLayoutParams(params1);
+                        break;
+                    case 231123:
+                        //comments.setAdapter(com_adapter);
+                        int totalHeight1 = 0;
+                        for (int i = 0; i < com_adapter.getCount(); i++) {
+                            View listItem = com_adapter.getView(i, null, comments);
+                            listItem.measure(0, 0);
+                            totalHeight1 += listItem.getMeasuredHeight();
+                        }
 
-                    ViewGroup.LayoutParams params11 = comments.getLayoutParams();
-                    params11.height = totalHeight1 + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
-                    //params11.height = 5* params11.height;
-                    comments.setLayoutParams(params11);
-                    com_adapter.notifyDataSetChanged();
-                    //comments.setVisibility(View.VISIBLE);
-                    //flag1 = true;
-                   // Toast.makeText(mContext,"We have1 "+comment_list.size()+"comments",Toast.LENGTH_LONG).show();
-                    break;
-            }
+                        ViewGroup.LayoutParams params11 = comments.getLayoutParams();
+                        params11.height = totalHeight1 + (comments.getDividerHeight() * (com_adapter.getCount() - 1));
+                        //params11.height = 5* params11.height;
+                        comments.setLayoutParams(params11);
+                        com_adapter.notifyDataSetChanged();
+                        //comments.setVisibility(View.VISIBLE);
+                        //flag1 = true;
+                        // Toast.makeText(mContext,"We have1 "+comment_list.size()+"comments",Toast.LENGTH_LONG).show();
+                        break;
+                }
             }
 
         }
@@ -295,18 +305,18 @@ Handler nhandler = new Handler(){
     };
     public void onStart(){
         super.onStart();
-       // han'd.makeText(this,"UUonStart",Toast.LENGTH_LONG).show();
+        // han'd.makeText(this,"UUonStart",Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-      //  if (flag1){
-    //        flag1 = false;
+        //  if (flag1){
+        //        flag1 = false;
 
-      //      Toast.makeText(mContext,"We have "+com_adapter.getCount()+"comments",Toast.LENGTH_LONG).show();
+        //      Toast.makeText(mContext,"We have "+com_adapter.getCount()+"comments",Toast.LENGTH_LONG).show();
 
-     //   }
+        //   }
         //Toast.makeText(this,"UUonResumekengbi",Toast.LENGTH_LONG).show();;
 
     }
@@ -382,12 +392,12 @@ Handler nhandler = new Handler(){
             try {
                 org.json.JSONObject outjson = new org.json.JSONObject(ostr);
 
-                OwnerID = outjson.getJSONObject("itemInfo").getString("ownerID");
+                OwnerID = outjson.getJSONObject("itemInfo").getInt("ownerID");
 
                 Desc = outjson.getJSONObject("itemInfo").getString("description");
-                Price = outjson.getJSONObject("itemInfo").getString("estimatedPriceByUser");
+                Price = outjson.getJSONObject("itemInfo").getInt("estimatedPriceByUser");
                 Picset = outjson.getJSONObject("itemInfo").getString("images");
-             System.out.println("---------------"+Picset+"----------------");
+                System.out.println("---------------"+Picset+"----------------");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

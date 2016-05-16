@@ -8,6 +8,10 @@
         "source": "D:\\git\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
     },
     {
+        "merged": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_rotate.png",
+        "source": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_rotate.png"
+    },
+    {
         "merged": "F:\\AndroidStudioProjects\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_rotate.png",
         "source": "F:\\AndroidStudioProjects\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_rotate.png"
     },
@@ -16,8 +20,16 @@
         "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
     },
     {
+        "merged": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\indicator_arrow.png",
+        "source": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\indicator_arrow.png"
+    },
+    {
         "merged": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\indicator_arrow.png",
         "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\indicator_arrow.png"
+    },
+    {
+        "merged": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_flip.png",
+        "source": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
     },
     {
         "merged": "D:\\git\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_rotate.png",

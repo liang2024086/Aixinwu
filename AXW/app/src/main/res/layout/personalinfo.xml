@@ -178,7 +178,24 @@
                         </RelativeLayout>
 
                         <View style="@style/PersonalLine" />
+                        <RelativeLayout style="@style/PersonalNormalStyle"
+                            android:id="@+id/message">
 
+                            <ImageView
+                                android:id="@+id/personal_icon_04"
+                                style="@style/PersonalIconStyle"
+                                android:src="@drawable/android_my_jd_messages" />
+
+                            <TextView
+                                style="@style/PersonalTextStyle"
+                                android:layout_toRightOf="@id/personal_icon_04"
+                                android:text="我的消息" />
+
+                            <ImageView
+                                style="@style/PersonalRightIconStyle"
+                                android:src="@drawable/android_list_idex" />
+                        </RelativeLayout>
+                        <View style="@style/PersonalLine" />
                         <RelativeLayout style="@style/PersonalNormalStyle" >
 
                             <ImageView

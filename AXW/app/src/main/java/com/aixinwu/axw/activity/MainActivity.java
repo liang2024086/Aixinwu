@@ -1,18 +1,29 @@
 package com.aixinwu.axw.activity;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aixinwu.axw.Adapter.PicAdapter;
 import com.aixinwu.axw.fragment.HomePage;
 import com.aixinwu.axw.fragment.LoveCoin;
 import com.aixinwu.axw.fragment.SubmitThings;
@@ -21,6 +32,7 @@ import com.aixinwu.axw.fragment.UserInfo;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.tools.ADInfo;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.tools.ViewFactory;
 import com.aixinwu.axw.view.CycleViewPager;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -29,8 +41,21 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javax.microedition.khronos.opengles.GL;
 
 /**
  * Created by liangyuding on 2016/4/6.
@@ -40,15 +65,17 @@ public class MainActivity extends FragmentActivity{
     private View tab_home,tab_love_coin,tab_submit,tab_deal,tab_userinfo;
     private Fragment[] mFragments;
     FragmentManager fragmentManager;
+    private boolean checkforfirst=true;
     FragmentTransaction transaction;
-
+    public SharedPreferences sharedPreferences;
+    private  int mId;
     //���ڵ������˳�
     private int mBackKeyPressedTimes = 0;
 
     private List<ImageView> views = new ArrayList<ImageView>();
     private List<ADInfo> infos = new ArrayList<ADInfo>();
     //private CycleViewPager cycleViewPager;
-
+    private String surl = GlobalParameterApplication.getSurl();
     private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
             "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
             "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
@@ -60,6 +87,11 @@ public class MainActivity extends FragmentActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        sharedPreferences = getSharedPreferences("GLOBE", MODE_PRIVATE);
+
+        mThread.start();
         init();
         configImageLoader();
         initialize();
@@ -126,7 +158,122 @@ public class MainActivity extends FragmentActivity{
         super.onBackPressed();
 
     }
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("Chat_Num"+GlobalParameterApplication.getUserID(),GlobalParameterApplication.getChat_Num());
+        editor.commit();
+        GlobalParameterApplication.setPause(false);
+    }
 
+    public Handler nHandler = new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+                switch (msg.what) {
+                    case 12234:
+                        if (msg.arg1 == 1){
+
+                            Toast.makeText(MainActivity.this,"You have new message!!!",Toast.LENGTH_LONG);
+                        }
+
+                        break;
+                }
+        }
+    };
+    public Thread mThread=new Thread(new Runnable() {
+        @Override
+        public void run() {
+
+
+            //GlobalParameterApplication.setChat_Num(sharedPreferences.getInt("Chat_Num", 0 ));
+            while (GlobalParameterApplication.getPause()) {
+                if (GlobalParameterApplication.getLogin_status() == 1 && GlobalParameterApplication.getAllowChatThread()) {
+                    while (!GlobalParameterApplication.getEnd());
+                    GlobalParameterApplication.setEnd(false);
+                    if (GlobalParameterApplication.getPrename()!=GlobalParameterApplication.getUserID()){
+                        if (GlobalParameterApplication.getPrename()==-1){
+                            GlobalParameterApplication.setChat_Num(sharedPreferences.getInt("Chat_Num"+GlobalParameterApplication.getUserID(),0));
+                        }else {
+                            SharedPreferences.Editor editor =  sharedPreferences.edit();
+                            editor.putInt("Chat_Num"+GlobalParameterApplication.getPrename(),GlobalParameterApplication.getChat_Num());
+                            editor.commit();
+                        }
+                        GlobalParameterApplication.setPrename(GlobalParameterApplication.getUserID());
+
+                    }
+                    Message msg = new Message();
+                    msg.what = 12234;
+                    msg.arg1 = 0;
+                    int UserID = GlobalParameterApplication.getUserID();
+                    JSONObject data = new JSONObject();
+
+                    try {
+                        URL url = new URL(surl + "/item_get_chart");
+                        try {
+                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                            data.put("token", GlobalParameterApplication.getToken());
+                            conn.setRequestMethod("POST");
+                            conn.setDoOutput(true);
+                            conn.setConnectTimeout(1000);
+                            conn.setReadTimeout(1000);
+                            conn.setRequestProperty("Content-Type", "application/json");
+                            conn.setRequestProperty("Content-Length", String.valueOf(data.toJSONString().length()));
+                            conn.getOutputStream().write(data.toJSONString().getBytes());
+
+                            String ostr = IOUtils.toString(conn.getInputStream());
+                            conn.disconnect();
+                            System.out.println("MainActivity1" + ostr);
+                            int chat_num = GlobalParameterApplication.getChat_Num();
+                            org.json.JSONObject outjson = null;
+                            org.json.JSONArray result = null;
+                            try {
+                                outjson = new org.json.JSONObject(ostr);
+                                result = outjson.getJSONArray("chat");
+                                if (chat_num < result.length()) {
+                                    //GlobalParameterApplication.setAllowChatThread(false);
+                                    for (int i = chat_num; i < result.length(); i++) {
+                                        org.json.JSONObject now = (org.json.JSONObject) result.get(i);
+                                        int To = now.getInt("buyer_id");
+                                        int From = now.getInt("publisher_id");
+                                        int itemID = now.getInt("itemID");
+                                        String content = now.getString("content");
+                                        String FileName = To + "$" + From + "$" + itemID + ".txt";
+                                        FileOutputStream fos = openFileOutput(FileName, MODE_APPEND);
+                                        fos.write(("$$" + 1 + "$" + content).getBytes());
+                                        fos.close();
+
+                                    }
+                                    GlobalParameterApplication.setChat_Num(result.length());
+
+                                    msg.arg1 = 1;
+                                    nHandler.sendMessage(msg);
+                                    GlobalParameterApplication.setEnd(true);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                }
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
+    });
     @Override
     protected void onActivityResult(int requestCode, int resultCode,Intent data){
 

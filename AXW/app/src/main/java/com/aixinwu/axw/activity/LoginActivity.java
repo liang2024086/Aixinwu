@@ -23,6 +23,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
@@ -191,8 +192,21 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     GlobalParameterApplication.setLogin_status(1);
                     GlobalParameterApplication.setToken(token);
-
-
+                    JSONObject data = new JSONObject();
+                    data.put("token",token);
+                    URL url=new URL(GlobalParameterApplication.getSurl()+"/usr_get");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+                    conn.getOutputStream().write(data.toJSONString().getBytes());
+                    InputStream input = conn.getInputStream();
+                    String ostr = IOUtils.toString(input);
+                    org.json.JSONObject outjson = null;
+                    outjson = new org.json.JSONObject(ostr);
+                    int result = outjson.getJSONObject("userinfo").getInt("ID");
+                    GlobalParameterApplication.setUserID(result);
+                    conn.disconnect();
                 }
             }
             catch(Exception e) {
@@ -230,7 +244,7 @@ public class LoginActivity extends AppCompatActivity {
         conn.getOutputStream().write(jsonstr.getBytes());
 
         String ostr = IOUtils.toString(conn.getInputStream());
-        //System.out.println(ostr);
+        System.out.println(ostr);
 
         org.json.JSONObject outjson = null;
         String result = null;
@@ -242,6 +256,7 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        conn.disconnect();
             return result;
     }
 
