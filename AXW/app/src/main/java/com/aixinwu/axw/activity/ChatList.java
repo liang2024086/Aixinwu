@@ -84,8 +84,8 @@ public class ChatList extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(ChatList.this,Chat.class);
-                intent.putExtra("To",Integer.parseInt(chatitem.get(i).get("Name").toString()));
-                intent.putExtra("itemID",Integer.parseInt(chatitem.get(i).get("Item").toString()));
+                intent.putExtra("To",Integer.parseInt(chatitem.get(i).get("Name")));
+                intent.putExtra("itemID",Integer.parseInt(chatitem.get(i).get("Item")));
                 startActivity(intent);
             }
         });

@@ -34,7 +34,7 @@ public class GlobalParameterApplication extends Application{
 
     private static boolean AllowChatThread = true;
     private static int UserID;
-    private static int Chat_Num;
+    private static int Chat_Num = 0;
     private static int prename=-1;
     private static boolean end = true;
     private SharedPreferences sharedPreferences;

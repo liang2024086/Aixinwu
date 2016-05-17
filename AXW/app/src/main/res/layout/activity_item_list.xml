@@ -14,10 +14,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     >
     <TextView
-        android:paddingTop="30dp"
-        android:layout_width="wrap_content"
+
+        android:textSize="40sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/te1"
+        android:background="@color/yellow"
         android:text="上架商品"/>
     <ListView
         android:layout_below="@+id/te1"
@@ -27,11 +29,14 @@
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"/>
     <TextView
-        android:paddingTop="30dp"
+
+        android:textSize="40sp"
+
         android:layout_below="@id/itemlistviewup"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/te2"
+        android:background="@color/yellow"
         android:text="下架商品"/>
     <ListView
         android:layout_below="@+id/te2"

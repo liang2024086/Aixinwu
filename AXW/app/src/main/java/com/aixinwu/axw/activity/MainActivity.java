@@ -1,6 +1,7 @@
 package com.aixinwu.axw.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -90,7 +91,77 @@ public class MainActivity extends FragmentActivity{
 
 
      //   sharedPreferences = getSharedPreferences("GLOBE", MODE_PRIVATE);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (GlobalParameterApplication.getPause()) {
+                    if (GlobalParameterApplication.getLogin_status() == 1 && GlobalParameterApplication.getAllowChatThread()) {
+                        //  while (!GlobalParameterApplication.getEnd());
+                        //     GlobalParameterApplication.setEnd(false);
+                        Message msg = new Message();
+                        msg.what = 22234;
+                        msg.arg1 = 0;
+                        int UserID = GlobalParameterApplication.getUserID();
+                        JSONObject data = new JSONObject();
 
+                        try {
+                            URL url = new URL(surl + "/item_get_chart");
+                            try {
+                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+
+
+                                data.put("token", GlobalParameterApplication.getToken());
+                                conn.setRequestMethod("POST");
+                                conn.setDoOutput(true);
+                                conn.setConnectTimeout(1000);
+                                conn.setReadTimeout(1000);
+                                conn.setRequestProperty("Content-Type", "application/json");
+                                conn.setRequestProperty("Content-Length", String.valueOf(data.toJSONString().length()));
+                                conn.getOutputStream().write(data.toJSONString().getBytes());
+
+                                String ostr = IOUtils.toString(conn.getInputStream());
+                                System.out.println("chat" + ostr);
+
+                                org.json.JSONObject outjson = null;
+                                org.json.JSONArray result = null;
+                                try {
+                                    outjson = new org.json.JSONObject(ostr);
+                                    result = outjson.getJSONArray("chat");
+
+                                    // int chat_num = GlobalParameterApplication.getChat_Num();
+                                    //  while (!GlobalParameterApplication.getChat_othermsg());
+                                    // GlobalParameterApplication.setChat_othermsg(false);
+                                    //   System.out.println(chat_num+"++++++++++"+result.length());
+                                    if (GlobalParameterApplication.getChat_Num() < result.length()) {
+
+                                        GlobalParameterApplication.setChat_Num(result.length());
+                                        //msg.arg1 = 1;
+                                        nHandler.sendMessage(msg);
+                                        //GlobalParameterApplication.setEnd(true);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            }
+        }).start();
    //     mThread.start();
         init();
         configImageLoader();
@@ -164,7 +235,7 @@ public class MainActivity extends FragmentActivity{
    //     SharedPreferences.Editor editor = sharedPreferences.edit();
   //      editor.putInt("Chat_Num"+GlobalParameterApplication.getUserID(),GlobalParameterApplication.getChat_Num());
    //     editor.commit();
-    //    GlobalParameterApplication.setPause(false);
+        GlobalParameterApplication.setPause(false);
     }
 
     public Handler nHandler = new Handler(){
@@ -172,11 +243,18 @@ public class MainActivity extends FragmentActivity{
             super.handleMessage(msg);
 
                 switch (msg.what) {
-                    case 12234:
-                        if (msg.arg1 == 1){
+                    case 22234:
+                        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                        //构建一个通知对象(需要传递的参数有三个,分别是图标,标题和 时间)
+                        Notification notification = new Notification(R.drawable.aixinwu, "通知", System.currentTimeMillis());
+                        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,new Intent(MainActivity.this,ChatList.class),0);//这是一个PendingIntent,关于它的使用昨天我刚写过一个,有兴趣可以去看看
+                        notification.setLatestEventInfo(getApplicationContext(), "通知1", "您有新消息", pendingIntent);//这就是对通知的具体设置了
+                        notification.flags = Notification.FLAG_AUTO_CANCEL;//点击后自动消失
+                        notification.defaults = Notification.DEFAULT_SOUND;//声音默认
+                        manager.notify(0, notification);//发动通知
 
                             Toast.makeText(MainActivity.this,"You have new message!!!",Toast.LENGTH_LONG);
-                        }
+
 
                         break;
                 }

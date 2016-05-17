@@ -88,6 +88,7 @@ public class Chat extends Activity{
     public int num = 0;
     protected MyChatAdapter adapter=null;
     private int ItemID;
+    private boolean pause = true;
     private int To;
     private int From;
     private String FileName;
@@ -99,12 +100,11 @@ public class Chat extends Activity{
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
         Bundle out = intent.getExtras();
-        GlobalParameterApplication.setPause(true);
-      //  GlobalParameterApplication.setAllowChatThread(false);
-        ItemID=(int)out.get("itemID");
-        From=(int)out.get("To");
-        chatt =(TextView)findViewById(R.id.chat_contact_name);
-        chatt.setText("商品"+ItemID+" -----"+" 用户"+From);
+      //  GlobalParameterApplication.setPause(true);
+       GlobalParameterApplication.setAllowChatThread(false);
+        ItemID=out.getInt("itemID");
+        From=out.getInt("To");
+
         To = GlobalParameterApplication.getUserID();
 /*        FileName = To+"$"+From+"$"+ItemID+".txt";
         String[] sss = fileList();
@@ -115,6 +115,7 @@ public class Chat extends Activity{
                 break;
             }
         }*/
+        pause = true;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_chat);
         chatList=new ArrayList<HashMap<String,Object>>();
@@ -158,8 +159,8 @@ public class Chat extends Activity{
             @Override
             public void run() {
 
-                while (GlobalParameterApplication.getPause()) {
-                    if (GlobalParameterApplication.getLogin_status() == 1/*&& !GlobalParameterApplication.getAllowChatThread()*/) {
+                while (pause) {
+                    if (GlobalParameterApplication.getLogin_status() == 1 && !GlobalParameterApplication.getAllowChatThread()) {
                         //  while (!GlobalParameterApplication.getEnd());
                         //     GlobalParameterApplication.setEnd(false);
                         Message msg = new Message();
@@ -255,6 +256,8 @@ public class Chat extends Activity{
                 }
             }
         }).start();
+        chatt =(TextView)findViewById(R.id.chat_contact_name);
+        chatt.setText("商品"+ItemID+" -----"+" 用户"+From);
         chatSendButton=(Button)findViewById(R.id.chat_bottom_sendbutton);
         editText=(EditText)findViewById(R.id.chat_bottom_edittext);
         chatListView=(ListView)findViewById(R.id.chat_list);
@@ -357,7 +360,9 @@ public class Chat extends Activity{
        // GlobalParameterApplication.setEnd(true);
         //while (!GlobalParameterApplication.getEnd());
        // GlobalParameterApplication.setChat_othermsg(true);
-	//	GlobalParameterApplication.setAllowChatThread(true);
+
+		GlobalParameterApplication.setAllowChatThread(true);
+        GlobalParameterApplication.setChat_Num(num);
      /*   if (!OtherMsg.isEmpty()){
                 FileOutputStream out = null;
                 try {
@@ -378,7 +383,8 @@ public class Chat extends Activity{
                     e.printStackTrace();
                 }
             }*/
-        GlobalParameterApplication.setPause(false);
+     pause= false;
+        //   GlobalParameterApplication.setPause(false);
         super.onDestroy();
         }
 
