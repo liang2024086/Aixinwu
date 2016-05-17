@@ -26,20 +26,19 @@
     <LinearLayout
         android:id="@+id/chat_bottom_linear"
         android:layout_width="match_parent"
-        android:layout_height="42dip"
+        android:layout_height="wrap_content"
 
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:paddingTop="7dip"
-        android:paddingBottom="3dip">
+        >
 
 
         <EditText
             android:id="@+id/chat_bottom_edittext"
             android:layout_width="match_parent"
-            android:layout_height="32dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="7dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="7dp"
             android:layout_weight="1.5"
             />
         <Button
@@ -47,8 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3.2"
-            android:layout_marginRight="4dip"
-            android:layout_marginBottom="3dip"
+            android:layout_marginRight="4dp"
             android:text="发送"
             android:textColor="@android:color/white"/>"
     </LinearLayout>
