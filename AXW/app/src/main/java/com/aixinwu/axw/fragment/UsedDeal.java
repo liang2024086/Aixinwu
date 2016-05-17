@@ -491,7 +491,7 @@ public class UsedDeal extends CycleViewPager {
         MyToken=GlobalParameterApplication.getToken();
         JSONObject data = new JSONObject();
         data.put("startAt",start);
-        data.put("length",5);
+        data.put("length",12);
         {
 
             Log.i("UsedDeal", "get");
@@ -512,7 +512,9 @@ public class UsedDeal extends CycleViewPager {
                         outjson = new org.json.JSONObject(ostr);
                         result = outjson.getJSONArray("items");
                         start+=result.length();
-                        for (int i = 0; i < result.length(); i++) {
+                        for (int i = 0; i < result.length(); i++)
+                        if (result.getJSONObject(i).getInt("status")==0)
+                        {
                             String[] rr = result.getJSONObject(i).getString("images").split(",");
                             if (rr[0]=="") {
                                 BitmapFactory.Options cc = new BitmapFactory.Options();

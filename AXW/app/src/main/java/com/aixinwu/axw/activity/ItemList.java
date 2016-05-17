@@ -88,8 +88,9 @@ public class ItemList extends Activity {
                                     public void run(){
                                         super.run();
                                         changestatus(upData.get(now).getItemId(),2);
+                                        getDbData();
                                         Message msg = new Message();
-                                        msg.what = 11111;
+                                        msg.what = 1321;
                                         nHandler.sendMessage(msg);
 
                                     }
@@ -120,7 +121,8 @@ public class ItemList extends Activity {
                                         super.run();
                                         changestatus(downData.get(noww).getItemId(),0);
                                         Message msg = new Message();
-                                        msg.what = 22222;
+                                        getDbData();
+                                        msg.what = 1321;
                                         nHandler.sendMessage(msg);
 
                                     }
@@ -134,7 +136,7 @@ public class ItemList extends Activity {
                 return false;
             }
         });
-        configImageLoader();
+
     }
     public Thread mThread = new Thread(){
         @Override
@@ -181,88 +183,11 @@ public class ItemList extends Activity {
                     downadapter.notifyDataSetChanged();
 
                     break;
-                case 11111:
-                    Bean tmp = upData.get(now);
-                    upData.remove(now);
-                    downData.add(tmp);
-                    int totalHeight2 = 0;
-                    for (int i = 0; i < upadapter.getCount(); i++) {
-                        View listItem = upadapter.getView(i, null, uplist);
-                        listItem.measure(0, 0);
-                        totalHeight2 += listItem.getMeasuredHeight();
-                    }
-
-                    ViewGroup.LayoutParams params2 = uplist.getLayoutParams();
-                    params2.height = totalHeight2 + (uplist.getDividerHeight() * (uplist.getCount()));
-                    // params.height = params.height;
-                    uplist.setLayoutParams(params2);
-
-                    upadapter.notifyDataSetChanged();
-                    totalHeight2 = 0;
-                    for (int i = 0; i < downadapter.getCount(); i++) {
-                        View listItem = downadapter.getView(i, null, downlist);
-                        listItem.measure(0, 0);
-                        totalHeight2 += listItem.getMeasuredHeight();
-                    }
-
-                    ViewGroup.LayoutParams params3 = downlist.getLayoutParams();
-                    params3.height = totalHeight2 + (downlist.getDividerHeight() * (downlist.getCount()));
-                    // params.height = params.height;
-                    downlist.setLayoutParams(params3);
-
-                    downadapter.notifyDataSetChanged();
-                    break;
-                case 22222:
-                    Bean tmpp = downData.get(noww);
-                    downData.remove(noww);
-                    upData.add(tmpp);
-                    int totalHeight4 = 0;
-                    for (int i = 0; i < upadapter.getCount(); i++) {
-                        View listItem = upadapter.getView(i, null, uplist);
-                        listItem.measure(0, 0);
-                        totalHeight4 += listItem.getMeasuredHeight();
-                    }
-
-                    ViewGroup.LayoutParams params5 = uplist.getLayoutParams();
-                    params5.height = totalHeight4 + (uplist.getDividerHeight() * (uplist.getCount()));
-                    // params.height = params.height;
-                    uplist.setLayoutParams(params5);
-
-                    upadapter.notifyDataSetChanged();
-                    totalHeight4 = 0;
-                    for (int i = 0; i < downadapter.getCount(); i++) {
-                        View listItem = downadapter.getView(i, null, downlist);
-                        listItem.measure(0, 0);
-                        totalHeight4 += listItem.getMeasuredHeight();
-                    }
-
-                    ViewGroup.LayoutParams params6 = downlist.getLayoutParams();
-                    params6.height = totalHeight4 + (downlist.getDividerHeight() * (downlist.getCount()));
-                    // params.height = params.height;
-                    downlist.setLayoutParams(params6);
-
-                    downadapter.notifyDataSetChanged();
-                    break;
 
             }
         }
     };
-    private void configImageLoader() {
-        // ��ʼ��ImageLoader
-        @SuppressWarnings("deprecation")
-        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.drawable.icon_stub) // ����ͼƬ�����ڼ���ʾ��ͼƬ
-                .showImageForEmptyUri(R.drawable.icon_empty) // ����ͼƬUriΪ�ջ��Ǵ����ʱ����ʾ��ͼƬ
-                .showImageOnFail(R.drawable.icon_error) // ����ͼƬ���ػ��������з���������ʾ��ͼƬ
-                .cacheInMemory(true) // �������ص�ͼƬ�Ƿ񻺴����ڴ���
-                .cacheOnDisc(true) // �������ص�ͼƬ�Ƿ񻺴���SD����
-                // .displayer(new RoundedBitmapDisplayer(20)) // ���ó�Բ��ͼƬ
-                .build(); // �������ù���DisplayImageOption����
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).defaultDisplayImageOptions(options)
-                .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
-                .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
-        ImageLoader.getInstance().init(config);
-    }
     private void getDbData(){
         MyToken= GlobalParameterApplication.getToken();
         JSONObject data = new JSONObject();
@@ -285,6 +210,8 @@ public class ItemList extends Activity {
                         JSONArray result = null;
                         outjson = new org.json.JSONObject(ostr);
                         result = outjson.getJSONArray("items");
+                        upData.clear();
+                        downData.clear();
                         for (int i = 0; i < result.length(); i++) {
                             String[] rr = result.getJSONObject(i).getString("images").split(",");
                             if (result.getJSONObject(i).getInt("status")==0) {
