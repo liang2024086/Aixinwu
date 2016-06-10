@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
     <ImageView
         android:src="@drawable/icon"
+        android:scaleType="centerInside"
         android:id="@+id/item_search_iv_icon"
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"
-        android:layout_width="60dp"
-        android:layout_height="60dp"/>
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
     <TextView
         android:id="@+id/item_search_tv_title"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@id/item_search_iv_icon"
         android:text="Title"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textSize="18sp"
         android:textColor="#000"
         android:layout_width="wrap_content"
@@ -27,6 +31,8 @@
         android:layout_toRightOf="@id/item_search_iv_icon"
         android:layout_below="@id/item_search_tv_title"
         android:text="content"
+        android:lines="2"
+        android:ellipsize="end"
         android:textSize="16sp"
         android:textColor="#777"
         android:layout_width="match_parent"

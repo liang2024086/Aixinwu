@@ -13,10 +13,17 @@ import android.view.ViewGroup;
 import android.widget.*;
 
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.activity.ChatList;
+import com.aixinwu.axw.activity.ItemList;
 import com.aixinwu.axw.activity.LoginActivity;
 import com.aixinwu.axw.activity.PersonalDetailActivity;
 import com.aixinwu.axw.activity.SignupActivity;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
@@ -44,6 +51,7 @@ public class UserInfo extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.personalinfo, null);
+        configImageLoader();
         return view;
     }
 
@@ -138,8 +146,41 @@ public class UserInfo extends Fragment {
 
 
 
+        RelativeLayout ly_message = (RelativeLayout)getActivity().findViewById(R.id.message);
+        RelativeLayout ly_myitem = (RelativeLayout)getActivity().findViewById(R.id.myitem);
+        ly_myitem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==1){
+                Intent intent = new Intent(getActivity(), ItemList.class);
+                startActivity(intent);}
+            }
+        });
+        ly_message.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChatList.class);
+                startActivity(intent);
+            }
+        });
 
         super.onStart();
+    }
+    private void configImageLoader() {
+        // ��ʼ��ImageLoader
+        @SuppressWarnings("deprecation")
+        DisplayImageOptions options = new DisplayImageOptions.Builder().showStubImage(R.drawable.icon_stub) // ����ͼƬ�����ڼ���ʾ��ͼƬ
+                .showImageForEmptyUri(R.drawable.icon_empty) // ����ͼƬUriΪ�ջ��Ǵ����ʱ����ʾ��ͼƬ
+                .showImageOnFail(R.drawable.icon_error) // ����ͼƬ���ػ��������з���������ʾ��ͼƬ
+                .cacheInMemory(true) // �������ص�ͼƬ�Ƿ񻺴����ڴ���
+                .cacheOnDisc(true) // �������ص�ͼƬ�Ƿ񻺴���SD����
+                // .displayer(new RoundedBitmapDisplayer(20)) // ���ó�Բ��ͼƬ
+                .build(); // �������ù���DisplayImageOption����
+
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).defaultDisplayImageOptions(options)
+                .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+                .discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).build();
+        ImageLoader.getInstance().init(config);
     }
     /*
 public Thread mThread = new Thread(new Runnable() {

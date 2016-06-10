@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -103,6 +104,9 @@ public class SendToAXw extends Activity {
                     conn.getOutputStream().write(data.toJSONString().getBytes());
                     java.lang.String oss = IOUtils.toString(conn.getInputStream());
                     System.out.println(oss);
+                    Message msg = new Message();
+                    msg.what = 134;
+                    nHandler.sendMessage(msg);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -113,5 +117,16 @@ public class SendToAXw extends Activity {
 
         }
     };
+    public Handler nHandler = new Handler(){
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 134:
+                    SendToAXw.this.setResult(RESULT_OK);
 
+                    finish();
+                    break;
+            }
+        }
+    };
 }

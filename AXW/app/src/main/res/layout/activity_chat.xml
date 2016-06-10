@@ -21,50 +21,32 @@
             android:textColor="@android:color/black"
             android:gravity="center"
             android:layout_gravity="center_vertical"/>
-        <ImageButton
-            android:id="@+id/chat_contact_button"
-            android:layout_width="match_parent"
-            android:layout_height="36dip"
-            android:layout_weight="2"
-            android:layout_marginRight="8dip"
-            android:layout_marginTop="3dip"
-            android:background="@drawable/icon_empty"/>
 
     </LinearLayout>
     <LinearLayout
         android:id="@+id/chat_bottom_linear"
         android:layout_width="match_parent"
-        android:layout_height="42dip"
+        android:layout_height="wrap_content"
 
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:paddingTop="7dip"
-        android:paddingBottom="3dip">
+        >
 
-        <ImageButton
-            android:id="@+id/chat_bottom_look"
-            android:layout_width="match_parent"
-            android:layout_height="26dip"
-            android:layout_weight="3.5"
-            android:layout_marginLeft="7dip"
-            android:layout_marginTop="3dip"
-            android:background="@drawable/icon"/>
 
         <EditText
             android:id="@+id/chat_bottom_edittext"
             android:layout_width="match_parent"
-            android:layout_height="32dip"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="7dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="7dp"
             android:layout_weight="1.5"
             />
         <Button
             android:id="@+id/chat_bottom_sendbutton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="3.2"
-            android:layout_marginRight="4dip"
-            android:layout_marginBottom="3dip"
+            android:layout_marginRight="4dp"
             android:text="发送"
             android:textColor="@android:color/white"/>"
     </LinearLayout>

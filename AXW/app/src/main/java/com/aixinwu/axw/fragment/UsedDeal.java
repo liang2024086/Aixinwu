@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.aixinwu.axw.Adapter.HomepageGuiedAdapter;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.Buy;
+import com.aixinwu.axw.activity.ChatList;
 import com.aixinwu.axw.activity.HelloWorld;
 import com.aixinwu.axw.activity.ProductDetailActivity;
 import com.aixinwu.axw.model.HomepageGuide;
@@ -110,7 +111,7 @@ public class UsedDeal extends CycleViewPager {
     private ListView lvResults;
     private int searchTouchTime = 0;
     private PullToRefreshScrollView mPullRefreshScrollView;
-
+    private Button chatbutton;
     private ArrayList<HomepageGuide> homepageGuides = new ArrayList<HomepageGuide>();
 
     @Override
@@ -148,17 +149,31 @@ public class UsedDeal extends CycleViewPager {
         mPullRefreshScrollView.getLoadingLayoutProxy().setPullLabel("PULLLABLE");
         mPullRefreshScrollView.getLoadingLayoutProxy().setRefreshingLabel("refreshingLabel");
         mPullRefreshScrollView.getLoadingLayoutProxy().setReleaseLabel("releaseLabel");
-        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
-
+        mPullRefreshScrollView.setMode(PullToRefreshBase.Mode.BOTH);
+      //  chatbutton = (Button)view.findViewById(R.id.chat_button);
         //上拉监听函数
         mPullRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
 
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
                 //执行刷新函数
+                if (PullToRefreshBase.Mode.PULL_FROM_END == mPullRefreshScrollView.getCurrentMode())
                 new GetDataTask().execute();
+                else if (PullToRefreshBase.Mode.PULL_FROM_START == mPullRefreshScrollView.getCurrentMode()){
+                    new MyTask().execute();
+                }
             }
         });
+        /*chatbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(GlobalParameterApplication.getLogin_status()==1){
+                    Intent intent4 = new Intent();
+                    intent4.setClass(getActivity(), ChatList.class);
+                    startActivity(intent4);
+                }
+            }
+        });*/
         lvResults.setVisibility(View.VISIBLE);
         dbData=new ArrayList<Bean>();
         mThread.start();
@@ -172,7 +187,7 @@ public class UsedDeal extends CycleViewPager {
 
                 Intent intent = new Intent();
                 intent.putExtra("itemId", dbData.get(i).getItemId());
-
+                intent.putExtra("caption",dbData.get(i).getType());
                 intent.setClass(getActivity(), Buy.class);
                 startActivity(intent);
 
@@ -266,21 +281,45 @@ public class UsedDeal extends CycleViewPager {
         //����Բ��ָʾͼ���������ʾ��Ĭ�Ͽ���
         setIndicatorCenter();
     }
-    private class MyTask extends AsyncTask<Void, Void, List<Bean>> {
+    private class MyTask extends AsyncTask<Void, Void, LinearLayout> {
+
         @Override
-        protected List<Bean> doInBackground(Void... params) {
+        protected LinearLayout doInBackground(Void... params) {
+            // Simulates a background job.
             try {
-                Thread.sleep(2000);//睡眠2秒，延迟加载数据
+                dbData.clear();
+                start=0;
+                getDbData();
+                Thread.sleep(4000);
+
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Log.e("msg","GetDataTask:" + e.getMessage());
             }
-            getDbData();
-            return dbData;
+            return null;
         }
+
         @Override
-        protected void onPostExecute(List<Bean> result) {
+        protected void onPostExecute(LinearLayout result) {
+            // Do some stuff here
+
+            int totalHeight = 0;
+            for (int i = 0; i < resultAdapter.getCount(); i++) {
+                View listItem = resultAdapter.getView(i, null, lvResults);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+
+            ViewGroup.LayoutParams params = lvResults.getLayoutParams();
+            params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount() - 1));
+            // params.height = params.height;
+            lvResults.setLayoutParams(params);
+
             resultAdapter.notifyDataSetChanged();
-       //     lvResults.onRefreshComplete();//数据加载到适配器完成后，刷新完成，
+
+
+            mPullRefreshScrollView.onRefreshComplete();
+
+
             super.onPostExecute(result);
         }
     }
@@ -432,13 +471,17 @@ public class UsedDeal extends CycleViewPager {
                         listItem.measure(0, 0);
                         totalHeight += listItem.getMeasuredHeight();
                     }
-
+                    /*View listItem = resultAdapter.getView(0, null, lvResults);
+                    listItem.measure(0, 0);
+                    totalHeight += listItem.getMeasuredHeight();
+*/
                     ViewGroup.LayoutParams params = lvResults.getLayoutParams();
-                    params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount() - 1));
+                    params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount()-1));
                     // params.height = params.height;
                     lvResults.setLayoutParams(params);
 
                     resultAdapter.notifyDataSetChanged();
+
                     break;
             }
         }
@@ -448,7 +491,7 @@ public class UsedDeal extends CycleViewPager {
         MyToken=GlobalParameterApplication.getToken();
         JSONObject data = new JSONObject();
         data.put("startAt",start);
-        data.put("length",2);
+        data.put("length",12);
         {
 
             Log.i("UsedDeal", "get");
@@ -469,14 +512,16 @@ public class UsedDeal extends CycleViewPager {
                         outjson = new org.json.JSONObject(ostr);
                         result = outjson.getJSONArray("items");
                         start+=result.length();
-                        for (int i = 0; i < result.length(); i++) {
+                        for (int i = 0; i < result.length(); i++)
+                        if (result.getJSONObject(i).getInt("status")==0)
+                        {
                             String[] rr = result.getJSONObject(i).getString("images").split(",");
                             if (rr[0]=="") {
                                 BitmapFactory.Options cc = new BitmapFactory.Options();
                                 cc.inSampleSize = 20;
-                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("ownerID"), result.getJSONObject(i).getString("description")));
+                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
                             } else
-                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/"+rr[0], result.getJSONObject(i).getString("ownerID"), result.getJSONObject(i).getString("description")));
+                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/"+rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
                         }
 
                     } catch (JSONException e) {
