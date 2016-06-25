@@ -106,9 +106,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private void initDatas() {
 
         final SQLiteDatabase db = mDbHelper.getReadableDatabase();
-        final Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME, null, null,
-                null,
-                null, null, null);
+        final Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME, null, null, null, null, null, null);
 
         new Thread() {
             @Override
@@ -121,7 +119,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         String name = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_NAME));
-                        ;
+
                         String category = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_CATEGORY));
@@ -130,7 +128,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         int number = Integer.parseInt(cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER)));
                         ShoppingCartEntity entity = new ShoppingCartEntity(id, name, category,
-                                price, number, Integer.parseInt(id));
+                                price, number, 1);
                         mDatas.add(entity);
                     }
                     if (cursor != null) {
@@ -235,7 +233,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
             holder.number.setText("x" + entity.getNumber());
-            holder.img.setImageResource(R.drawable.handshake_1);
+            //holder.img.setImageResource(R.drawable.handshake_1);
             holder.cb.setChecked(getMap().get(position));
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

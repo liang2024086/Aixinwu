@@ -60,7 +60,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ImageView mImgIcon;
 
     private Button mBtnOK;
-private Button cartBtn;
+
+    private Button cartBtn;
     /**
      * PopupWindow是否打开
      */
@@ -204,7 +205,7 @@ private Button cartBtn;
         String name = entity.getProduct_name();  // 购买名称
 
 
-        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplication());
+        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
         db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -235,7 +236,7 @@ private Button cartBtn;
 
         ISQUERYED = false;
 
-        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplication());
+        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
         db = mDbHelper.getWritableDatabase();
 
         Cursor c = null;
@@ -304,7 +305,7 @@ private Button cartBtn;
                 values,
                 selection,
                 selectionArgs);
-        Toast.makeText(getApplication(), "count = " + count + "/r/n number=" + sqlNumber, Toast
+        Toast.makeText(getApplication(), "count = " + count + "\r\n number=" + sqlNumber, Toast
                 .LENGTH_LONG).show();
     }
 

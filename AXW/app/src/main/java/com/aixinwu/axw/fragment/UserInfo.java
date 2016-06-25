@@ -152,8 +152,8 @@ public class UserInfo extends Fragment {
             @Override
             public void onClick(View view) {
                 if (GlobalParameterApplication.getLogin_status()==1){
-                Intent intent = new Intent(getActivity(), ItemList.class);
-                startActivity(intent);}
+                    Intent intent = new Intent(getActivity(), ItemList.class);
+                    startActivity(intent);}
             }
         });
         ly_message.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +174,7 @@ public class UserInfo extends Fragment {
                 .showImageOnFail(R.drawable.icon_error) // ����ͼƬ���ػ��������з���������ʾ��ͼƬ
                 .cacheInMemory(true) // �������ص�ͼƬ�Ƿ񻺴����ڴ���
                 .cacheOnDisc(true) // �������ص�ͼƬ�Ƿ񻺴���SD����
-                // .displayer(new RoundedBitmapDisplayer(20)) // ���ó�Բ��ͼƬ
+                        // .displayer(new RoundedBitmapDisplayer(20)) // ���ó�Բ��ͼƬ
                 .build(); // �������ù���DisplayImageOption����
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getActivity().getApplicationContext()).defaultDisplayImageOptions(options)
@@ -210,7 +210,7 @@ public Thread mThread = new Thread(new Runnable() {
             }
         }
     };
-//=======================Connect to Server=================
+    //=======================Connect to Server=================
     public String genJson(String token) {
         JSONObject matadata = new JSONObject();
         matadata.put("TimeStamp", 123124233);
@@ -233,7 +233,7 @@ public Thread mThread = new Thread(new Runnable() {
         conn.setDoOutput(true);
         conn.setConnectTimeout(1000);
         conn.setReadTimeout(1000);
-        conn.setRequestProperty("Content-Typkie", "application/json");
+        conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
         conn.getOutputStream().write(jsonstr.getBytes());
 
