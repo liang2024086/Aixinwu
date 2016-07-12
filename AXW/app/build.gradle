@@ -32,4 +32,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile files('libs/universal-image-loader-1.9.2-SNAPSHOT-with-sources.jar')
     compile project(':PullToRefresh')
+    compile 'org.greenrobot:eventbus:3.0.0'
 }
