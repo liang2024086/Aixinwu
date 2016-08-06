@@ -115,7 +115,7 @@ public class Buy extends Activity{
                     Intent intent3 = new Intent(Buy.this, LoginActivity.class);
                     startActivity(intent3);
                 } else {
-                    Intent intent2 = new Intent(Buy.this,Chat.class);
+                    Intent intent2 = new Intent(Buy.this,Chattoother.class);
                     //intent.setClass();
                     intent2.putExtra("itemID",itemID);
                     intent2.putExtra("To",OwnerID);

@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity{
 
 
      //   sharedPreferences = getSharedPreferences("GLOBE", MODE_PRIVATE);
-        new Thread(new Runnable() {
+      /* new Thread(new Runnable() {
             @Override
             public void run() {
                 while (GlobalParameterApplication.getPause()) {
@@ -161,7 +161,7 @@ public class MainActivity extends FragmentActivity{
 
                 }
             }
-        }).start();
+        }).start();*/
    //     mThread.start();
         init();
         configImageLoader();
@@ -236,9 +236,10 @@ public class MainActivity extends FragmentActivity{
   //      editor.putInt("Chat_Num"+GlobalParameterApplication.getUserID(),GlobalParameterApplication.getChat_Num());
    //     editor.commit();
         GlobalParameterApplication.setPause(false);
+        GlobalParameterApplication.stop();
     }
 
-    public Handler nHandler = new Handler(){
+    /*public Handler nHandler = new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
@@ -351,7 +352,7 @@ public class MainActivity extends FragmentActivity{
 
             }
         }
-    });
+    });*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode,Intent data){
 

@@ -7,7 +7,15 @@ package com.aixinwu.axw.tools;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeoutException;
+
+import io.nats.client.ConnectionFactory;
+import schoolapp.chat.Chat;
 
 public class GlobalParameterApplication extends Application{
     private static int login_status = 0;
@@ -15,12 +23,14 @@ public class GlobalParameterApplication extends Application{
     private static String token;
     private static boolean pause=true;
     private static String surl = "http://202.120.47.213:12345/api";
-
+    public  static Chat chat = null;
+    public static dbmessage DataBaseM;
     private static HashMap<String,Integer> newOldStringToInt = new HashMap<String, Integer>();
     private static HashMap<Integer,String> newOldIntToString = new HashMap<Integer, String>();
 
 
     public GlobalParameterApplication(){
+        DataBaseM = new dbmessage(this);
         newOldIntToString.put(Integer.valueOf(1),"全新");
         newOldIntToString.put(Integer.valueOf(2),"九成新");
         newOldIntToString.put(Integer.valueOf(3),"七成新");
@@ -31,7 +41,70 @@ public class GlobalParameterApplication extends Application{
         newOldStringToInt.put("七成新",Integer.valueOf(3));
         newOldStringToInt.put("六成新及以下",Integer.valueOf(4));
     }
+    public static void start(String _token){
+        chat = new Chat(_token, ConnectionFactory.DEFAULT_URL);
+        chat.addRecvCallBack(new Chat.ChatCallback() {
+            @Override
+            public void recv(org.json.JSONObject msgjson) {
 
+                org.json.JSONArray msgs = null;
+                try {
+
+                    msgs = msgjson.getJSONArray("messages");
+                    for (int i = 0; i < msgs.length(); i++){
+                        int send = msgs.getJSONObject(i).getInt("from");
+                        int recv = msgs.getJSONObject(i).getInt("to");
+                        String content = msgs.getJSONObject(i).getString("content");
+                        DataBaseM.add(send, recv, content);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("GET"+msgjson.toString());
+                //     System.out.println(messages.toString());
+                //      for (int i = 0; i < messages.getMessages().size(); i++){
+                //       int send = messages.getFrom(i);
+                //         int recv = messages.getTo(i);
+                //      String content = messages.getContent(i);
+                //DataBaseM.add(send, recv, content);
+
+
+            }
+        });
+        try {
+            chat.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+    public static void stop(){
+
+        try {
+            if (chat !=null)
+                chat.stop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static List<talkmessage> gettalklist(int mem){
+        List<talkmessage> result = DataBaseM.getIntalk(Integer.toString(mem));
+        return result;
+    }
+    public static void publish(String str, int dest){
+        chat.publish(str, Integer.toString(dest));
+        System.out.println("Send :"+str+dest);
+    }
+    public static void add(int sender, int recver, String doc){
+        DataBaseM.add(sender, recver, doc);
+    }
+    public static List<talkmessage> gettalk(int sender, int recv){
+        List<talkmessage> result = DataBaseM.getIn(Integer.toString(sender), Integer.toString(recv));
+        return result;
+    }
     private static boolean AllowChatThread = true;
     private static int UserID;
     private static int Chat_Num = 0;
