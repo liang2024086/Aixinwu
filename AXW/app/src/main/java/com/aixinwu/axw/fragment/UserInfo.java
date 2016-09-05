@@ -125,7 +125,7 @@ public class UserInfo extends Fragment {
                 //GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
                 GlobalParameterApplication.setToken("");
                 GlobalParameterApplication.setLogin_status(0);
-
+                GlobalParameterApplication.stop();
 
                 ly_logininfo.setVisibility(View.VISIBLE);
                 ly_personalinfo.setVisibility(View.GONE);
