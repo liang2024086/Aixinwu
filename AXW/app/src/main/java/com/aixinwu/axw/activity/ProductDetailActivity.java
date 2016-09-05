@@ -208,7 +208,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         String id = entity.getId() + ""; // 购买id
 
 
-        String category = "电子产品";
+        String category = "种类";
         /*
         if (Integer.parseInt(id) > 30000) {
             category = "书籍";
@@ -220,7 +220,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         */
 
         String name = entity.getProduct_name();  // 购买名称
-
+        String imgurl = entity.getImage_url();
 
 
         //database operation
@@ -234,6 +234,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NAME, name);
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number + "");
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY, category);
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_IMG, imgurl);
 
         long rawID = -1;
 
@@ -349,7 +350,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         mTVPopCategory = (TextView) mPop.findViewById(R.id.tv_pop_category);
         //double PopHeight = getWindow().getAttributes().height;
         //PopHeight = PopHeight * 0.6;
-        mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1080);
+        mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1500);
 
     }
 
@@ -412,7 +413,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         //mTVDetails.setText(entity.getDescription());
         mTVTopPrice.setText("爱心币：" + entity.getPrice());
         mTVPrice.setText("爱心币：" + entity.getPrice());
-        mTVPopDetails.setText(Html.fromHtml(entity.getDescription()));
+        mTVPopDetails.setText(entity.getShortdescription());
         //mTVList.setText("￥" + (entity.getPrice() + 900));
 
         //mImgIcon.setImageResource(entity.getImage_id());changed in 38

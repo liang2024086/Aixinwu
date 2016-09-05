@@ -10,10 +10,10 @@ public class ShoppingCartEntity {
     private String category;
     private int price;
     private int number ;
-    private int imgUrl;
+    private String imgUrl;
 
     public ShoppingCartEntity(String id, String name, String category, int price, int number,
-                              int imgUrl) {
+                              String imgUrl) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -62,11 +62,11 @@ public class ShoppingCartEntity {
         this.number = number;
     }
 
-    public int getImgUrl() {
+    public String getImgUrl() {
         return imgUrl;
     }
 
-    public void setImgUrl(int imgUrl) {
+    public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 }

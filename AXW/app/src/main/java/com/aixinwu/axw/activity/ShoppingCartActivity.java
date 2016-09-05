@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +27,11 @@ import android.widget.TextView;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.database.ProductReadDbHelper;
 import com.aixinwu.axw.database.ProductReaderContract;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.aixinwu.axw.model.ShoppingCartEntity;
@@ -151,6 +158,11 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     deleteFromDatabase(CheckedProductId.get(i));
                 }
                 //====
+                //send order request to the server
+
+
+
+
 
                 Intent intent = new Intent(ShoppingCartActivity.this, DealFinished.class);
                 intent.putExtra("overallcost", mTotalMoney + "");
@@ -193,7 +205,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     }
 
     private void initDatas() {
-
+//初始化购物车数据
         final SQLiteDatabase db = mDbHelper.getReadableDatabase();
         final Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME, null, null, null, null, null, null);
 
@@ -207,6 +219,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         String id = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_ENTRY_ID));
+
                         String name = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_NAME));
@@ -214,12 +227,20 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         String category = cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_CATEGORY));
+
                         int price = Integer.parseInt(cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE)));
+
                         int number = Integer.parseInt(cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER)));
+
+                        String imgurl = cursor.getString(cursor.getColumnIndex(
+                                ProductReaderContract.ProductEntry.COLUMN_NAME_IMG));
+
                         ShoppingCartEntity entity = new ShoppingCartEntity(id, name, category,
-                                price, number, 1);
+                                price, number, imgurl);
+
+
                         mDatas.add(entity);
                     }
                     if (cursor != null) {
@@ -268,6 +289,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         private LayoutInflater mInflater;
         private ArrayList<ShoppingCartEntity> mDatas = new ArrayList<>();
         private ViewHolder holder;
+        public Bitmap bitmap;
 
         public  HashMap<Integer,Boolean> mMaps = new HashMap<>();
 
@@ -303,6 +325,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
             return position;
         }
 
+
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             holder = null;
@@ -329,7 +353,45 @@ public class ShoppingCartActivity extends AppCompatActivity {
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
             holder.number.setText("x" + entity.getNumber());
-            holder.img.setImageResource(R.drawable.aixinwu);
+//============================================================
+            final Handler nhandler=new Handler(){
+                @Override
+                public void handleMessage(Message msg) {
+                    if (msg.what == 0x4869) {
+                        //显示从网上下载的图片
+                        holder.img.setImageBitmap(bitmap);
+                    }
+                }
+            };
+
+            new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        //创建一个url对象
+                        URL url=new URL(entity.getImgUrl());
+                        //打开URL对应的资源输入流
+                        InputStream is= url.openStream();
+                        //从InputStream流中解析出图片
+                        bitmap = BitmapFactory.decodeStream(is);
+                        //  imageview.setImageBitmap(bitmap);
+
+                        //发送消息，通知UI组件显示图片
+                        nhandler.sendEmptyMessage(0x4869);
+                        //关闭输入流
+                        is.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+            //============================================================
+
+            //holder.img.setImageResource(R.drawable.aixinwu);           //缩略图片显示
+
+
+
+
             holder.cb.setChecked(getMap().get(position));
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

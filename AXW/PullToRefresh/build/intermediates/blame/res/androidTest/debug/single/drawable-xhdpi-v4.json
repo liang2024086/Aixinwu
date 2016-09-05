@@ -1,19 +1,51 @@
 [
     {
-        "merged": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
-        "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
+        "merged": "C:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
+        "source": "C:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
     },
     {
-        "merged": "D:\\git\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
-        "source": "D:\\git\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
+        "merged": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
+        "source": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
+    },
+    {
+        "merged": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
+        "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
+    },
+    {
+        "merged": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
+        "source": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
+    },
+    {
+        "merged": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
+        "source": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
+    },
+    {
+        "merged": "C:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
+        "source": "C:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
+    },
+    {
+        "merged": "F:\\AndroidStudioProjects\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
+        "source": "F:\\AndroidStudioProjects\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
+    },
+    {
+        "merged": "C:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
+        "source": "C:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
+    },
+    {
+        "merged": "C:\\SJTU\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
+        "source": "C:\\SJTU\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
+    },
+    {
+        "merged": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
+        "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
     },
     {
         "merged": "D:\\chengxu\\1\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
         "source": "D:\\chengxu\\1\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
     },
     {
-        "merged": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
-        "source": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
+        "merged": "D:\\git\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
+        "source": "D:\\git\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
     },
     {
         "merged": "D:\\chengxu\\1\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
@@ -36,20 +68,8 @@
         "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
     },
     {
-        "merged": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
-        "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
-    },
-    {
-        "merged": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
-        "source": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
-    },
-    {
         "merged": "C:\\SJTU\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
         "source": "C:\\SJTU\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
-    },
-    {
-        "merged": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",
-        "source": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
     },
     {
         "merged": "D:\\git\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
@@ -60,20 +80,12 @@
         "source": "F:\\AndroidStudioProjects\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\indicator_arrow.png"
     },
     {
-        "merged": "F:\\AndroidStudioProjects\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
-        "source": "F:\\AndroidStudioProjects\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
-    },
-    {
         "merged": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_rotate.png",
         "source": "D:\\223\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_rotate.png"
     },
     {
         "merged": "D:\\chengxu\\1\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
         "source": "D:\\chengxu\\1\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
-    },
-    {
-        "merged": "C:\\SJTU\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\default_ptr_flip.png",
-        "source": "C:\\SJTU\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\default_ptr_flip.png"
     },
     {
         "merged": "D:\\chengxu\\11\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\indicator_arrow.png",

@@ -33,6 +33,8 @@ public class ProductReadDbHelper extends SQLiteOpenHelper {
                         COMMA_SEP +
                         ProductReaderContract.ProductEntry.COLUMN_NAME_NAME + TEXT_TYPE + " default " +
                         "健康产品系列1" +
+                        COMMA_SEP +
+                        ProductReaderContract.ProductEntry.COLUMN_NAME_IMG + TEXT_TYPE +
                         " )";
 
 

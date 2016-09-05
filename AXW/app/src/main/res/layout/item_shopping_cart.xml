@@ -29,7 +29,6 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/lottery_head_1"
             android:id="@+id/img_item_shopping_cart_number"/>
 
         <RelativeLayout

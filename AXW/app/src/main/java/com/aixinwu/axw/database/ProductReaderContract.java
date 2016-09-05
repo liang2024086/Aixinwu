@@ -17,7 +17,7 @@ public final class ProductReaderContract {
         public static final String COLUMN_NAME_NUMBER = "number";
         public static final String COLUMN_NAME_PRICE = "price";
         public static final String COLUMN_NAME_NAME = "name";
-        //        public static final String COLUMN_NAME_IMG = "imgurl";
+        public static final String COLUMN_NAME_IMG = "imgurl";
 
     }
 }
