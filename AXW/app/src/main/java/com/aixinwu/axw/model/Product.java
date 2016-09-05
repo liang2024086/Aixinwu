@@ -1,23 +1,23 @@
 package com.aixinwu.axw.model;
-
+import java.io.Serializable;
 /**
  * Created by dell1 on 2016/4/24.
  */
-public class Product {
+public class Product implements Serializable {
     private String product_name;
-    private int amount;
+    //private int amount;
     private int price;
     private String description;
-    private int image_id;
-    private String id;
+    private String image_url;
+    private int id;
 
 
-    public Product (String name, int price, int image_id) {
+    public Product (int Id, String name, int price, String image_url, String description) {
         this.product_name = name;
         this.price = price;
-        this.image_id = image_id;
-        this.id = "0001";
-        this.description = "des";
+        this.image_url = image_url;
+        this.id = Id;
+        this.description = description;
     }
 
     public String getProduct_name () {
@@ -28,11 +28,11 @@ public class Product {
         return price;
     }
 
-    public int getImage_id () {
-        return image_id;
+    public String getImage_url () {
+        return image_url;
     }
 
-    public String getId () {return id;}
+    public int getId () {return id;}
 
     public String getDescription () {return description;}
 

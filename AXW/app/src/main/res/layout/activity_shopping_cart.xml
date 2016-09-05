@@ -4,8 +4,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="?attr/actionBarSize"
+
     >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#ffffffff"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的购物车"
+            android:layout_gravity="center"
+            android:layout_margin="7dp"
+            android:textSize="20sp"/>
+</LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:text="删除所选商品"
+            android:textColor="#ffffffff"
+            android:background="#ffea5d15"
+            android:id="@+id/btn_delete_selected_product"
+            android:layout_gravity="right"
+            android:layout_weight="0.10" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:text="清空购物车"
+            android:textColor="#ffffffff"
+            android:background="#ffea5d15"
+            android:id="@+id/btn_delete_all_product"
+            android:layout_gravity="end"
+            android:layout_weight="0.10" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 
     <ListView
@@ -54,7 +104,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:text="结算(0)"
+            android:text="去结算(0)"
             android:textColor="#ffffffff"
             android:background="#ffea5d15"
             android:id="@+id/btn_activity_shopping_cart_clearing"/>

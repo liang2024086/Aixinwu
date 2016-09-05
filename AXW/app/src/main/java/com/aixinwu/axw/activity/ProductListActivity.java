@@ -49,6 +49,7 @@ public class ProductListActivity extends AppCompatActivity {
     }
 
     private void initProduct () {
+        /*
         Product product1 = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
         productList.add(product1);
         Product product2 = new Product("A new Hadoop book", 100, R.mipmap.product2);
@@ -57,5 +58,6 @@ public class ProductListActivity extends AppCompatActivity {
         productList.add(product3);
         Product product4 = new Product("A new C++ primer book", 100, R.mipmap.product4);
         productList.add(product4);
+   */
     }
 }

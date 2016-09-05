@@ -51,10 +51,11 @@
                     android:layout_height="fill_parent"
                     android:orientation="horizontal">
                     <GridView android:id="@+id/grid1"
-                        android:layout_width="700dp"
+                        android:layout_width="2000dp"
                         android:layout_height="fill_parent"
                         android:gravity="center"
-                        android:numColumns="4"/>
+                        android:numColumns="10"
+                        />
                 </LinearLayout>
             </HorizontalScrollView>
 

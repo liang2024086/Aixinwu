@@ -1,12 +1,14 @@
 package com.aixinwu.axw.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,10 +34,19 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private static final int MSG_WHAT = 0x223;
 
     private ListView mListView;
+
+
+    //content of shoppingcart
+    public ArrayList<Integer> CheckedProductId = new ArrayList<>();
+    private Button BtnDelChecked;
+    private Button BtnDelAll;
+
+
     /**
      * 结算
      */
-    private Button mBtnClearing;
+    private Button mBtnChecking;
+
 
     private TextView mTVTotal;
 
@@ -75,8 +86,34 @@ public class ShoppingCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
 
+
+
         initViews();
+        //initDatas();
+    }
+
+    @Override
+    protected void onStart() {
         initDatas();
+        super.onStart();
+    }
+
+
+    private void deleteFromDatabase (int id) {
+        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.delete(ProductReaderContract.ProductEntry.TABLE_NAME,
+                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID+"=?",
+                new String[]{id+""}
+                );
+        Log.i("Check!", id + " Ok");
+    }
+
+    private void deleteAllFromDatabase () {
+        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        db.execSQL("DELETE FROM " + ProductReaderContract.ProductEntry.TABLE_NAME);
+        Log.i("Delete all", " Ok");
     }
 
     private void addListeners() {
@@ -97,16 +134,70 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private void initViews() {
 
         mListView = (ListView) findViewById(R.id.lv_shopping_cart_activity);
-        mBtnClearing = (Button) findViewById(R.id.btn_activity_shopping_cart_clearing);
+        mBtnChecking = (Button) findViewById(R.id.btn_activity_shopping_cart_clearing);
         mTVTotal = (TextView) findViewById(R.id.tv_activity_shopping_cart_total);
         mCheckBox = (CheckBox) findViewById(R.id.cb_activity_shopping_cart);
+        BtnDelChecked = (Button) findViewById(R.id.btn_delete_selected_product);
+        BtnDelAll = (Button) findViewById(R.id.btn_delete_all_product);
+        mBtnChecking = (Button) findViewById(R.id.btn_activity_shopping_cart_clearing);
 
+        mBtnChecking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //delete from database
+
+                for (int i = 0; i < CheckedProductId.size(); ++i) {
+                    deleteFromDatabase(CheckedProductId.get(i));
+                }
+                //====
+
+                Intent intent = new Intent(ShoppingCartActivity.this, DealFinished.class);
+                intent.putExtra("overallcost", mTotalMoney + "");
+
+                startActivity(intent);
+            }
+        });
+
+
+        BtnDelChecked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //delete from database
+
+                for (int i = 0; i < CheckedProductId.size(); ++i) {
+                    deleteFromDatabase(CheckedProductId.get(i));
+                }
+                //====
+                finish();
+                Intent intent = new Intent(ShoppingCartActivity.this, ShoppingCartActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        BtnDelAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //delete from database
+
+                deleteAllFromDatabase();
+                //====
+                finish();
+                Intent intent = new Intent(ShoppingCartActivity.this, ShoppingCartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initDatas() {
 
         final SQLiteDatabase db = mDbHelper.getReadableDatabase();
         final Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME, null, null, null, null, null, null);
+
+        mDatas.clear();
 
         new Thread() {
             @Override
@@ -143,6 +234,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
                 }
             }
         }.start();
+
+        mBtnChecking.setText("去结算（0)");
+        mTVTotal.setText("合计：0 爱心币");
     }
 
     @Override
@@ -167,7 +261,9 @@ public class ShoppingCartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private  class ShoppingCartAdapter extends BaseAdapter {
+
+    //购物车列表adapter
+    private class ShoppingCartAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
         private ArrayList<ShoppingCartEntity> mDatas = new ArrayList<>();
@@ -233,21 +329,25 @@ public class ShoppingCartActivity extends AppCompatActivity {
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
             holder.number.setText("x" + entity.getNumber());
-            //holder.img.setImageResource(R.drawable.handshake_1);
+            holder.img.setImageResource(R.drawable.aixinwu);
             holder.cb.setChecked(getMap().get(position));
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    int itemid = Integer.parseInt(entity.getId());
                     if (isChecked) {
                         mTotalMoney += entity.getNumber() * entity.getPrice();
                         mTotalChecked++;
+                        CheckedProductId.add(itemid);
                     } else {
-                        mTotalChecked--;
                         mTotalMoney -= entity.getNumber() * entity.getPrice();
+                        mTotalChecked--;
+                        CheckedProductId.remove(CheckedProductId.indexOf(itemid));
+
                     }
-                    mBtnClearing.setText("结算（" + mTotalChecked + ")");
-                    mTVTotal.setText("合计：￥" + mTotalMoney);
+                    mBtnChecking.setText("去结算（" + mTotalChecked + ")");
+                    mTVTotal.setText("合计：" + mTotalMoney + " 爱心币");
                 }
             });
 
@@ -260,4 +360,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
             TextView name, category, price, number;
         }
     }
+
+
+
+
 }

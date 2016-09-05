@@ -6,21 +6,38 @@
     android:orientation="vertical"
 
     >
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="500dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/img_activity_product"
         android:layout_width="match_parent"
-        android:layout_height="270dp"
+        android:layout_height="200dp"
         android:scaleType="fitXY"
-        android:src="@drawable/lottery_head_1"
         />
 
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/img_activity_product"
+    android:id="@+id/detail_product_name"
+    android:textColor="@color/myred"
+    android:textSize="50sp"
+    android:text="11"
+    />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:baselineAligned="true"
         android:minHeight="50dp"
         android:orientation="horizontal"
+        android:layout_below="@id/detail_product_name"
+        android:id="@+id/detail_middle"
         >
 
         <LinearLayout
@@ -31,6 +48,7 @@
             android:orientation="vertical"
             android:padding="7dp">
 
+            <!--
             <TextView
                 android:id="@+id/tv_activity_product_details_list"
                 android:layout_width="wrap_content"
@@ -40,14 +58,14 @@
                 android:paddingLeft="11dp"
                 android:text="￥0"
                 android:textColor="#ff606461"/>
-
+-->
             <TextView
                 android:id="@+id/tv_activity_product_details_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:paddingLeft="11dp"
-                android:text="￥0"
+                android:text="爱心币：0"
                 android:textColor="#ffea1a15"/>
         </LinearLayout>
 
@@ -67,11 +85,16 @@
     <TextView
         android:id="@+id/tv_activity_product_details_details"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/detail_middle"
+
         android:ellipsize="end"
         android:padding="7dp"
+        android:text="ff"
         />
+        </RelativeLayout>
+</ScrollView>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,7 +102,8 @@
         android:gravity="center_vertical"
         android:minHeight="48dp"
         android:orientation="horizontal"
-        android:weightSum="3">
+        android:weightSum="3"
+        android:layout_gravity="bottom">
 
         <TextView
             android:layout_width="0dp"
@@ -103,9 +127,10 @@
             android:layout_weight="1"
             android:background="#ffea0c23"
             android:gravity="center"
-            android:text="马上买"
+            android:text="查看购物车"
             android:textColor="#ffffffff"/>
     </LinearLayout>
+
 
 
 </LinearLayout>

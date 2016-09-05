@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +14,7 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +33,11 @@ import com.aixinwu.axw.database.ProductReadDbHelper;
 import com.aixinwu.axw.database.ProductReaderContract;
 import com.aixinwu.axw.model.Product;
 
+import org.w3c.dom.Text;
+
+import java.io.InputStream;
+import java.net.URL;
+
 public class ProductDetailActivity extends AppCompatActivity {
 
     private static final int QUERY_YES = 0x100;
@@ -38,6 +46,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private static boolean ISQUERYED = false;
 
     private Product entity;
+    private Bitmap bitmap;
 
     private TextView mTVDetails;
     private TextView mTVList;
@@ -46,7 +55,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView mTVPrice;
     private TextView mTVTopPrice;
     private TextView mTVPopCategory;
-
+    private TextView mProductCaption;
     private Button mBtnAddToCart;
     private Button mBtnMinute;
     private Button mBtnPlus;
@@ -79,7 +88,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             switch (what) {
                 case QUERY_YES:
                     int number = (int) msg.obj;
-                    updateDatebase(number);
+                    updateDatabase(number);
                     break;
                 case QUERY_NO:
                     insert2Sqlite();
@@ -96,7 +105,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
 
-        ActionBar actionBar = getSupportActionBar();
+        //ActionBar actionBar = getSupportActionBar();
         //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#33000000")));
         //google的actionbar是分为上下两栏显示的，上面的代码只能设置顶部actionbar的背景色，
         //为了让下面的背景色一致，还需要添加一行代码：
@@ -117,6 +126,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void addListeners() {
+
+        //弹出加入购物车窗口
         mBtnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +141,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+
+        //添加购物车，更新数据库
         mBtnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,7 +150,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 //TODO 发送请求到后台
                 // 保存产品信息到数据库
 
-                queryDatebase();
+                queryDatabase();
 
                 Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
 
@@ -149,6 +162,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+        //关闭弹出窗口
         mImgClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,6 +174,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+        //number 表示添加商品数量
+        //增加商品数量
         mBtnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +184,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
 
+        //减少商品数量
         mBtnMinute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,7 +205,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         // 购买数量 number
         // 购买种类
         int price = entity.getPrice();   // 购买价格
-        String id = entity.getProduct_name(); // 购买id
+        String id = entity.getId() + ""; // 购买id
 
 
         String category = "电子产品";
@@ -205,8 +222,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         String name = entity.getProduct_name();  // 购买名称
 
 
+
+        //database operation
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
         db = mDbHelper.getWritableDatabase();
+
 
         ContentValues values = new ContentValues();
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID, id);
@@ -228,7 +248,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     /**
      * 查询数据库
      */
-    private void queryDatebase() {
+    private void queryDatabase() {
 //        String[] projection = {
 //                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID,
 //                ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER,
@@ -242,7 +262,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         Cursor c = null;
         try {
             String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " = ?";
-            String[] selectionArgs = new String[]{entity.getId()};
+            String[] selectionArgs = new String[]{entity.getId() + ""};//changed on 8.3
             c = db.query(
                     ProductReaderContract.ProductEntry.TABLE_NAME,  // The table to query
 //                projection,                               // The columns to return
@@ -261,7 +281,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     int number = Integer.parseInt(c.getString(c.getColumnIndex(ProductReaderContract
                             .ProductEntry
                             .COLUMN_NAME_NUMBER)));
-                    if (itemId.equals(entity.getId())) {
+                    if (itemId.equals(entity.getId() + "")) {
                         Toast.makeText(getApplication(), "true", Toast.LENGTH_LONG).show();
                         ISQUERYED = true;
                         Message message = Message.obtain();
@@ -288,7 +308,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     /**
      * 更新数据库
      */
-    private void updateDatebase(int sqlNumber) {
+    private void updateDatabase(int sqlNumber) {
 
         sqlNumber += number;// 购买数量
 
@@ -311,12 +331,12 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
     private void initViews() {
-        mTVList = (TextView) findViewById(R.id.tv_activity_product_details_list);
+        //mTVList = (TextView) findViewById(R.id.tv_activity_product_details_list);
         mTVDetails = (TextView) findViewById(R.id.tv_activity_product_details_details);
         mBtnAddToCart = (Button) findViewById(R.id.btn_activity_product_details_add_to_cart);
         mImgDetails = (ImageView) findViewById(R.id.img_activity_product);
         mTVTopPrice = (TextView) findViewById(R.id.tv_activity_product_details_price);
-
+        mProductCaption = (TextView) findViewById(R.id.detail_product_name);
         mPop = LayoutInflater.from(this).inflate(R.layout.popup_add_to_cart, null);
         mImgIcon = (ImageView) mPop.findViewById(R.id.img_pop_icon);
         mBtnOK = (Button) mPop.findViewById(R.id.btn_pop_ok);
@@ -327,25 +347,79 @@ public class ProductDetailActivity extends AppCompatActivity {
         mTVPopDetails = (TextView) mPop.findViewById(R.id.tv_pop_details);
         mTVPrice = (TextView) mPop.findViewById(R.id.tv_pop_price);
         mTVPopCategory = (TextView) mPop.findViewById(R.id.tv_pop_category);
+        //double PopHeight = getWindow().getAttributes().height;
+        //PopHeight = PopHeight * 0.6;
         mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1080);
+
     }
 
-    private void initDatas() {
 
+
+    final Handler bitmaphandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what==0x9527) {
+                //显示从网上下载的图片
+                mImgDetails.setImageBitmap(bitmap);
+                mImgIcon.setImageBitmap(bitmap);
+            }
+        }
+    };
+
+    private void initDatas() {
+        Intent intent = this.getIntent();
+        entity= (Product) intent.getSerializableExtra("product");
 //        entity = (Product) getIntent().getSerializableExtra("param1");
-entity = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
+        //entity = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
         String category = "";
 
-        mImgDetails.setImageResource(entity.getImage_id());
 
-        mTVDetails.setText(entity.getDescription());
-        mTVTopPrice.setText("￥" + entity.getPrice());
-        mTVPrice.setText("￥" + entity.getPrice());
-        mTVPopDetails.setText(entity.getDescription());
-        mTVList.setText("￥" + (entity.getPrice() + 900));
+        //mImgDetails.setImageResource(entity.getImage_id());  changed in 38
 
-        mImgIcon.setImageResource(entity.getImage_id());
 
+        //==========Set image url===============
+
+
+        new Thread(){
+            @Override
+            public void run() {
+                try {
+                    //创建一个url对象
+                    URL url=new URL(entity.getImage_url());
+                    //打开URL对应的资源输入流
+                    InputStream is= url.openStream();
+                    //从InputStream流中解析出图片
+                    bitmap = BitmapFactory.decodeStream(is);
+                    //  imageview.setImageBitmap(bitmap);
+                    //发送消息，通知UI组件显示图片
+                    bitmaphandler.sendEmptyMessage(0x9527);
+                    //关闭输入流
+                    is.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+
+        //mImgDetails.setImageResource(R.mipmap.product1);
+
+
+
+
+
+        mProductCaption.setText(entity.getProduct_name());
+        mTVDetails.setText(Html.fromHtml(entity.getDescription()));
+        //mTVDetails.setText(entity.getDescription());
+        mTVTopPrice.setText("爱心币：" + entity.getPrice());
+        mTVPrice.setText("爱心币：" + entity.getPrice());
+        mTVPopDetails.setText(Html.fromHtml(entity.getDescription()));
+        //mTVList.setText("￥" + (entity.getPrice() + 900));
+
+        //mImgIcon.setImageResource(entity.getImage_id());changed in 38
+
+        //mImgIcon.setImageResource(R.mipmap.product1);
+
+        /*
         if (Integer.parseInt(entity.getId()) / 10000 == 1) {
             category = "保健产品";
         } else if (Integer.parseInt(entity.getId()) / 10000 == 2) {
@@ -353,8 +427,9 @@ entity = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
         } else {
             category = "书籍";
         }
+*/
         mTVPopCategory.setText(category);
-        mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        //mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
     }
 
