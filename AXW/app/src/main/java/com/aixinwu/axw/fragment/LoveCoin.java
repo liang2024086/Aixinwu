@@ -229,6 +229,7 @@ public class LoveCoin extends Fragment {
                                 String descurl = result.getJSONObject(i).getString("desp_url");
                                 String descdetail = result.getJSONObject(i).getString("desc");
                                 String shortdesc = result.getJSONObject(i).getString("short_desc");
+                                String despUrl   = result.getJSONObject(i).getString("desp_url");
                                 Log.i("Image Url", imageurl[0]);
                                 Log.i("aixinwuitemid", iid);
                                 Log.i("value", value);
@@ -245,7 +246,8 @@ public class LoveCoin extends Fragment {
                                             result.getJSONObject(i).getInt("price"),
                                             "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
                                             descdetail,
-                                            shortdesc
+                                            shortdesc,
+                                            despUrl
                                             ));
                                     Log.i("Status ", "001");
                                 } else
@@ -254,7 +256,8 @@ public class LoveCoin extends Fragment {
                                             result.getJSONObject(i).getInt("price"),
                                             "http://202.120.47.213:12345/"+imageurl[0],
                                             descdetail,
-                                            shortdesc
+                                            shortdesc,
+                                            despUrl
                                     ));
                                 Log.i("Status ", "021");
                             }

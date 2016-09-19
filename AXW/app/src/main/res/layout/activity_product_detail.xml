@@ -11,8 +11,8 @@
         android:layout_height="500dp">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/img_activity_product"
@@ -82,15 +82,14 @@
             android:textColor="#ff606461"/>
     </LinearLayout>
 
-    <TextView
+    <WebView
         android:id="@+id/tv_activity_product_details_details"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/detail_middle"
 
         android:ellipsize="end"
         android:padding="7dp"
-        android:text="ff"
         />
         </RelativeLayout>
 </ScrollView>

@@ -2,92 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ca2231a-1e82-4bdc-9dc1-7a39ff49ec0a" name="Default" comment="">
-      <change type="DELETED" beforePath="F:\AndroidStudioProjects\Aixinwu\AXW\.idea\inspectionProfiles\Project_Default.xml" afterPath="" />
-      <change type="DELETED" beforePath="F:\AndroidStudioProjects\Aixinwu\AXW\.idea\inspectionProfiles\profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="F:\AndroidStudioProjects\Aixinwu\~$APP.docx" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/FlipLoadingLayout$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/FlipLoadingLayout$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/FlipLoadingLayout$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/FlipLoadingLayout$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/IndicatorLayout$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/IndicatorLayout$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/IndicatorLayout$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/IndicatorLayout$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/IndicatorLayout.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/IndicatorLayout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/IndicatorLayout.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/IndicatorLayout.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/LoadingLayout$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/LoadingLayout$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/LoadingLayout$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/LoadingLayout$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/OverscrollHelper$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/OverscrollHelper$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/OverscrollHelper$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/OverscrollHelper$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/OverscrollHelper.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/OverscrollHelper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/OverscrollHelper.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/OverscrollHelper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/outputs/aar/PullToRefresh-debug.aar" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/outputs/aar/PullToRefresh-debug.aar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/outputs/aar/PullToRefresh-release.aar" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/outputs/aar/PullToRefresh-release.aar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshAdapterViewBase$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshAdapterViewBase$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshAdapterViewBase$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshAdapterViewBase$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshBase$4.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshBase$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshBase$4.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshBase$4.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshBase.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshBase.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshBase.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshBase.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshListView$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshListView$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshListView$1.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshListView$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshListView.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/PullToRefreshListView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshListView.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/PullToRefreshListView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/R.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/R.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/R.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/ViewCompat.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/debug/com/handmark/pulltorefresh/library/internal/ViewCompat.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/ViewCompat.class" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/classes/release/com/handmark/pulltorefresh/library/internal/ViewCompat.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/bundles/debug/classes.jar" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/bundles/debug/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/bundles/release/classes.jar" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/bundles/release/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/res/resources-debug-androidTest.ap_" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/res/resources-debug-androidTest.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/AXW.iml" afterPath="$PROJECT_DIR$/AXW/AXW.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/AXW/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/fragment/LoveCoin.java" afterPath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/fragment/LoveCoin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/model/Product.java" afterPath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/model/Product.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/activity/ProductDetailActivity.java" afterPath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/activity/ProductDetailActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/PullToRefresh.iml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/PullToRefresh.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/fragment/UserInfo.java" afterPath="$PROJECT_DIR$/AXW/app/src/main/java/com/aixinwu/axw/fragment/UserInfo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/anim.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/anim.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/app.iml" afterPath="$PROJECT_DIR$/AXW/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/AXW/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/.idea/compiler.xml" afterPath="$PROJECT_DIR$/AXW/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable-hdpi-v4.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable-hdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable-mdpi-v4.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable-mdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable-xhdpi-v4.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable-xhdpi-v4.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/drawable.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/.idea/encodings.xml" afterPath="$PROJECT_DIR$/AXW/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/.idea/gradle.xml" afterPath="$PROJECT_DIR$/AXW/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/layout.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/single/layout.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/res/layout/love_coin.xml" afterPath="$PROJECT_DIR$/AXW/app/src/main/res/layout/love_coin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugAndroidTestAssets/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugAndroidTestAssets/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugAndroidTestResources/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugAndroidTestResources/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugAssets/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeReleaseAssets/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeReleaseAssets/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/mergeReleaseJniLibFolders/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/packageDebugResources/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/packageDebugResources/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/packageReleaseResources/merger.xml" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/incremental/packageReleaseResources/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/.idea/misc.xml" afterPath="$PROJECT_DIR$/AXW/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/.idea/modules.xml" afterPath="$PROJECT_DIR$/AXW/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/res/layout/product_item.xml" afterPath="$PROJECT_DIR$/AXW/app/src/main/res/layout/product_item.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/.idea/runConfigurations.xml" afterPath="$PROJECT_DIR$/AXW/.idea/runConfigurations.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/AXW/app/src/main/res/values/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ar.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ar.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-cs.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-cs.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-de.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-de.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-es.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-es.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-fi.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-fi.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-fr.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-fr.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-he.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-he.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-it.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-it.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-iw.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-iw.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ja.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ja.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ko.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ko.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-nl.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-nl.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-pl.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-pl.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-pt-rBR.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-pt-rBR.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-pt.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-pt.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ro.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ro.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ru.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-ru.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-zh.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values-zh.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values.json" afterPath="$PROJECT_DIR$/AXW/PullToRefresh/build/intermediates/blame/res/androidTest/debug/multi/values.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/AXW/.idea/vcs.xml" afterPath="$PROJECT_DIR$/AXW/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/Aixinwu.iml" afterPath="$PROJECT_DIR$/.idea/Aixinwu.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Aixinwu.iws" />
@@ -115,14 +30,11 @@
       <projects_view />
     </option>
   </component>
-  <component name="NamedScopeManager">
-    <order />
-  </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="22" />
-    <option name="width" value="1382" />
-    <option name="height" value="754" />
+    <option name="x" value="41" />
+    <option name="y" value="24" />
+    <option name="width" value="1879" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -145,14 +57,16 @@
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane />
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -212,8 +126,9 @@
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/AXW" />
     <property name="FullScreen" value="false" />
+    <property name="device.picker.selection" value="Nexus_4_API_18" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Android Application.Unnamed">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="DEPLOY" value="true" />
@@ -227,10 +142,23 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <Native>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Native>
+      <Java />
+      <Hybrid>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Hybrid>
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method />
@@ -249,10 +177,23 @@
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <Native>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Native>
+      <Java />
+      <Hybrid>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Hybrid>
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -348,6 +289,43 @@
       <listeners />
       <method />
     </configuration>
+    <configuration default="false" name="Unnamed" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="Aixinwu" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="DEBUGGER_TYPE" value="Java" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <Native>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Native>
+      <Java />
+      <Hybrid>
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+      </Hybrid>
+      <Profilers>
+        <option name="GAPID_DISABLE_PCS" value="false" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Android Application.Unnamed" />
+    </list>
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
       <option name="MAIN_CLASS_NAME" />
       <option name="HTML_FILE_NAME" />
@@ -375,31 +353,35 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1382" height="754" extended-state="6" />
+    <frame x="41" y="24" width="1879" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32941177" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962178" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25259137" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">

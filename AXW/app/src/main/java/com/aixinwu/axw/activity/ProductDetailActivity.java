@@ -22,6 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -48,7 +51,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Product entity;
     private Bitmap bitmap;
 
-    private TextView mTVDetails;
+    private WebView mTVDetails;
     private TextView mTVList;
     private TextView mTVNumber;
     private TextView mTVPopDetails;
@@ -333,7 +336,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private void initViews() {
         //mTVList = (TextView) findViewById(R.id.tv_activity_product_details_list);
-        mTVDetails = (TextView) findViewById(R.id.tv_activity_product_details_details);
+        mTVDetails = (WebView) findViewById(R.id.tv_activity_product_details_details);
         mBtnAddToCart = (Button) findViewById(R.id.btn_activity_product_details_add_to_cart);
         mImgDetails = (ImageView) findViewById(R.id.img_activity_product);
         mTVTopPrice = (TextView) findViewById(R.id.tv_activity_product_details_price);
@@ -409,7 +412,19 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         mProductCaption.setText(entity.getProduct_name());
-        mTVDetails.setText(Html.fromHtml(entity.getDescription()));
+        mTVDetails.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+//        mTVDetails.setText(Html.fromHtml(entity.getDescription()));
+//        WebSettings webSettings = mTVDetails.getSettings();
+//        webSettings.setJavaScriptEnabled(true);
+
+        mTVDetails.loadUrl(entity.getDescriptionUrl());
+
         //mTVDetails.setText(entity.getDescription());
         mTVTopPrice.setText("爱心币：" + entity.getPrice());
         mTVPrice.setText("爱心币：" + entity.getPrice());
