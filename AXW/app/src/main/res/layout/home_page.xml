@@ -37,6 +37,7 @@
                     android:hint="@string/homepageSearch"/>
 
                 <RelativeLayout
+                    android:id="@+id/rollPicture"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:background="@color/white" >
@@ -44,7 +45,8 @@
                     <com.aixinwu.axw.view.BaseViewPager
                         android:id="@+id/viewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp" >
                     </com.aixinwu.axw.view.BaseViewPager>
 
                     <LinearLayout
@@ -61,308 +63,332 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-                <GridView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:id="@+id/homepage_guide"
-                    android:numColumns="4"
-                    android:background="@color/white">
-                </GridView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="商品推荐"
-                    android:textSize="18dp"
-                    android:textColor="@color/red"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/white"/>
                 <RelativeLayout
-                    android:id="@+id/show_commodity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="3dp"
+                    android:layout_marginTop="-2dp"
+                    android:background="#F0F0F0"></RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="重要商品推荐"
+                        android:textSize="18dp"
+                        android:textColor="#3e3a39"
+                        android:layout_centerHorizontal="true"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多 ＞ "
+                        android:textSize="13dp"
+                        android:textColor="#888889"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        />
 
                 </RelativeLayout>
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="爱心屋数据"
-                    android:textSize="18dp"
-                    android:textColor="@color/red"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/white"/>
-                <LinearLayout
-                    android:id="@+id/data_analyze"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="340dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp">
 
-                    <LinearLayout
+                    <View
+                        android:id="@+id/topLine"
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        android:background="@color/white">
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0"
+                        android:layout_alignParentTop="true"/>
 
-                        <RelativeLayout
-                            android:layout_width="150dp"
-                            android:layout_height="100dp">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="物品捐赠量(本月)"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_marginRight="3dp"
-                                android:layout_marginEnd="3dp"/>
+                    <View
+                        android:id="@+id/leftLine"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#F0F0F0"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/number4"
-                                android:gravity="center"
-                                android:text="36000"
-                                android:textColor="@color/red"
-                                android:textSize="40sp"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="15dp"/>
-
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#F0F0F0"/>
-
-                        <RelativeLayout
-                            android:layout_width="150dp"
-                            android:layout_height="100dp">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="物品流转量(本月)"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_marginRight="3dp"
-                                android:layout_marginEnd="3dp"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/number3"
-                                android:gravity="center"
-                                android:text="94562"
-                                android:textColor="@color/red"
-                                android:textSize="40sp"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="15dp"/>
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
+                    <View
+                        android:id="@+id/rightLine"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#F0F0F0"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="#F0F0F0"/>
+                        android:background="#F0F0F0"
+                        android:layout_alignParentBottom="true"/>
 
-                    <LinearLayout
+                    <GridView
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/homepage_guide"
+                        android:numColumns="3"
+                        android:layout_below="@id/topLine"
+                        android:layout_toRightOf="@id/leftLine"
+                        android:layout_toEndOf="@id/leftLine"
+                        android:layout_toLeftOf="@id/rightLine"
+                        android:layout_toStartOf="@id/rightLine">
+                    </GridView>
+
+
+                    <!--
+                    <GridView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:numColumns="3"
                         android:background="@color/white">
-
-                        <RelativeLayout
-                            android:layout_width="150dp"
-                            android:layout_height="100dp">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/donation1"
-                                android:gravity="center"
-                                android:text="物品捐赠量(累计)"
-                                android:layout_alignParentLeft="true"
-                                android:layout_alignParentStart="true"
-                                android:layout_marginRight="3dp"
-                                android:layout_marginEnd="3dp"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/number1"
-                                android:gravity="center"
-                                android:text="776697"
-                                android:textColor="@color/red"
-                                android:textSize="40sp"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="15dp"/>
-
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="#F0F0F0"/>
-
-                        <RelativeLayout
-                            android:layout_width="150dp"
-                            android:layout_height="100dp">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:text="物品流转量(累计)"
-                                android:paddingLeft="5dp"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/number2"
-                                android:gravity="center"
-                                android:text="25386"
-                                android:textColor="@color/red"
-                                android:textSize="40sp"
-                                android:layout_alignParentRight="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="15dp"/>
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-    <!--
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_info"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    />
-
-                <RelativeLayout
-                    android:id="@+id/home_info"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="#FFFFFFFF">
-
-                    <TextView
-                        android:id="@+id/info1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textSize="15sp"
-                        android:gravity="start"
-                        android:padding="5dp"
-                        android:textColor="@drawable/textselector"
-                        />
-
-                    <TextView
-                        android:id="@+id/info2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/info1"
-                        android:text=""
-                        android:textSize="15sp"
-                        android:gravity="start"
-                        android:padding="5dp"
-                        android:textColor="@drawable/textselector"
-                        />
-
-                    <TextView
-                        android:id="@+id/info3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/info2"
-                        android:text=""
-                        android:textSize="15sp"
-                        android:gravity="start"
-                        android:padding="5dp"
-                        android:textColor="@drawable/textselector"
-                        />
-
-                    <TextView
-                        android:id="@+id/moreInfo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentTop="true"
-                        android:text="@string/more"
-                        android:textSize="15sp"
-                        android:textColor="@drawable/textselector"/>
-
-
+                    </GridView>
+-->
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_commodity"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    />
 
+<!--
+                <RelativeLayout
+                    android:id="@+id/show_commodity"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_below="@id/topLine"
+                    android:layout_alignLeft="@id/leftLine"
+                    android:layout_alignStart="@id/leftLine">
 
-                <LinearLayout
-                    android:id="@+id/home_commodity"
-                    android:orientation="vertical"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="#FFFFFFFF">
+                </RelativeLayout>
+-->
 
-
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_deal"
-                    android:textSize="20sp"
-                    android:gravity="center_horizontal"
-                    android:padding="5dp"
-                    />
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="#F0F0F0"></View>
 
                 <RelativeLayout
-                    android:id="@+id/home_deal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp">
 
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentTop="true">
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="2dp"
+                            android:layout_marginEnd="6dp"
+                            android:src="@drawable/heart"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" 爱心屋数据"
+                            android:textSize="18dp"
+                            android:textColor="#3e3a39"/>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="更多 ＞ "
+                        android:textSize="13dp"
+                        android:textColor="#888889"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        />
+
                 </RelativeLayout>
-    -->
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="50dp">
+
+                    <View
+                        android:id="@+id/topLine2"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0"
+                        android:layout_alignParentTop="true"/>
+
+                    <View
+                        android:id="@+id/leftLine2"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#F0F0F0"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"/>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#F0F0F0"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#F0F0F0"
+                        android:layout_alignParentBottom="true"/>
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="本月物品捐赠"
+                            android:textSize="18dp"
+                            android:textColor="#3e3a39"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/number4"
+                            android:gravity="center"
+                            android:text="36000"
+                            android:textColor="#ea5404"
+                            android:textSize="25sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="40dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="本月物品流转"
+                            android:textSize="18dp"
+                            android:textColor="#3e3a39"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/number3"
+                            android:gravity="center"
+                            android:text="94562"
+                            android:textColor="#ea5404"
+                            android:textSize="25sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="40dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="50dp">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/donation1"
+                            android:gravity="center"
+                            android:text="累计物品捐赠"
+                            android:textSize="18dp"
+                            android:textColor="#3e3a39"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/number1"
+                            android:gravity="center"
+                            android:text="776697"
+                            android:textColor="#ea5404"
+                            android:textSize="25sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="40dp"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="150dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="50dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="累计物品流转"
+                            android:textSize="18dp"
+                            android:textColor="#3e3a39"
+                            android:layout_centerHorizontal="true"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/number2"
+                            android:gravity="center"
+                            android:text="25386"
+                            android:textColor="#ea5404"
+                            android:textSize="25sp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="40dp"/>
+
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/line"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="80dp"
+                        android:layout_marginStart="80dp"/>
+
+                </RelativeLayout>
             </LinearLayout>
 
         </com.aixinwu.axw.view.MyScrollView>

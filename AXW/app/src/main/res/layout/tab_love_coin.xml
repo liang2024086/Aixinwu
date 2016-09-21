@@ -15,7 +15,7 @@
         android:id="@+id/tab_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="置换"
+        android:text="爱心"
         android:textSize="12dp"
         android:gravity="center"
         android:textColor="#696969"/>

@@ -2,9 +2,12 @@ package com.aixinwu.axw.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.media.Image;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -27,18 +30,30 @@ import android.widget.Toast;
 
 import com.aixinwu.axw.Adapter.HomepageGuiedAdapter;
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.activity.Buy;
 import com.aixinwu.axw.activity.HelloWorld;
 import com.aixinwu.axw.activity.ProductDetailActivity;
 import com.aixinwu.axw.model.HomepageGuide;
 import com.aixinwu.axw.model.Product;
+import com.aixinwu.axw.tools.Bean;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.view.BaseViewPager;
 import com.aixinwu.axw.view.CycleViewPager;
 import com.aixinwu.axw.view.MyScrollView;
 
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.simple.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by liangyuding on 2016/4/6.
@@ -56,6 +71,22 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     View searchHomePage;
     View search;
 
+    private String surl = GlobalParameterApplication.getSurl();
+    private String MyToken;
+    private static List<Bean> dbData = new ArrayList<Bean>();
+    private String visitCounter = "" ;
+    private String money = "" ;
+    private String user = "" ;
+    private String item = "" ;
+    private TextView number1;
+    private TextView number2;
+    private TextView number3;
+    private TextView number4;
+
+
+    private View view;
+
+
     private int searchTouchTime = 0;
 
     private ArrayList<HomepageGuide> homepageGuides = new ArrayList<HomepageGuide>();
@@ -67,7 +98,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.home_page,null);
+        view = inflater.inflate(R.layout.home_page,null);
 
         //获取屏幕宽度
         metrics = new DisplayMetrics();
@@ -85,7 +116,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
         setViewPagerScrollSpeed(1000);//设置滑动速度
         init();
 
-        search =  view.findViewById(R.id.homepage_search);
+        search = view.findViewById(R.id.homepage_search);
         searchTouchTime = 0;
         search.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -105,6 +136,11 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
 
         //自己的
 
+        number1 = (TextView) view.findViewById(R.id.number1);
+        number2 = (TextView) view.findViewById(R.id.number2);
+        number3 = (TextView) view.findViewById(R.id.number3);
+        number4 = (TextView) view.findViewById(R.id.number4);
+
         scrollView = (MyScrollView) view.findViewById(R.id.homepageScroll);
         scrollView.setScrollViewListener(this);
 
@@ -114,13 +150,13 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
-                intent.putExtra("param1","搜索");
+                intent.putExtra("param1", "搜索");
                 getActivity().startActivity(intent);
             }
         });
 
-        initializeGuide(view);
-        showCommodity = (RelativeLayout) view.findViewById(R.id.show_commodity);
+        mThread.start();
+        /*showCommodity = (RelativeLayout) view.findViewById(R.id.show_commodity);
         createShowCommodity();
         addFirst();
         addSecond();
@@ -128,7 +164,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
         addForth();
         addFifth();
         addSixth();
-
+*/
         /*
         info1 = (TextView) view.findViewById(R.id.info1);
         info1.setOnClickListener(new View.OnClickListener() {
@@ -187,30 +223,34 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     }
 
     private void initializeGuide(View view){
-        homepageGuides.add(new HomepageGuide(R.mipmap.product1,"二手物品"));
-        homepageGuides.add(new HomepageGuide(R.mipmap.img1,"爱心"));
-        homepageGuides.add(new HomepageGuide(R.mipmap.product2,"租赁"));
-        homepageGuides.add(new HomepageGuide(R.mipmap.product3,"志愿者"));
-        homepageGuides.add(new HomepageGuide(R.mipmap.product4,"众筹"));
-        homepageGuides.add(new HomepageGuide(R.mipmap.img2,"规则清单"));
+        homepageGuides.add(new HomepageGuide(dbData.get(0).getPicId(),dbData.get(0).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(1).getPicId(),dbData.get(1).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(2).getPicId(),dbData.get(2).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(3).getPicId(),dbData.get(3).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(4).getPicId(),dbData.get(4).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(5).getPicId(),dbData.get(5).getType()));
+        //homepageGuides.add(new HomepageGuide(R.mipmap.img1,dbData.get(0).getType()));
         //homepageGuides.add(new HomepageGuide(R.mipmap.img3,"待定"));
         //homepageGuides.add(new HomepageGuide(R.mipmap.img1,"待定"));
+
+        Toast.makeText(getActivity(),R.mipmap.img1+" ",Toast.LENGTH_SHORT).show();
 
         HomepageGuiedAdapter homepageGuiedAdapter = new HomepageGuiedAdapter(
                 getActivity(),
                 R.layout.homepage_guide_item,
                 homepageGuides);
 
-        GridView guides = (GridView) view.findViewById(R.id.homepage_guide);
+        GridView guides = (GridView) getActivity().findViewById(R.id.homepage_guide);
         guides.setAdapter (homepageGuiedAdapter);
         guides.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HomepageGuide guide = homepageGuides.get(i);
-                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
-                intent.putExtra("param1",guide.getName());
-                getActivity().startActivity(intent);
-
+                Intent intent = new Intent();
+                intent.putExtra("itemId", dbData.get(i).getItemId());
+                intent.putExtra("caption",dbData.get(i).getType());
+                intent.setClass(getActivity(), Buy.class);
+                startActivity(intent);
             }
         });
     }
@@ -218,7 +258,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     private void addData(){
 
     }
-
+/*
     private void createShowCommodity(){
 
         // first
@@ -285,6 +325,15 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
         sixthCommodityParams.addRule(RelativeLayout.BELOW, firstCommodity.getId());
         sixthCommodity.setLayoutParams(forthCommodityParams);
         showCommodity.addView(sixthCommodity,sixthCommodityParams);
+
+       //two edges
+        View leftEdge = new View(getActivity());
+        RelativeLayout.LayoutParams leftEdgeLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        leftEdgeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        leftEdgeLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        leftEdge.setLayoutParams(leftEdgeLayoutParams);
+        firstCommodity.addView(leftEdge, leftEdgeLayoutParams);
+
 
     }
 
@@ -499,157 +548,140 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
             }
         });
     }
+*/
 
-    private void addPopularCommodity(int id,int aboveId){
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenHalfWidth = metrics.widthPixels / 2;
 
-        RelativeLayout relativeLayout = new RelativeLayout(getActivity());
-        RelativeLayout.LayoutParams relativeLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        relativeLayout.setId(id);
-        relativeLayout.setBackgroundColor(0xFFFFFFFF);
-        if (aboveId != -1){
-            relativeLayoutParams.addRule(RelativeLayout.BELOW,aboveId);
+    private Thread mThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            getDbData();
+            getStaticData();
+
+
+            Message msg= new Message();
+            msg.what = 23212;
+            handler.sendMessage(msg);
+
         }
-        relativeLayoutParams.setMargins(0, 20, 0, 20);
-        relativeLayout.setLayoutParams(relativeLayoutParams);
+    });
+    public Handler handler = new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 23212:
+                    //                 lvResults.onRefreshComplete();
 
-        TextView userInfo = new TextView(getActivity());
-        userInfo.setText("匿名用户\n n小时前发布");
-        userInfo.setId(R.id.userinfo);
-        RelativeLayout.LayoutParams userInfoLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        userInfoLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        userInfoLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        userInfoLayoutParams.setMargins(0, 5, 0, 20);
-        userInfo.setLayoutParams(userInfoLayoutParams);
+                    switch(dbData.size()){
 
-        relativeLayout.addView(userInfo, userInfoLayoutParams);
-
-        LinearLayout linearLayout = new LinearLayout(getActivity());
-        linearLayout.setId(R.id.linear1);
-        linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout.setPadding(15, 25, 15, 15);
-        RelativeLayout.LayoutParams linearLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, screenHalfWidth/2);
-        linearLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        linearLayoutParams.addRule(RelativeLayout.BELOW, userInfo.getId());
-        linearLayout.setLayoutParams(linearLayoutParams);
+                        case 0:break;
+                    }
 
 
-        ImageView picture = new ImageView(getActivity());
-        picture.setId(R.id.pop1);
-        picture.setImageResource(R.mipmap.img1);
-        RelativeLayout.LayoutParams pictureLayoutParams = new RelativeLayout.LayoutParams(metrics.widthPixels/4, screenHalfWidth/2);
-        picture.setLayoutParams(pictureLayoutParams);
-
-        linearLayout.addView(picture, pictureLayoutParams);
-
-        View blank1 = new View(getActivity());
-        blank1.setLayoutParams(new RelativeLayout.LayoutParams(screenHalfWidth / 10, screenHalfWidth / 2));
-        linearLayout.addView(blank1);
-
-        ImageView picture1 = new ImageView(getActivity());
-        picture1.setId(R.id.pop2);
-        picture1.setImageResource(R.mipmap.img2);
-        RelativeLayout.LayoutParams pictureLayoutParams1 = new RelativeLayout.LayoutParams(metrics.widthPixels/4, screenHalfWidth / 2);
-        picture1.setLayoutParams(pictureLayoutParams1);
-
-        linearLayout.addView(picture1, pictureLayoutParams1);
-
-        View blank2 = new View(getActivity());
-        blank2.setLayoutParams(new RelativeLayout.LayoutParams(screenHalfWidth / 10, screenHalfWidth / 2));
-        linearLayout.addView(blank2);
-
-        ImageView picture2 = new ImageView(getActivity());
-        picture2.setImageResource(R.mipmap.img3);
-        RelativeLayout.LayoutParams pictureLayoutParams2 = new RelativeLayout.LayoutParams(metrics.widthPixels / 4, screenHalfWidth / 2);
-        picture2.setLayoutParams(pictureLayoutParams2);
-
-        linearLayout.addView(picture2, pictureLayoutParams2);
-
-        relativeLayout.addView(linearLayout, linearLayoutParams);
-
-        TextView description = new TextView(getActivity());
-        description.setText("商品介绍\n     这件商品质量很好，大家快来买啊！！！");
-        RelativeLayout.LayoutParams desLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        desLayoutParams.addRule(RelativeLayout.BELOW,linearLayout.getId());
-        desLayoutParams.setMargins(0,0,0,30);
-        description.setLayoutParams(desLayoutParams);
-
-        relativeLayout.addView(description);
-
-        popCommodity.addView(relativeLayout,relativeLayoutParams);
-
-
-    }
-
-    private void addNewCommodity(int pic,int pic_id,String coin,String repertory){
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        int screenHalfWidth = metrics.widthPixels / 2;
-
-        RelativeLayout relativeLayout = new RelativeLayout(getActivity());
-        relativeLayout.setPadding(0, 10, 0, 10);
-        relativeLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));//���ǿ�ȣ����Ǹ߶�
-        /*LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) newCommodity.getLayoutParams();
-        layoutParams.height = screenHalfWidth;
-        layoutParams.width = LinearLayout.LayoutParams.MATCH_PARENT;*/
-
-        ImageView img1 = new ImageView(getActivity());
-        img1.setImageResource(pic);
-        //img1.setLayoutParams(new RelativeLayout.LayoutParams(screenHalfWidth, screenHalfWidth));
-        img1.setId(pic_id);
-        RelativeLayout.LayoutParams img1LayoutParams = new RelativeLayout.LayoutParams(screenHalfWidth*4/3, screenHalfWidth);
-        img1LayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        img1LayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-        img1.setLayoutParams(img1LayoutParams);
-        relativeLayout.addView(img1, img1LayoutParams);
-
-        LinearLayout linearLayout = new LinearLayout(getActivity());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        RelativeLayout.LayoutParams linearLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        linearLayoutParams.addRule(RelativeLayout.RIGHT_OF, img1.getId());
-        linearLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-        linearLayout.setLayoutParams(linearLayoutParams);
-        relativeLayout.addView(linearLayout, linearLayoutParams);
-
-        TextView text1 = new TextView(getActivity());
-        text1.setText("爱心币: "+coin);
-        //text1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-        LinearLayout.LayoutParams text1LayoutParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        text1.setLayoutParams(text1LayoutParams);
-        linearLayout.addView(text1, text1LayoutParams);
-
-        TextView text2 = new TextView(getActivity());
-        text2.setText("库存: "+ repertory);
-        //text1.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-        LinearLayout.LayoutParams text2LayoutParams = new LinearLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        text2.setLayoutParams(text2LayoutParams);
-        linearLayout.addView(text2, text2LayoutParams);
+                    initializeGuide(view);   // don't need this guide liangyuding
+                    number1.setText(visitCounter);
+                    number2.setText(money);
+                    number3.setText(user);
+                    number4.setText(item);
 
 
 
-        newCommodity.addView(relativeLayout,relativeLayout.getLayoutParams());
+
+                    break;
+            }
+        }
+
+    };
+    private void getDbData(){
+        MyToken= GlobalParameterApplication.getToken();
+        JSONObject data = new JSONObject();
+
+        {
+
+            Log.i("UsedDeal", "get");
+            try {
+                URL url = new URL(surl + "/item_mainpage");
+                try {
+                    Log.i("UsedDeal","getconnection");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    conn.getOutputStream().write(data.toJSONString().getBytes());
+                    java.lang.String ostr = IOUtils.toString(conn.getInputStream());
+                    org.json.JSONObject outjson = null;
+                    try {
+                        JSONArray result = null;
+                        outjson = new org.json.JSONObject(ostr);
+                        result = outjson.getJSONArray("items");
+                        for (int i = 0; i < result.length(); i++)
+                            if (result.getJSONObject(i).getInt("status")==0)
+                            {
+                                String[] rr = result.getJSONObject(i).getString("images").split(",");
+                                if (rr[0]=="") {
+                                    BitmapFactory.Options cc = new BitmapFactory.Options();
+                                    cc.inSampleSize = 20;
+                                    dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
+                                } else
+                                    dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/"+rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
+                            }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 
-    private void addLine(){
 
-        LinearLayout linearLayout = new LinearLayout(getActivity());
-        linearLayout.setPadding(15, 10, 15, 10);
-        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));//���ǿ�ȣ����Ǹ߶�
 
-        View line = new View(getActivity());
-        line.setBackgroundColor(Color.GRAY);
-        RelativeLayout.LayoutParams lineLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, 5);
-        lineLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        //lineLayoutParams.setMargins(0,100,0,100);
+    private void getStaticData(){
+        MyToken= GlobalParameterApplication.getToken();
+        JSONObject data = new JSONObject();
+        {
 
-        line.setLayoutParams(lineLayoutParams);
-        linearLayout.addView(line, lineLayoutParams);
+            Log.i("UsedDeal", "get");
+            try {
+                URL url = new URL(surl + "/static");
+                try {
+                    Log.i("UsedDeal","getconnection");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
 
-        newCommodity.addView(linearLayout, linearLayout.getLayoutParams());
+                    conn.getOutputStream().write(data.toJSONString().getBytes());
+                    java.lang.String ostr = IOUtils.toString(conn.getInputStream());
+                    org.json.JSONObject outjson = null;
+                    try {
+                        org.json.JSONObject result = null;
+                        outjson = new org.json.JSONObject(ostr);
+                        result = outjson.getJSONObject("staticInfo");
+
+                        visitCounter = result.getString("visitCounter");
+                        money = result.getString("money");
+                        user = result.getString("user");
+                        item = result.getString("item");
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     @Override

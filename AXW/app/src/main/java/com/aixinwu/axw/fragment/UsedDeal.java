@@ -410,7 +410,7 @@ public class UsedDeal extends CycleViewPager {
     }
 
     private void initializeGuide(View view){
-        homepageGuides.add(new HomepageGuide(R.mipmap.product1,"二手物品"));
+     /*   homepageGuides.add(new HomepageGuide(R.mipmap.product1,"二手物品"));
         homepageGuides.add(new HomepageGuide(R.mipmap.img1,"爱心"));
         homepageGuides.add(new HomepageGuide(R.mipmap.product2,"租赁"));
         homepageGuides.add(new HomepageGuide(R.mipmap.product3,"志愿者"));
@@ -435,7 +435,7 @@ public class UsedDeal extends CycleViewPager {
                 getActivity().startActivity(intent);
 
             }
-        });
+        });*/
     }
 
 

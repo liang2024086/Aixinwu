@@ -17,7 +17,7 @@ import com.aixinwu.axw.R;
  */
 public class WelcomeActivity extends Activity {
 
-    private final long SPLASH_LENGTH = 5000;
+    private final long SPLASH_LENGTH = 2000;
     Handler handler = new Handler();
     private TextView time;
     private MyCountDownTimer mc;
@@ -30,7 +30,7 @@ public class WelcomeActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
 
-        time = (TextView)findViewById(R.id.time);
+       /* time = (TextView)findViewById(R.id.time);
         time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,8 +43,8 @@ public class WelcomeActivity extends Activity {
             }
         });
 
-        mc = new MyCountDownTimer(5000, 1000);
-        mc.start();
+       mc = new MyCountDownTimer(5000, 1000);
+       mc.start();*/
 
 
         handler.postDelayed(my,SPLASH_LENGTH);
