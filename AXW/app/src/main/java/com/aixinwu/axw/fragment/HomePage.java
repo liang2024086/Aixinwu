@@ -223,12 +223,14 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     }
 
     private void initializeGuide(View view){
-        homepageGuides.add(new HomepageGuide(dbData.get(0).getPicId(),dbData.get(0).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(1).getPicId(),dbData.get(1).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(2).getPicId(),dbData.get(2).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(3).getPicId(),dbData.get(3).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(4).getPicId(),dbData.get(4).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(5).getPicId(),dbData.get(5).getType()));
+        //homepageGuides.add(new HomepageGuide(dbData.get(0).getItemId(),dbData.get(0).getPicId(),dbData.get(0).getPicId()+"|"+dbData.get(1).getPicId()+"|"+
+        //        dbData.get(2).getPicId()+"|"+dbData.get(3).getPicId()+"|"+dbData.get(3).getPicId()+"|"+dbData.get(4).getPicId()+"|"));
+        homepageGuides.add(new HomepageGuide(dbData.get(0).getItemId(),dbData.get(0).getPicId(),dbData.get(0).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(1).getItemId(),dbData.get(1).getPicId(),dbData.get(1).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(2).getItemId(),dbData.get(2).getPicId(),dbData.get(2).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(3).getItemId(),dbData.get(3).getPicId(),dbData.get(3).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(4).getItemId(),dbData.get(4).getPicId(),dbData.get(4).getType()));
+        homepageGuides.add(new HomepageGuide(dbData.get(5).getItemId(),dbData.get(5).getPicId(),dbData.get(5).getType()));
         //homepageGuides.add(new HomepageGuide(R.mipmap.img1,dbData.get(0).getType()));
         //homepageGuides.add(new HomepageGuide(R.mipmap.img3,"待定"));
         //homepageGuides.add(new HomepageGuide(R.mipmap.img1,"待定"));

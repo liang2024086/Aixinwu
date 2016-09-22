@@ -6,15 +6,15 @@ package com.aixinwu.axw.model;
 public class HomepageGuide {
     private String imgURL;
     private String name;
-    //private int imgId;
+    private int id;
 
-    public HomepageGuide(String imgURL, String name){
-        //this.imgId = imgId;
+    public HomepageGuide(int id ,String imgURL, String name){
+        this.id = id;
         this.imgURL = imgURL;
         this.name = name;
     }
 
-    //public int getImgId() { return imgId; }
+    public int getId() { return id; }
 
     public String getImgURL(){
         return imgURL;

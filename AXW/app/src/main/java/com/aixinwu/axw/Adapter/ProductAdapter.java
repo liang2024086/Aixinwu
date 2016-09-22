@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.model.Product;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.InputStream;
 import java.util.List;
@@ -50,10 +51,12 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
          View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
 
-         final ImageView productImage = (ImageView) view.findViewById(R.id.product_image);
+         ImageView productImage = (ImageView) view.findViewById(R.id.product_image);
          TextView productName = (TextView) view.findViewById(R.id.product_name);
          TextView productPrice = (TextView) view.findViewById(R.id.product_price);
 
+        ImageLoader.getInstance().displayImage(product.getImage_url(), productImage);
+/*
         final Handler nhandler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -85,7 +88,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
                     }
                 }
             }.start();
-
+*/
 
 
 

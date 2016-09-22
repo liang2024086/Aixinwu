@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.model.HomepageGuide;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -28,6 +29,7 @@ public class HomepageGuiedAdapter extends ArrayAdapter<HomepageGuide> {
     private int resourceId;
     public HomepageGuide guide;
     public Bitmap bitmap;
+    private ImageView guideImage;
 
     public HomepageGuiedAdapter (Context context,
                                  int textViewResourseId,
@@ -37,24 +39,27 @@ public class HomepageGuiedAdapter extends ArrayAdapter<HomepageGuide> {
 
     }
 
+    /*private Handler nhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0x8888) {
+                //显示从网上下载的图片
+                guideImage.setImageBitmap(bitmap);
+            }
+        }
+    };*/
+
     @Override
     public View getView(int position, View concertView, ViewGroup parent) {
         guide = getItem(position);
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);
-        final ImageView guideImage = (ImageView) view.findViewById(R.id.homepage_guide_image);
+        guideImage = (ImageView) view.findViewById(R.id.homepage_guide_image);
         TextView guideName = (TextView) view.findViewById(R.id.homepage_guide_name);
 
-        final Handler nhandler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 0x8888) {
-                    //显示从网上下载的图片
-                    guideImage.setImageBitmap(bitmap);
-                }
-            }
-        };
 
-        new Thread(){
+        ImageLoader.getInstance().displayImage(guide.getImgURL(), guideImage);
+
+        /*new Thread(){
             @Override
             public void run() {
                 try {
@@ -74,7 +79,7 @@ public class HomepageGuiedAdapter extends ArrayAdapter<HomepageGuide> {
                     e.printStackTrace();
                 }
             }
-        }.start();
+        }.start();*/
 
         //guideImage.setImageResource(guide.getImgId());
         guideName.setText(guide.getName());
