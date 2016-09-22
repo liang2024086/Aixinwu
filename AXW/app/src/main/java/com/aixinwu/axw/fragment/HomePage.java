@@ -235,7 +235,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
         //homepageGuides.add(new HomepageGuide(R.mipmap.img3,"待定"));
         //homepageGuides.add(new HomepageGuide(R.mipmap.img1,"待定"));
 
-        Toast.makeText(getActivity(),R.mipmap.img1+" ",Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(),R.mipmap.img1+" ",Toast.LENGTH_SHORT).show();
 
         HomepageGuiedAdapter homepageGuiedAdapter = new HomepageGuiedAdapter(
                 getActivity(),
