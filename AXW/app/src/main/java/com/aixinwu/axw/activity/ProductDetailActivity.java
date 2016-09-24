@@ -423,6 +423,10 @@ public class ProductDetailActivity extends AppCompatActivity {
 //        WebSettings webSettings = mTVDetails.getSettings();
 //        webSettings.setJavaScriptEnabled(true);
 
+        WebSettings webSettings= mTVDetails.getSettings();
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setBuiltInZoomControls(false);
         mTVDetails.loadUrl(entity.getDescriptionUrl());
 
         //mTVDetails.setText(entity.getDescription());
