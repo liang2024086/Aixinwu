@@ -2,7 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dip"
     android:padding="20dp"
     >
 
@@ -14,7 +14,7 @@
     android:layout_centerHorizontal = "true"
     />
 
-<TextView
+    <TextView
     android:id="@+id/product_name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/product_name"
-        android:text = "爱心币： "
+        android:text = "爱心币："
     />
     <TextView
         android:id="@+id/product_price"

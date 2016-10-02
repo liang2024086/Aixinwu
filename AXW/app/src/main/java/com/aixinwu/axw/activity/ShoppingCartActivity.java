@@ -30,11 +30,20 @@ import com.aixinwu.axw.database.ProductReaderContract;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.aixinwu.axw.model.ShoppingCartEntity;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.simple.JSONObject;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
@@ -47,7 +56,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     public ArrayList<Integer> CheckedProductId = new ArrayList<>();
     private Button BtnDelChecked;
     private Button BtnDelAll;
-
+    public ArrayList<JSONObject> OrderedProduct = new ArrayList<>();
 
     /**
      * 结算
@@ -59,6 +68,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private CheckBox mCheckBox;
 
+    private String orderid;
     /**
      * 合计
      */
@@ -106,16 +116,18 @@ public class ShoppingCartActivity extends AppCompatActivity {
     }
 
 
+    //在数据库中删除物品id 为id的操作
     private void deleteFromDatabase (int id) {
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.delete(ProductReaderContract.ProductEntry.TABLE_NAME,
                 ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID+"=?",
                 new String[]{id+""}
-                );
+        );
         Log.i("Check!", id + " Ok");
     }
 
+    //清空购物车的数据库操作
     private void deleteAllFromDatabase () {
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -123,6 +135,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         Log.i("Delete all", " Ok");
     }
 
+    //结算listerner
     private void addListeners() {
 
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -138,6 +151,111 @@ public class ShoppingCartActivity extends AppCompatActivity {
         });
     }
 
+
+    //创建JSONArray 用于order
+    private void createOrderList () {
+        int quant = 0;
+        for (int i = 0; i < CheckedProductId.size(); i++) {
+            JSONObject orderproduct = new JSONObject();
+            String index = CheckedProductId.get(i).toString();
+            ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME,
+                    new String[]{ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER},
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
+                    new String[] {index},
+                    null,
+                    null,
+                    null
+                    );
+            //String SELECT_PRODUCT_QUANT = "Select number From entry Where product_id=?";
+            //Cursor cursor = db.rawQuery(SELECT_PRODUCT_QUANT, new String[]{index});
+            if (cursor.moveToNext()) {
+                quant = cursor.getInt(cursor.getColumnIndex("number"));
+            }
+            cursor.close();
+            orderproduct.put("product_id", CheckedProductId.get(i));
+            //orderproduct.put("product_id", CheckedProductId.get(i));
+            orderproduct.put("isbook", 0);
+            orderproduct.put("quantity", quant);
+            Log.i("Orderproduct", orderproduct.toString());
+            OrderedProduct.add(orderproduct);
+            Log.i("Orderedlist:", OrderedProduct.toString());
+        }
+    }
+
+    //链接服务器
+    private void order(){
+        String MyToken= GlobalParameterApplication.getToken();
+        String surl = GlobalParameterApplication.getSurl();
+        int userid = GlobalParameterApplication.getUserID();
+        JSONObject orderrequest = new JSONObject();
+
+        orderrequest.put("token", MyToken);
+        orderrequest.put("order_info", OrderedProduct);
+        orderrequest.put("consignee_id", userid);
+
+
+        //data.put("token", MyToken);
+
+
+        try {
+            URL url = new URL(surl + "/item_aixinwu_item_make_order");
+            try {
+                Log.i("Order","getconnection");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                Log.i("orderorder", orderrequest.toJSONString());
+                conn.getOutputStream().write(orderrequest.toJSONString().getBytes());
+
+                java.lang.String ostr = IOUtils.toString(conn.getInputStream());
+                org.json.JSONObject outjson = null;
+                try{
+                    outjson = new org.json.JSONObject(ostr);
+                    orderid = outjson.getInt("order_id") + "";
+                    Log.i("Order successful", outjson.toString());
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    public Thread oThread = new Thread() {
+        @Override
+        public void run() {
+            super.run();
+            order();
+            Message msg = new Message();
+            msg.what = 1994;
+            oHandler.sendMessage(msg);
+        }
+    };
+
+    public Handler oHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1994:
+                    Intent intent = new Intent(ShoppingCartActivity.this, DealFinished.class);
+                    intent.putExtra("overallcost", mTotalMoney + "");
+                    intent.putExtra("orderid", orderid);
+                    startActivity(intent);
+            }
+        }
+    };
+
     private void initViews() {
 
         mListView = (ListView) findViewById(R.id.lv_shopping_cart_activity);
@@ -151,23 +269,19 @@ public class ShoppingCartActivity extends AppCompatActivity {
         mBtnChecking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //create checked list
+                createOrderList();
 
                 //delete from database
-
                 for (int i = 0; i < CheckedProductId.size(); ++i) {
                     deleteFromDatabase(CheckedProductId.get(i));
                 }
                 //====
                 //send order request to the server
 
+                oThread.start();
 
 
-
-
-                Intent intent = new Intent(ShoppingCartActivity.this, DealFinished.class);
-                intent.putExtra("overallcost", mTotalMoney + "");
-
-                startActivity(intent);
             }
         });
 
@@ -354,37 +468,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
             holder.price.setText(entity.getPrice() + "");
             holder.number.setText("x" + entity.getNumber());
 //============================================================
-            final Handler nhandler=new Handler(){
-                @Override
-                public void handleMessage(Message msg) {
-                    if (msg.what == 0x4869) {
-                        //显示从网上下载的图片
-                        holder.img.setImageBitmap(bitmap);
-                    }
-                }
-            };
+            ImageLoader.getInstance().displayImage(entity.getImgUrl(), holder.img);
 
-            new Thread(){
-                @Override
-                public void run() {
-                    try {
-                        //创建一个url对象
-                        URL url=new URL(entity.getImgUrl());
-                        //打开URL对应的资源输入流
-                        InputStream is= url.openStream();
-                        //从InputStream流中解析出图片
-                        bitmap = BitmapFactory.decodeStream(is);
-                        //  imageview.setImageBitmap(bitmap);
-
-                        //发送消息，通知UI组件显示图片
-                        nhandler.sendEmptyMessage(0x4869);
-                        //关闭输入流
-                        is.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
             //============================================================
 
             //holder.img.setImageResource(R.drawable.aixinwu);           //缩略图片显示

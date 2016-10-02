@@ -70,7 +70,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_activity_product_details_number"
+            android:id="@+id/tv_activity_product_details_stock"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
@@ -78,8 +78,9 @@
             android:gravity="right|center_vertical"
             android:padding="7dp"
             android:paddingRight="11dp"
-            android:text="已售出159件"
+            android:text="库存："
             android:textColor="#ff606461"/>
+
     </LinearLayout>
 
     <WebView

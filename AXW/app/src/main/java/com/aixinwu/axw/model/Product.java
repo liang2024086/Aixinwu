@@ -14,11 +14,13 @@ public class Product implements Serializable {
     private String image_url;
     private String descriptionUrl;
     private int id;
+    private int stock;
 
 
-    public Product (int Id, String name, int price, String image_url, String description, String shortdescription, String descriptionUrl) {
+    public Product (int Id, String name, int price, int stock, String image_url, String description, String shortdescription, String descriptionUrl) {
         this.product_name = name;
         this.price = price;
+        this.stock = stock;
         this.image_url = image_url;
         this.id = Id;
         this.description = description;
@@ -46,4 +48,5 @@ public class Product implements Serializable {
 
     public String getDescriptionUrl(){ return GlobalParameterApplication.getSurl() + "/" +  this.descriptionUrl;}
 
+    public int getStock() {return stock;}
 }

@@ -35,6 +35,7 @@ import com.aixinwu.axw.R;
 import com.aixinwu.axw.database.ProductReadDbHelper;
 import com.aixinwu.axw.database.ProductReaderContract;
 import com.aixinwu.axw.model.Product;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.w3c.dom.Text;
 
@@ -59,6 +60,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView mTVTopPrice;
     private TextView mTVPopCategory;
     private TextView mProductCaption;
+    private TextView StockNum;
     private Button mBtnAddToCart;
     private Button mBtnMinute;
     private Button mBtnPlus;
@@ -354,11 +356,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         //double PopHeight = getWindow().getAttributes().height;
         //PopHeight = PopHeight * 0.6;
         mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1500);
-
+        StockNum = (TextView) findViewById(R.id.tv_activity_product_details_stock);
     }
 
 
-
+/*
     final Handler bitmaphandler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -369,7 +371,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         }
     };
-
+*/
     private void initDatas() {
         Intent intent = this.getIntent();
         entity= (Product) intent.getSerializableExtra("product");
@@ -383,7 +385,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         //==========Set image url===============
 
-
+        ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgDetails);
+        ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgIcon);
+        /*
         new Thread(){
             @Override
             public void run() {
@@ -404,7 +408,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 }
             }
         }.start();
-
+*/
         //mImgDetails.setImageResource(R.mipmap.product1);
 
 
@@ -433,6 +437,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         mTVTopPrice.setText("爱心币：" + entity.getPrice());
         mTVPrice.setText("爱心币：" + entity.getPrice());
         mTVPopDetails.setText(entity.getShortdescription());
+        StockNum.setText("库存： " + (entity.getStock() + ""));
         //mTVList.setText("￥" + (entity.getPrice() + 900));
 
         //mImgIcon.setImageResource(entity.getImage_id());changed in 38

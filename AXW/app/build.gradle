@@ -1,17 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
-
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+    //buildToolsVersion "22.0.1"
     compileOptions.encoding = "UTF-8"
 
     defaultConfig {
         applicationId "com.aixinwu.axw"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -24,9 +25,11 @@ android {
 dependencies {
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.android.support:design:22.2.0'
+    //compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    //compile 'com.android.support:appcompat-v7:22.2.0'
+    //compile 'com.android.support:design:22.2.0'
     compile files('libs/commons-io-2.4.jar')
     compile files('libs/json-20160212.jar')
     compile 'com.jakewharton:butterknife:7.0.1'
@@ -39,4 +42,7 @@ dependencies {
     //compile files('libs/gson-2.7.jar')
     //  compile files('libs/gson-1.7.1.jar')
     compile files('libs/gson-2.7.jar')
+    compile 'com.jcodecraeer:xrecyclerview:1.2.7'
+
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

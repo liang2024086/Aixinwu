@@ -47,7 +47,7 @@ public class LoveCoin extends Fragment {
     private List<Product> leaseList = new ArrayList<Product>();
     private List<Product> volList = new ArrayList<Product>();
 
-    public List<Product> dbData = new ArrayList<Product>();
+    //public List<Product> dbData = new ArrayList<Product>();
 
 
     @Override
@@ -129,10 +129,10 @@ public class LoveCoin extends Fragment {
         @Override
         public void run(){
             super.run();
-            getDbData();
-            productList = new ArrayList<Product> (dbData);
-            leaseList =  new ArrayList<Product> (dbData);
-            volList =  new ArrayList<Product> (dbData);
+            //getDbData();
+            productList = new ArrayList<Product> (getDbData("exchange"));
+            leaseList =  new ArrayList<Product> (getDbData("rent"));
+            volList =  new ArrayList<Product> (getDbData("cash"));
             Message msg = new Message();
             msg.what=1321;
             nHandler.sendMessage(msg);
@@ -180,22 +180,57 @@ public class LoveCoin extends Fragment {
                     });
                     GridView gridView2 = (GridView) getActivity().findViewById(R.id.grid2);
                     gridView2.setAdapter(adapter2);
+                    gridView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Product product = leaseList.get(i);
+                            Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("product", product);
+                            intent.putExtras(bundle);
+                            getActivity().startActivity(intent);
+                        }
+                    });
                     GridView gridView3 = (GridView) getActivity().findViewById(R.id.grid3);
                     gridView3.setAdapter(adapter3);
+                    gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Product product = volList.get(i);
+                            Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("product", product);
+                            intent.putExtras(bundle);
+                            getActivity().startActivity(intent);
+                        }
+                    });
             }
         }
     };
 
-    private void getDbData(){
+    private List<Product> getDbData(String type){
+        List<Product> dbData = new ArrayList<Product>();
         String MyToken= GlobalParameterApplication.getToken();
         String surl = GlobalParameterApplication.getSurl();
-        JSONObject data = new JSONObject();
-
+        JSONObject itemsrequest = new JSONObject();
+        String typestr = "";
         int start = 0;
-        data.put("startAt", start);
-        data.put("length", 12);
-        //data.put("token", MyToken);
+        itemsrequest.put("startAt", start);
+        itemsrequest.put("length", 100);
+        switch (type) {
+            case "exchange":
+                typestr = "置换";
+                break;
+            case "rent":
+                typestr = "租赁";
+                break;
+            case "cash":
+                typestr = "现金";
+                break;
+        }
 
+        itemsrequest.put("type", typestr);
+        //data.put("token", MyToken);
         Log.i("LoveCoin", "get");
 
         try {
@@ -207,7 +242,7 @@ public class LoveCoin extends Fragment {
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.setDoOutput(true);
 
-                    conn.getOutputStream().write(data.toJSONString().getBytes());
+                    conn.getOutputStream().write(itemsrequest.toJSONString().getBytes());
                     java.lang.String ostr = IOUtils.toString(conn.getInputStream());
                     org.json.JSONObject outjson = null;
 
@@ -230,10 +265,12 @@ public class LoveCoin extends Fragment {
                                 String descdetail = result.getJSONObject(i).getString("desc");
                                 String shortdesc = result.getJSONObject(i).getString("short_desc");
                                 String despUrl   = result.getJSONObject(i).getString("desp_url");
+                                int stock = result.getJSONObject(i).getInt("stock");
                                 Log.i("Image Url", imageurl[0]);
                                 Log.i("aixinwuitemid", iid);
                                 Log.i("value", value);
                                 Log.i("name", logname);
+                                Log.i("stock", stock + "");
                                 //Log.i("xxxx", logname + value + iid);
                                 Log.i("Image Url", imageurl[0]);
                                 Log.i("Desc", descurl + "null");
@@ -244,6 +281,7 @@ public class LoveCoin extends Fragment {
                                     dbData.add(new Product(result.getJSONObject(i).getInt("id"),
                                             result.getJSONObject(i).getString("name"),
                                             result.getJSONObject(i).getInt("price"),
+                                            stock,
                                             "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
                                             descdetail,
                                             shortdesc,
@@ -254,6 +292,7 @@ public class LoveCoin extends Fragment {
                                     dbData.add(new Product(result.getJSONObject(i).getInt("id"),
                                             result.getJSONObject(i).getString("name"),
                                             result.getJSONObject(i).getInt("price"),
+                                            stock,
                                             "http://202.120.47.213:12345/"+imageurl[0],
                                             descdetail,
                                             shortdesc,
@@ -273,7 +312,7 @@ public class LoveCoin extends Fragment {
                 e.printStackTrace();
             }
 
-
+        return dbData;
     }
 
 
