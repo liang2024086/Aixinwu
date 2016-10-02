@@ -21,6 +21,7 @@ import android.text.TextUtils;
 import android.util.EventLogTags;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -80,9 +81,29 @@ public class SubmitThings extends Fragment {
         View view = inflater.inflate(R.layout.submit_things,null);
         axw = view.findViewById(R.id.button3);
         people = view.findViewById(R.id.button);
+        axw.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+
+                ImageView img1 = (ImageView) v.findViewById(R.id.imageAixinwu);
+                ImageView img2 = (ImageView) v.findViewById(R.id.imageAixinwu1);
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    img1.setVisibility(View.VISIBLE);
+                    img2.setVisibility(View.GONE);
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP){
+                    img1.setVisibility(View.GONE);
+                    img2.setVisibility(View.VISIBLE);
+                }
+                return false;
+            }
+        });
         axw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (GlobalParameterApplication.getLogin_status()==1){
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), SendToAXw.class);
@@ -96,9 +117,31 @@ public class SubmitThings extends Fragment {
                 }
             }
         });
+        people.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                ImageView img1 = (ImageView) v.findViewById(R.id.imageDeal1);
+                ImageView img2 = (ImageView) v.findViewById(R.id.imageDeal);
+
+                if ((event.getAction()) == MotionEvent.ACTION_DOWN){
+                    img1.setVisibility(View.GONE);
+                    img2.setVisibility(View.VISIBLE);
+                }
+                else if (event.getAction() == MotionEvent.ACTION_UP){
+                    img1.setVisibility(View.VISIBLE);
+                    img2.setVisibility(View.GONE);
+                }
+
+
+
+                return false;
+            }
+        });
         people.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (GlobalParameterApplication.getLogin_status()==1) {
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), SendToPeople.class);

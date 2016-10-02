@@ -42,7 +42,7 @@ public class UserInfo extends Fragment {
 
     private int ss=0;
     private RelativeLayout ly_personalinfo;
-    private LinearLayout ly_logininfo;
+    private RelativeLayout ly_logininfo;
     private Button btn_logoff;
     private String username;
     private String coins;
@@ -60,7 +60,7 @@ public class UserInfo extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
 
-        ly_logininfo = (LinearLayout) getActivity().findViewById(R.id.login);
+        ly_logininfo = (RelativeLayout) getActivity().findViewById(R.id.login);
         ly_personalinfo = (RelativeLayout) getActivity().findViewById(R.id.personal);
         btn_logoff = (Button) getActivity().findViewById(R.id.personal_exit);
 
@@ -100,7 +100,7 @@ public class UserInfo extends Fragment {
             btn_logoff.setVisibility(View.GONE);
         }
 
-        Button login_btn = (Button) getActivity().findViewById(R.id.personal_login_button);
+        TextView login_btn = (TextView) getActivity().findViewById(R.id.personal_login_button);
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +108,8 @@ public class UserInfo extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-/*
+
+
         TextView signup_btn = (TextView) getActivity().findViewById(R.id.signup);
         signup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +118,7 @@ public class UserInfo extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-*/
+
         Button logoff_btn = (Button) getActivity().findViewById(R.id.personal_exit);
         logoff_btn.setOnClickListener(new View.OnClickListener() {
             @Override
