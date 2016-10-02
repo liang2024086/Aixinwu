@@ -2,19 +2,14 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
     android:layout_width="wrap_content"
-    android:background="#f0f0f0">
+    android:background="@color/white">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginStart="3dp">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/Layout_top"
             android:layout_alignParentTop="true"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center">
@@ -25,40 +20,89 @@
                 <TextView
                     android:layout_weight="1"
                     android:id="@+id/name1"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:textSize="25sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
                     android:gravity="center"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:text="发布信息" />
+                    android:textSize="25sp"
+                    android:textColor="#3e3a39"
+                    android:background="#eeefef"
+                    android:text="发布" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+                    <TextView
+                        android:id="@+id/axwCampus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:gravity="center"
+                        android:textColor="#3e3a39"
+                        android:textSize="16sp"
+                        android:text="校区选择  " />
+
+                    <EditText
+                        android:layout_toRightOf="@id/axwCampus"
+                        android:layout_toEndOf="@id/axwCampus"
+                        android:layout_width="200dp"
+                        android:layout_height="70dp"
+                        android:singleLine="false"
+                        android:inputType="text"
+                        android:textColor="#3e3a39"
+                        android:textSize="16sp"
+                        android:text="上海交通大学闵行校区"
+                        android:background="@color/white"
+                        />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#dcdcdd"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+                <TextView
+                    android:id="@+id/axwComTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="70dp"
+                    android:gravity="center"
+                    android:textColor="#3e3a39"
+                    android:textSize="16sp"
+                    android:text="商品名称 " />
+
                 <EditText
                     android:id="@+id/commodity_title"
-                    android:layout_height="50dp"
+                    android:layout_toRightOf="@id/axwComTitle"
+                    android:layout_toEndOf="@id/axwComTitle"
+                    android:layout_height="70dp"
                     android:layout_width="fill_parent"
                     android:textSize="16sp"
-                    android:hint=" 标题"
+                    android:hint="型号"
                     android:maxLength="50"
                     android:singleLine="false"
                     android:background="@color/white"
                     android:layout_weight="0.69"
                     android:padding="10dp"
                     android:autoText="false" />
+                </RelativeLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#f0f0f0"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:padding="10dp"/>
+                    android:background="#dcdcdd"
+                    />
 
                 <!-- 显示图片 -->
                 <RelativeLayout
                     android:id="@+id/Layout_mid"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     >
                     <LinearLayout
@@ -70,46 +114,150 @@
                         android:layout_alignParentEnd="true"
                         android:weightSum="1">
                         <!-- 设置运行多行 设置圆角图形 黑色字体-->
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/axwComDescription2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="150dp"
+                            android:layout_marginLeft="20dp"
+                            android:gravity="center"
+                            android:textColor="#3e3a39"
+                            android:textSize="16sp"
+                            android:text="商品描述 " />
+
                         <EditText
                             android:id="@+id/editText1"
-                            android:layout_height="100dp"
-                            android:layout_width="fill_parent"
+                            android:layout_height="150dp"
+                            android:layout_width="300dp"
+                            android:layout_toEndOf="@id/axwComDescription2"
+                            android:layout_marginRight="20dp"
+                            android:layout_toRightOf="@id/axwComDescription2"
                             android:textSize="16sp"
-                            android:hint="商品描述..."
+                            android:hint="（不少于15字）"
                             android:maxLength="500"
                             android:singleLine="false"
                             android:background="@color/white"
-                            android:layout_weight="0.69"
-                            android:padding="10dp"
-                            android:autoText="false" />
+                            android:padding="10dp" />
+
+                        </RelativeLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#dcdcdd"
+                            />
                         <!-- 网格显示图片 行列间距5dp 每列宽度90dp -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginTop="20dp"
+                            android:textSize="16sp"
+                            android:textColor="#3e3a39"
+                            android:text="添加照片"/>
+                        <ScrollView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
                         <GridView
                             android:id="@+id/gridView1"
-                            android:layout_width="fill_parent"
-                            android:layout_height="200dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="300dp"
                             android:background="#ffffff"
-                            android:horizontalSpacing="5dp"
-                            android:verticalSpacing="5dp"
                             android:numColumns="4"
-
-                            android:columnWidth="80dp"
                             android:stretchMode="columnWidth"
-                            android:padding="10dp"
+                            android:padding="20dp"
                             android:gravity="center" >
                         </GridView>
+                        </ScrollView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="#dcdcdd"
+                            />
+                        <!--
                         <TextView
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:text="(友情提示:只能添加7张图片,长按图片可以删除已添加图片)"
                             android:gravity="center"
                             android:layout_marginBottom="10dp" />
+                            -->
+
+                        <RelativeLayout
+                            android:id="@+id/supplyAXW5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_below="@id/supplyAXWLine3"
+                            >
+                            <TextView
+                                android:id="@+id/axwComSubmit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:textColor="#3e3a39"
+                                android:textSize="16sp"
+                                android:gravity="center"
+                                android:text="发布到人人交易" />
+
+                            <TextView
+                                android:id="@+id/axwComPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="50dp"
+                                android:layout_below="@id/axwComSubmit"
+                                android:textColor="#888889"
+                                android:textSize="16sp"
+                                android:gravity="center"
+                                android:text="价格  ¥" />
+
+                            <EditText
+                                android:id="@+id/donationPrice"
+                                android:layout_toRightOf="@id/axwComPrice"
+                                android:layout_toEndOf="@id/axwComPrice"
+                                android:layout_below="@id/axwComSubmit"
+                                android:layout_width="100dp"
+                                android:layout_height="50dp"
+                                android:textColor="#888889"
+                                android:textSize="16sp"
+                                android:singleLine="false"
+                                android:background="@color/white"
+                                android:inputType="numberDecimal"
+                                />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="70dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="#eeefef">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_margin="5dp"
+                                android:text="确认发布"
+                                android:textSize="18sp"
+                                android:textColor="#ea5404"/>
+                        </RelativeLayout>
+
                     </LinearLayout>
+
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:visibility="gone"
                     android:background="@color/white">
 
                     <LinearLayout
@@ -206,6 +354,7 @@
             android:gravity="center"
             android:background="@color/white"
             android:layout_marginTop="1dp"
+            android:visibility="gone"
             android:padding="10dp">
 
 
