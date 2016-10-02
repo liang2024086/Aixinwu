@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="E:\Aixinwu\AXW\PullToRefresh\assets"/><source path="E:\Aixinwu\AXW\PullToRefresh\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="E:\Aixinwu\AXW\PullToRefresh\src\debug\assets"/></dataSet></merger>

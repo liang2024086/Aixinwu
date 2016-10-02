@@ -40,7 +40,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ArrayList<Product> productList = new ArrayList<Product>();
     private XRecyclerView mRecyclerView;
     private int times = 0;
-    private ArrayList<String> listData;
+
     private ProductListAdapter mAdapter;
 
 
@@ -54,7 +54,7 @@ public class ProductListActivity extends AppCompatActivity {
         @Override
         public void run() {
             super.run();
-            getDbData("cash", times);
+            getDbData("", times);
         }
     }
 
@@ -68,7 +68,7 @@ public class ProductListActivity extends AppCompatActivity {
 
     @Override
     public void onStart() {
-
+        super.onStart();
         mRecyclerView = (XRecyclerView) this.findViewById(R.id.recyclerview);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(layoutManager);
@@ -76,7 +76,7 @@ public class ProductListActivity extends AppCompatActivity {
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
         //==
-        Thread plthread = new thread("cash");
+        Thread plthread = new thread("");
         plthread.start();
         //==
 
@@ -87,7 +87,7 @@ public class ProductListActivity extends AppCompatActivity {
                                               public void run() {
                                                   times = 0;
                                                   productList.clear();
-                                                  Thread plthread1 = new thread("cash");
+                                                  Thread plthread1 = new thread("");
                                                   plthread1.start();
                                                   try {
                                                       plthread1.join();
@@ -122,7 +122,7 @@ public class ProductListActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                                               public void run() {
                                                   times++;
-                                                  Thread plthread2 = new thread("cash");
+                                                  Thread plthread2 = new thread("");
                                                   plthread2.start();
                                                   //==
                                                   try {
@@ -189,7 +189,7 @@ public class ProductListActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        super.onStart();
+
 
     }
 
