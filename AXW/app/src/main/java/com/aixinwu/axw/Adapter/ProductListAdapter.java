@@ -16,9 +16,6 @@ import java.util.Collections;
 import com.aixinwu.axw.model.Product;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-/**
- * Created by jianghejie on 15/11/26.
- */
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
     public ArrayList<Product> datas = null;
     public ProductListAdapter(ArrayList<Product> datas) {

@@ -88,41 +88,6 @@ public class LoveCoin extends Fragment {
     }
 
 
-    private void initProduct () {
-
-
-
-
-        //dbData;
-
-        /*
-        Product product1 = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
-        productList.add(product1);
-        Product product2 = new Product("A new Hadoop book", 100, R.mipmap.product2);
-        productList.add(product2);
-        Product product3 = new Product("A new Coding book", 100, R.mipmap.product3);
-        productList.add(product3);
-        Product product4 = new Product("A new C++ primer book", 100, R.mipmap.product4);
-        productList.add(product4);
-        Product leaseproduct1 = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
-        leaseList.add(leaseproduct1);
-        Product leaseproduct2 = new Product("A new Hadoop book", 100, R.mipmap.product2);
-        leaseList.add(leaseproduct2);
-        Product leaseproduct3 = new Product("A new Coding book", 100, R.mipmap.product3);
-        leaseList.add(leaseproduct3);
-        Product leaseproduct4 = new Product("A new C++ primer book", 100, R.mipmap.product4);
-        leaseList.add(leaseproduct4);
-        Product volproduct1 = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
-        volList.add(volproduct1);
-        Product volproduct2 = new Product("A new Hadoop book", 100, R.mipmap.product2);
-        volList.add(volproduct2);
-        Product volproduct3 = new Product("A new Coding book", 100, R.mipmap.product3);
-        volList.add(volproduct3);
-        Product volproduct4 = new Product("A new C++ primer book", 100, R.mipmap.product4);
-        volList.add(volproduct4);
-    */
-
-    }
 
 
     public Thread mThread = new Thread(){
@@ -193,7 +158,7 @@ public class LoveCoin extends Fragment {
                     });
                     GridView gridView3 = (GridView) getActivity().findViewById(R.id.grid3);
                     gridView3.setAdapter(adapter3);
-                    gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             Product product = volList.get(i);

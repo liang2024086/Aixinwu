@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -46,150 +47,76 @@ public class ProductListActivity extends AppCompatActivity {
 
     public class thread extends Thread {
         private String type;
-
-        public thread(String type) {
+        private int refreshtype;
+        public thread(String type, int refreshtype) {
             this.type = type;
+            this.refreshtype = refreshtype;
         }
-
         @Override
         public void run() {
             super.run();
-            getDbData("", times);
+            getDbData(type, times);
+            Message msg = new Message();
+            msg.what = refreshtype;
+            handler.sendMessage(msg);
         }
     }
+
+    public Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
+                    mAdapter = new ProductListAdapter(productList);
+                    mRecyclerView.setAdapter(mAdapter);
+                    break;
+                case 1:
+                    mAdapter.notifyDataSetChanged();
+                    mRecyclerView.refreshComplete();
+                    break;
+                case 2:
+                    mRecyclerView.loadMoreComplete();
+                    mAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
-
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         mRecyclerView = (XRecyclerView) this.findViewById(R.id.recyclerview);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-        //==
-        Thread plthread = new thread("");
-        plthread.start();
-        //==
+
+
+        //=========================
+
+
 
         mRecyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                                              public void run() {
-                                                  times = 0;
-                                                  productList.clear();
-                                                  Thread plthread1 = new thread("");
-                                                  plthread1.start();
-                                                  try {
-                                                      plthread1.join();
-                                                  } catch (InterruptedException e) {
-                                                      e.printStackTrace();
-                                                  }
-                                                  mAdapter.notifyDataSetChanged();
-                                                  mRecyclerView.refreshComplete();
-                                              }
-                                          }, 1000);
-                /*
-                refreshTime++;
                 times = 0;
-                new Handler().postDelayed(new Runnable() {
-                    public void run() {
-
-                        listData.clear();
-                        for (int i = 0; i < 20; i++) {
-                            listData.add("item" + i + "after " + refreshTime + " times of refresh");
-                        }
-                        mAdapter.notifyDataSetChanged();
-                        mRecyclerView.refreshComplete();
-                    }
-
-                }, 1000);            //refresh data here
-                */
-
+                productList.clear();
+                Thread plthread1 = new thread("cash", 1);
+                plthread1.start();
             }
-
             @Override
             public void onLoadMore() {
-                new Handler().postDelayed(new Runnable() {
-                                              public void run() {
-                                                  times++;
-                                                  Thread plthread2 = new thread("");
-                                                  plthread2.start();
-                                                  //==
-                                                  try {
-                                                      plthread2.join();
-                                                  } catch (InterruptedException e) {
-                                                      e.printStackTrace();
-                                                  }
-                                                  mRecyclerView.loadMoreComplete();
-                                                  mAdapter.notifyDataSetChanged();
-                                              }
-                                          }, 1000);
-                /*
-                if (times < 2) {
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            mRecyclerView.loadMoreComplete();
-                            for (int i = 0; i < 20; i++) {
-                                listData.add("item" + (i + listData.size()));
-                            }
-                            mRecyclerView.loadMoreComplete();
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }, 1000);
-                } else {
-                    new Handler().postDelayed(new Runnable() {
-                        public void run() {
-                            for (int i = 0; i < 9; i++) {
-                                listData.add("item" + (i + listData.size()));
-                            }
-                            mAdapter.notifyDataSetChanged();
-                            mRecyclerView.setIsnomore(true);
-                            //mRecyclerView.setNoMore(true);
-                        }
-                    }, 1000);
-                }
-                */
-
+                times++;
+                Thread plthread2 = new thread("cash", 2);
+                plthread2.start();
             }
         });
-/*
-        listData = new ArrayList<String>();
-        for (int i = 0; i < 20; i++) {
-            listData.add("item" + i);
-        }
-        */
-        mAdapter = new ProductListAdapter(productList);
-        mRecyclerView.setAdapter(mAdapter);
-/*
-        GridView gridView1 = (GridView) findViewById(R.id.grid_product);
-        gridView1.setAdapter(adapter1);
-        gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Product product = productList.get(i);
-                Intent intent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
-                intent.putExtra("param1", product.getProduct_name());
-                startActivity(intent);
-            }
-        });
-*/
-        try {
-            plthread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
-
+        Thread plthread = new thread("cash", 0);
+        plthread.start();
 
     }
 

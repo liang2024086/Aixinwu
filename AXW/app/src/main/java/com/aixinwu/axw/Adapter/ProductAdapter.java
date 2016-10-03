@@ -56,40 +56,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
          TextView productPrice = (TextView) view.findViewById(R.id.product_price);
 
         ImageLoader.getInstance().displayImage(product.getImage_url(), productImage);
-/*
-        final Handler nhandler=new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                if (msg.what == 0x4869) {
-                    //显示从网上下载的图片
-                    productImage.setImageBitmap(bitmap);
-                }
-            }
-        };
-
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                        //创建一个url对象
-                        URL url=new URL(product.getImage_url());
-                        //打开URL对应的资源输入流
-                        InputStream is= url.openStream();
-                        //从InputStream流中解析出图片
-                        bitmap = BitmapFactory.decodeStream(is);
-                        //  imageview.setImageBitmap(bitmap);
-
-                        //发送消息，通知UI组件显示图片
-                        nhandler.sendEmptyMessage(0x4869);
-                        //关闭输入流
-                        is.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
-*/
-
 
 
         productName.setText(product.getProduct_name());
