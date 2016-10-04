@@ -209,7 +209,7 @@
                                 android:layout_height="18dp"
                                 android:layout_marginStart="10dp"
                                 android:layout_marginLeft="10dp"
-                                android:src="@drawable/android_my_easy_buy" />
+                                android:src="@drawable/personal1" />
 
                             <TextView
                                 style="@style/PersonalTextStyle"
@@ -245,7 +245,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_width="20dp"
                             android:layout_height="18dp"
-                            android:src="@drawable/android_my_jd_return_repair" />
+                            android:src="@drawable/personal2" />
 
                         <TextView
                             style="@style/PersonalTextStyle"
@@ -279,7 +279,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_width="20dp"
                                 android:layout_height="18dp"
-                                android:src="@drawable/android_personel_waitpay_order" />
+                                android:src="@drawable/personal3" />
 
                             <TextView
                                 style="@style/PersonalTextStyle"
@@ -312,7 +312,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_width="20dp"
                                 android:layout_height="18dp"
-                                android:src="@drawable/android_my_jd_collects" />
+                                android:src="@drawable/personal4" />
 
                             <TextView
                                 style="@style/PersonalTextStyle"
@@ -345,7 +345,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_width="20dp"
                             android:layout_height="18dp"
-                            android:src="@drawable/android_my_jd_discuss" />
+                            android:src="@drawable/personal5" />
 
                         <TextView
                             style="@style/PersonalTextStyle"
@@ -376,11 +376,11 @@
                         <ImageView
                             android:id="@+id/personal_icon_04"
                             style="@style/PersonalIconStyle"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
                             android:layout_width="20dp"
                             android:layout_height="18dp"
-                            android:src="@drawable/android_my_jd_messages" />
+                            android:src="@drawable/personal6" />
 
                         <TextView
                             style="@style/PersonalTextStyle"
@@ -412,11 +412,11 @@
                         <ImageView
                             android:id="@+id/personal_icon_10"
                             style="@style/PersonalIconStyle"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
                             android:layout_width="20dp"
                             android:layout_height="18dp"
-                            android:src="@drawable/android_my_jd_online_service" />
+                            android:src="@drawable/personal7" />
 
                         <TextView
                             android:id="@+id/personal_service"

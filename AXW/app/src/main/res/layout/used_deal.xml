@@ -24,17 +24,24 @@
                 <EditText
                     android:id="@+id/homepage_search2"
                     android:layout_gravity="center_vertical"
-                    android:layout_margin="5dp"
-                    android:drawableLeft="@drawable/search_icon"
-                    android:drawablePadding="5dp"
+                    android:drawableLeft="@drawable/main_bottom_tab_search_normal"
+                    android:drawableStart="@drawable/main_bottom_tab_search_normal"
+                    android:drawablePadding="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/search_edittext_shape"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
+                    android:textColor="#b4b5b5"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:focusable="false"
-                    android:hint="@string/homepageSearch"/>
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginStart="13dp"
+                    android:layout_marginEnd="13dp"
+                    android:layout_marginRight="13dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/homepageSearch"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -68,21 +75,10 @@
                     android:layout_height="150dp"
                     android:id="@+id/homepage_guide2"
                     android:numColumns="4"
+                    android:visibility="gone"
                     android:background="@color/white">
                 </GridView>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="商品推荐"
-                    android:textSize="18dp"
-                    android:textColor="@color/red"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/white"/>
 
                 <ListView
 
@@ -91,7 +87,7 @@
                     android:id="@+id/main_lv_search_results">
                 </ListView>
 
-                
+
             </LinearLayout>
 
         </com.handmark.pulltorefresh.library.PullToRefreshScrollView>

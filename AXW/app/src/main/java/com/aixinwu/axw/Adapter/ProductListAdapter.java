@@ -24,7 +24,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     //创建新View，被LayoutManager所调用
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.product_item, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.activity_list_product, viewGroup, false);
         return new ViewHolder(view);
     }
     //将数据与界面进行绑定的操作
