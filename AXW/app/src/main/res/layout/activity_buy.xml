@@ -2,33 +2,105 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 <LinearLayout
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/main_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_activity_product"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/nohead"
+                android:scaleType="fitXY"
+                />
+            <View
+                android:layout_width="98dp"
+                android:layout_height="98dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginStart="6dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/product_circle"
+                />
+
+            <View
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/luency_circle_product"
+                />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/ownerid"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-5dp"
+            android:layout_marginLeft="-5dp"
+            android:layout_toRightOf="@id/main_picture"
+            android:layout_toEndOf="@id/main_picture"
+            android:layout_centerVertical="true"/>
+
+
+        <TextView
+            android:id="@+id/price3"
+            android:textSize="15sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#ea5404"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/caption"
-        android:textSize="30dp"
-
+        android:textSize="16sp"
+        android:textColor="#3e3a39"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         />
-    <TextView
-        android:id="@+id/ownerid"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/price3"
-        android:textSize="15sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeefef"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:textSize="15sp"
         android:layout_height="wrap_content"
         android:id="@+id/desc"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
         android:stretchMode="spacingWidth"/>
@@ -39,7 +111,8 @@
     <ListView
         android:id="@+id/picdetail"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:divider="@null">
     </ListView>
 </LinearLayout>
 
@@ -49,6 +122,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/commentword"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#3e3a39"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/shuoming"/>
+
+            <ListView
+                android:id="@+id/comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></ListView>
+
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -66,17 +155,6 @@
             android:gravity="center"
             android:text="聊天"/>
     </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:textSize="15sp"
-        android:layout_height="wrap_content"
-        android:id="@+id/shuoming"/>
-
-            <ListView
-                android:id="@+id/comments"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></ListView>
-
 
 </LinearLayout>
 

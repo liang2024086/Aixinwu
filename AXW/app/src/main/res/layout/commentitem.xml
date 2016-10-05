@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/comment_text"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
-</TextView>
+
+    <RelativeLayout
+        android:id="@+id/main_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <ImageView
+            android:id="@+id/img_activity_product"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginStart="9dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/clothing_05"
+            android:scaleType="fitXY"
+            />
+        <View
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/comment_circle"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/comment_time"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"/>
+
+
+    <TextView
+        android:id="@+id/comment_text"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/main_picture"
+        android:layout_toEndOf="@id/main_picture"
+        android:layout_centerVertical="true">
+    </TextView>
+
+
+</RelativeLayout>
