@@ -115,7 +115,8 @@
         android:gravity="center"
         android:text="加入购物车"
         android:textColor="#ea5404"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        style="?android:attr/borderlessButtonStyle"/>
 
 
     <Button
@@ -127,7 +128,8 @@
         android:gravity="center"
         android:text="查看购物车"
         android:layout_margin="10dp"
-        android:textColor="#ea5404"/>
+        android:textColor="#ea5404"
+        style="?android:attr/borderlessButtonStyle"/>
 
 
 </LinearLayout>
