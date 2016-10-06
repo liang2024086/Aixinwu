@@ -58,7 +58,7 @@
             android:layout_centerVertical="true"
             android:text="发送"
             android:textSize="16sp"
-            android:textColor="#3e3a39"/>"
+            android:textColor="#3e3a39"/>
     </RelativeLayout>
     <ListView
         android:id="@+id/chat_list"
@@ -68,8 +68,8 @@
         android:layout_above="@id/chat_bottom_linear"
         android:fadingEdge="none"
         android:background="@color/white"
-        android:divider="#aaaaaa"
-        android:dividerHeight="0px">
+        android:divider="#ffffff"
+        android:dividerHeight="20dp">
     </ListView>
 
 
