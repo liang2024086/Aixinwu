@@ -106,14 +106,22 @@
         android:stretchMode="spacingWidth"/>
 
 <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:id="@+id/pics"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
+
+    <!--
     <ListView
         android:id="@+id/picdetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:divider="@null">
     </ListView>
+    -->
+
 </LinearLayout>
 
 
@@ -121,13 +129,15 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/commentword"/>
+            android:id="@+id/commentword"
+            android:visibility="gone"/>
     <TextView
         android:layout_width="wrap_content"
         android:textSize="15sp"
         android:textColor="#3e3a39"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:id="@+id/shuoming"/>
 
@@ -138,23 +148,88 @@
 
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-        <Button
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp">
+
+        <TextView
             android:id="@+id/commentsubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="提交评论"/>
-        <Button
-            android:id="@+id/chat"
+            android:text="我要评论"
+            android:textColor="#ea5404"/>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="聊天"/>
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+            <TextView
+                android:id="@+id/collect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="收藏"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/personal4"
+                android:layout_toEndOf="@id/collect"
+                android:layout_toRightOf="@id/collect"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginRight="45dp">
+
+        <ImageView
+            android:id="@+id/shop_cart"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:paddingTop="18dp"
+            android:paddingStart="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="15dp"
+            android:src="@drawable/shop_cart"
+            android:background="@drawable/shop_cart_circle"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            />
+
+        <ImageView
+            android:id="@+id/chat"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:paddingTop="18dp"
+            android:paddingStart="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingEnd="15dp"
+            android:paddingBottom="15dp"
+            android:src="@drawable/connect_seller"
+            android:background="@drawable/chat_circle"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            />
+
+
+    </RelativeLayout>
 
 </LinearLayout>
 
