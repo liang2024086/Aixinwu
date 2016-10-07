@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
-    android:background="@drawable/sms_item">
+    android:background="#eeefef">
 
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#eaeaea"/>
+        android:layout_height="30dp"
+        android:background="@color/white"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,11 +19,13 @@
 
         <CheckBox
             android:id="@+id/cb_item_shopping_cart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical|left"
-            android:layout_marginLeft="7dp"
+            android:button="@null"
+            android:layout_marginLeft="17dp"
             android:layout_marginRight="7dp"
+            android:background="@drawable/check_box_background"
             />
 
         <ImageView
@@ -34,15 +37,16 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="16dp">
+            android:gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/tv_item_shopping_cart_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="健康产品系列产品1"
-                android:textColor="#000000"/>
+                android:textSize="16sp"
+                android:textColor="#3e3a39"/>
 
             <TextView
                 android:layout_below="@+id/tv_item_shopping_cart_name"
@@ -53,32 +57,64 @@
                 android:textColor="#ff606461"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 />
 
-            <TextView
+            <RelativeLayout
+                android:id="@+id/price_shop_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_item_shopping_cart_category"
-                android:id="@+id/tv_item_shopping_cart_price"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/love_coin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="爱心币: "
+                    android:textSize="14sp"
+                    android:textColor="#ea5404"/>
+                <TextView
+                    android:layout_toRightOf="@id/love_coin"
+                    android:layout_toEndOf="@id/love_coin"
+                    android:id="@+id/tv_item_shopping_cart_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥0"
+                    android:textSize="12sp"
+                    android:textColor="#ea5404"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="￥0"
-                android:textColor="#ffea3846"/>
-            <TextView
-                android:id="@+id/tv_item_shopping_cart_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="17dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignBaseline="@+id/tv_item_shopping_cart_price"
-                android:text="x1"
-                android:textColor="#000000"
-                android:typeface="serif"/>
+                android:layout_below="@id/price_shop_cart">
+
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="数量: "
+                    android:textSize="14sp"
+                    android:textColor="#3e3a39"/>
+
+                <TextView
+                    android:id="@+id/tv_item_shopping_cart_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x1"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@id/count"
+                    android:layout_toRightOf="@id/count"
+                    android:textColor="#3e3a39"
+                    android:typeface="serif"/>
+
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#eaeaea"/>
 
 </LinearLayout>

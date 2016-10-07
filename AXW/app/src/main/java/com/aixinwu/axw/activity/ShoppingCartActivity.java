@@ -370,7 +370,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             }
         }.start();
 
-        mBtnChecking.setText("去结算（0)");
+        mBtnChecking.setText("去结算(0)");
         mTVTotal.setText("合计：0 爱心币");
     }
 
@@ -493,7 +493,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         CheckedProductId.remove(CheckedProductId.indexOf(itemid));
 
                     }
-                    mBtnChecking.setText("去结算（" + mTotalChecked + ")");
+                    mBtnChecking.setText("去结算(" + mTotalChecked + ")");
                     mTVTotal.setText("合计：" + mTotalMoney + " 爱心币");
                 }
             });

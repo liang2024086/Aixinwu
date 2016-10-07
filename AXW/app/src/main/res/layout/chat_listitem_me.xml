@@ -2,27 +2,80 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0"
-    android:paddingLeft="80dip"
-    android:paddingRight="8dip"
-    android:paddingBottom="10dip"
-    android:paddingTop="10dip">
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/main_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/img_activity_product"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/scrollview_header"
+            android:scaleType="fitXY"
+            />
+        <View
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/comment_circle"
+            />
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/chatlist_image_me"
         android:layout_width="40dip"
         android:layout_height="40dip"
-        android:layout_marginLeft="5dip"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_alignParentRight="true"
-        android:text="我"/>
-    <TextView
-        android:id="@+id/chatlist_text_me"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/chatlist_image_me"
-        android:layout_alignTop="@id/chatlist_image_me"
-        android:text="会忽悠了gyughiulhlluihui过"
+        android:layout_alignParentEnd="true"
+        android:text="我"
+        android:visibility="gone"/>
 
-        android:paddingTop="13dip"
-        android:paddingBottom="18dip"      />
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/main_picture"
+        android:layout_toStartOf="@id/main_picture"
+        android:layout_marginRight="-10dp"
+        android:layout_marginEnd="-10dp"
+        android:layout_centerVertical="true">
+
+
+        <TextView
+            android:id="@+id/chatlist_text_me"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:padding="10dp"
+            android:background="#e8f0c5" />
+
+        <View
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/triangle_chat"
+            android:rotation="90"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>

@@ -67,7 +67,7 @@ public class Chattoother extends Activity{
 
 
     protected ListView chatListView=null;
-    protected Button chatSendButton=null;
+    protected TextView chatSendButton=null;
     protected EditText editText=null;
     public int num = 0;
     protected MyChatAdapter adapter=null;
@@ -184,7 +184,7 @@ public class Chattoother extends Activity{
         }).start();
         chatt =(TextView)findViewById(R.id.chat_contact_name);
         chatt.setText("用户 "+From);
-        chatSendButton=(Button)findViewById(R.id.chat_bottom_sendbutton);
+        chatSendButton=(TextView)findViewById(R.id.chat_bottom_sendbutton);
         editText=(EditText)findViewById(R.id.chat_bottom_edittext);
         chatListView=(ListView)findViewById(R.id.chat_list);
 

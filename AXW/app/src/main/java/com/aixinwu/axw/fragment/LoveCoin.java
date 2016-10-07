@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.io.IOUtils;
@@ -74,7 +75,7 @@ public class LoveCoin extends Fragment {
     @Override
     public void onStart () {
 
-        ImageView productlist = (ImageView) getActivity().findViewById(R.id.imageButton_1);
+        TextView productlist = (TextView) getActivity().findViewById(R.id.exchange_more);
         productlist.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +85,34 @@ public class LoveCoin extends Fragment {
         });
 
 
+        TextView leaselist = (TextView) getActivity().findViewById(R.id.lend_more_more);
+        leaselist.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProductListActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        TextView vollist = (TextView) getActivity().findViewById(R.id.vol_more_more);
+        vollist.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProductListActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        /*
+        TextView publiclist = (TextView) getActivity().findViewById(R.id.public_more);
+        publiclist.setOnClickListener (new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ProductListActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+*/
         super.onStart();
     }
 

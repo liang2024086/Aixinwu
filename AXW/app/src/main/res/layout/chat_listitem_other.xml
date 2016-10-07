@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#f0f0f0"
-    android:paddingRight="80dip"
-    android:paddingLeft="8dip"
-    android:paddingBottom="10dip"
-    android:paddingTop="10dip">
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/main_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/img_activity_product"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/scrollview_header"
+            android:scaleType="fitXY"
+            />
+        <View
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/comment_circle"
+            />
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/chatlist_image_other"
@@ -14,16 +40,44 @@
         android:layout_height="40dip"
         android:layout_marginRight="5dip"
         android:layout_alignParentLeft="true"
-        android:text="他"></TextView>
+        android:text="他"
+        android:visibility="gone"></TextView>
 
-    <TextView
-        android:id="@+id/chatlist_text_other"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/chatlist_image_other"
-        android:layout_alignTop="@id/chatlist_image_other"
-        android:text="hewdfb"
+        android:layout_toRightOf="@id/main_picture"
+        android:layout_toEndOf="@id/main_picture"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginStart="-10dp"
+        android:layout_centerVertical="true">
 
-        android:paddingTop="13dip"
-        android:paddingBottom="18dip"      />
+
+        <View
+            android:id="@+id/triangle"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/triangle_chat"
+            android:rotation="270"/>
+
+
+        <TextView
+            android:id="@+id/chatlist_text_other"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:background="#e8f0c5"/>
+
+
+
     </RelativeLayout>
+
+</RelativeLayout>

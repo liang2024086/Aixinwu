@@ -1,7 +1,9 @@
 package com.aixinwu.axw.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -18,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
@@ -39,6 +42,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Date;
+
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
@@ -46,7 +51,10 @@ import org.json.JSONException;
 import org.json.simple.JSONObject;
 
 import com.aixinwu.axw.tools.GlobalParameterApplication;
+import com.aixinwu.axw.tools.MyAlertDialog;
 import com.aixinwu.axw.tools.Tool;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 /**
  * Created by liangyuding on 2016/4/15.
  */
@@ -61,16 +69,16 @@ public class Buy extends Activity{
     private String Desc;
     private int Price;
     private String Picset;
-    private ListView pics;
+//    private ListView pics;
     private TextView textView1;
     private TextView textView2;
     private TextView textView3;
     private TextView textView4;
     private EditText commentword;
     private String CommentWord;
-    private Button commentsubmit;
+    private TextView commentsubmit;
     private ListView comments;
-    private Button button2;
+    private ImageView button2;
     private String[] picts;
     private List<String> pic_list;
     private PicAdapter sim_adapter;
@@ -80,9 +88,11 @@ public class Buy extends Activity{
     private ArrayList<String> User;
     private ArrayList<String> TimeStamp;
     private ArrayList<String> Comments = new ArrayList<String>();
+    private ArrayList<String> comment_times = new ArrayList<String>();
     private ArrayList<HashMap<String,Object>> comment_list;
     private TextView Caption;
     private String _caption;
+    private LinearLayout pictures;
     //private Handler nhandler;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -93,15 +103,16 @@ public class Buy extends Activity{
         Bundle out = intent.getExtras();
         itemID=(int)out.get("itemId");
         _caption = out.getString("caption");
-        button2=(Button)findViewById(R.id.chat);
+        pictures = (LinearLayout) findViewById(R.id.pics);
+        button2=(ImageView)findViewById(R.id.chat);
         textView1 = (TextView)findViewById(R.id.ownerid);
         textView2 = (TextView)findViewById(R.id.desc);
         textView3 = (TextView)findViewById(R.id.price3);
         textView4 = (TextView)findViewById(R.id.shuoming);
         commentword = (EditText)findViewById(R.id.commentword);
-        commentsubmit = (Button)findViewById(R.id.commentsubmit);
+        commentsubmit = (TextView) findViewById(R.id.commentsubmit);
         comments = (ListView)findViewById(R.id.comments);
-        pics = (ListView)findViewById(R.id.picdetail);
+    //    pics = (ListView)findViewById(R.id.picdetail);
         Caption = (TextView)findViewById(R.id.caption);
         Caption.setText(_caption);
         pic_list = new ArrayList<String>();
@@ -127,9 +138,86 @@ public class Buy extends Activity{
             @Override
             public void onClick(View view) {
 
-                commentwords = commentword.getText().toString();
-                if(commentwords!=null)
-                    if(GlobalParameterApplication.getLogin_status()==1)
+                        final EditText inputServer = new EditText(Buy.this);
+                        inputServer.setFocusable(true);
+
+                        final MyAlertDialog confirmDialog = new MyAlertDialog(Buy.this, "", "提交评论", "×",nhandler);
+                        confirmDialog.setView(inputServer);
+                        confirmDialog.show();
+                        /*confirmDialog.setClicklistener(new MyAlertDialog.ClickListenerInterface() {
+                            @Override
+                            public void doConfirm() {
+                                // TODO Auto-generated method stub
+                                Toast.makeText(mContext,"Yes",Toast.LENGTH_LONG).show();
+                            }
+
+                            @Override
+                            public void doCancel() {
+                                // TODO Auto-generated method stub
+
+                                Toast.makeText(mContext,"No",Toast.LENGTH_LONG).show();
+                                confirmDialog.dismiss();
+                            }
+                        });*/
+                    }
+
+        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                MyToken=GlobalParameterApplication.getToken();
+                GetComments(itemID);
+                GetInfo(itemID);
+                /*
+                textView1.setText("用户："+OwnerID);
+                textView2.setText("描述："+Desc);
+                textView3.setText("价格："+Price);
+                textView4.setText("留言：");*/
+
+
+                picts = Picset.split(",");
+                pic_list.clear();
+                for (int i = 0; i < picts.length; i++){
+
+
+                    pic_list.add("http://202.120.47.213:12345/img/"+picts[i]);
+                }
+                comment_list.clear();
+                for (int i = 0; i < Comments.size();i++){
+                    HashMap<String,Object> map = new HashMap<String, Object>();
+                    map.put("comment",Comments.get(i));
+                    map.put("time",comment_times.get(i));
+                    comment_list.add(map);
+                }
+                Message msg=new Message();
+                msg.what=2310231;
+                nhandler.sendMessage(msg);
+                flag=true;
+
+            }
+        }).start();
+        //while(!flag);
+//        textView1.setText("用户："+OwnerID);
+        //      textView2.setText("描述："+Desc);
+        //  textView3.setText("价格："+Price);
+        //    textView4.setText("留言：");
+
+
+
+
+    }
+    Handler nhandler = new Handler(){
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if(textView1!=null){
+                textView4.setText("留言("+Comments.size()+")");
+
+
+                commentwords = (String) msg.obj;
+
+                switch (msg.what) {
+
+                    case 2323232:
                         new Thread(new Runnable() {
                             @Override
                             public void run(){
@@ -165,6 +253,7 @@ public class Buy extends Activity{
                                     for (int i = 0; i < Comments.size();i++){
                                         HashMap<String,Object> map = new HashMap<String, Object>();
                                         map.put("comment",Comments.get(i));
+                                        map.put("time",comment_times.get(i));
                                         comment_list.add(map);
                                     }
                                     Message Msg = new Message();
@@ -177,65 +266,15 @@ public class Buy extends Activity{
 
                             }
                         }).start();
-            }
-        });
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                MyToken=GlobalParameterApplication.getToken();
-                GetComments(itemID);
-                GetInfo(itemID);
-                /*
-                textView1.setText("用户："+OwnerID);
-                textView2.setText("描述："+Desc);
-                textView3.setText("价格："+Price);
-                textView4.setText("留言：");*/
-
-
-                picts = Picset.split(",");
-                pic_list.clear();
-                for (int i = 0; i < picts.length; i++){
-
-
-                    pic_list.add("http://202.120.47.213:12345/img/"+picts[i]);
-                }
-                comment_list.clear();
-                for (int i = 0; i < Comments.size();i++){
-                    HashMap<String,Object> map = new HashMap<String, Object>();
-                    map.put("comment",Comments.get(i));
-                    comment_list.add(map);
-                }
-                Message msg=new Message();
-                msg.what=2310231;
-                nhandler.sendMessage(msg);
-                flag=true;
-
-            }
-        }).start();
-        //while(!flag);
-//        textView1.setText("用户："+OwnerID);
-        //      textView2.setText("描述："+Desc);
-        //  textView3.setText("价格："+Price);
-        //    textView4.setText("留言：");
-
-
-
-
-    }
-    Handler nhandler = new Handler(){
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if(textView1!=null){
-                switch (msg.what) {
+                        break;
                     case 2310231:
 
                         flag=false;
                         textView1.setText("用户："+OwnerID);
                         textView2.setText("描述："+Desc);
                         textView3.setText("价格："+Price);
-                        textView4.setText("留言：");
 
-                        com_adapter=new SimpleAdapter(mContext,comment_list,R.layout.commentitem,new String[]{"comment"},new int[]{R.id.comment_text});
+                        com_adapter=new SimpleAdapter(mContext,comment_list,R.layout.commentitem,new String[]{"comment","time"},new int[]{R.id.comment_text,R.id.comment_time});
                         com_adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
                             @Override
                             public boolean setViewValue(View view, Object o, String s) {
@@ -251,7 +290,7 @@ public class Buy extends Activity{
                         comments.setVisibility(View.VISIBLE);
                         int totalHeight = 0;
                         for (int i = 0; i < com_adapter.getCount(); i++) {
-                            View listItem = com_adapter.getView(i, null, pics);
+                            View listItem = com_adapter.getView(i, null, comments);
                             listItem.measure(0, 0);
                             totalHeight += listItem.getMeasuredHeight();
                         }
@@ -261,7 +300,15 @@ public class Buy extends Activity{
                         // params.height = params.height;
                         comments.setLayoutParams(params);
 
-
+                        for (int i = 0; i < pic_list.size(); ++i){
+                            ImageView img = new ImageView(mContext);
+                            img.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                            LinearLayout.LayoutParams imgLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                            ImageLoader.getInstance().displayImage(pic_list.get(i),img);
+                            img.setLayoutParams(imgLayoutParams);
+                            pictures.addView(img,imgLayoutParams);
+                        }
+/*
                         sim_adapter = new PicAdapter(mContext,pic_list,R.layout.picitem);
 
 
@@ -278,6 +325,7 @@ public class Buy extends Activity{
                         params1 = pics.getLayoutParams();
                         params1.height = totalHeight + (pics.getDividerHeight() * (sim_adapter.getCount()));
                         pics.setLayoutParams(params1);
+  */
                         break;
                     case 231123:
                         //comments.setAdapter(com_adapter);
@@ -354,11 +402,13 @@ public class Buy extends Activity{
                 result=outjson.getJSONArray("comment");
                 org.json.JSONObject outt=null;
                 Comments.clear();
+                comment_times.clear();
                 for (int i = 0; i < result.length();i++){
                     {
                         outt=result.getJSONObject(i);
-                        Comments.add(outt.getString("publisherID")+" "+outt.getString("created")+" "+outt.getString("content"));
-
+                        //Comments.add(outt.getString("publisherID")+" "+outt.getString("content"));
+                        Comments.add(outt.getString("content"));
+                        comment_times.add(outt.getString("created"));
                     }
                 }
 
