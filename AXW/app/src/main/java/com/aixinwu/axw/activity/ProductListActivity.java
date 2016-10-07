@@ -94,7 +94,6 @@ public class ProductListActivity extends AppCompatActivity {
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
 
-
         //=========================
 
 
