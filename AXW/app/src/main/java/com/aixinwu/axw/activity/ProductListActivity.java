@@ -70,6 +70,20 @@ public class ProductListActivity extends AppCompatActivity {
                 case 0:
                     mAdapter = new ProductListAdapter(productList);
                     mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.setOnItemClickListener(new ProductListAdapter.MyOnItemClickListener() {
+                        @Override
+                        public void OnItemClickListener(View view, int i) {
+                            Product product = productList.get(i-1);
+                            Intent intent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
+                            //intent.putExtra("param1", product.getProduct_name());
+                            //getActivity().startActivity(intent);
+
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("product", product);
+                            intent.putExtras(bundle);
+                            ProductListActivity.this.startActivity(intent);
+                        }
+                    });
                     break;
                 case 1:
                     mAdapter.notifyDataSetChanged();

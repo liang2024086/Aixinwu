@@ -21,6 +21,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public ProductListAdapter(ArrayList<Product> datas) {
         this.datas = datas;
     }
+
+    private MyOnItemClickListener itemClickListener;
+    private MyOnItemLongClickListener itemLongClickListener;
+
     //创建新View，被LayoutManager所调用
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -33,6 +37,32 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         viewHolder.mNameView.setText(datas.get(position).getProduct_name());
         viewHolder.mPriceView.setText(datas.get(position).getPrice() + "");
         ImageLoader.getInstance().displayImage(datas.get(position).getImage_url(), viewHolder.mImageView);
+
+        final ViewHolder myViewHolder = viewHolder;
+
+        /*自定义item的点击事件不为null，设置监听事件*/
+        if (itemClickListener != null) {
+            myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    itemClickListener.OnItemClickListener(myViewHolder.itemView, myViewHolder.getLayoutPosition());
+                }
+            });
+        }
+
+        /*自定义item的长按事件不为null，设置监听事件*/
+        if (itemLongClickListener != null) {
+
+            myViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    itemLongClickListener.OnItemLongClickListener(myViewHolder.itemView, myViewHolder.getLayoutPosition());
+                    return true;
+                }
+            });
+        }
+
+
     }
     //获取数据的数量
     @Override
@@ -53,4 +83,38 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         }
     }
+
+    /**
+     * 列表点击事件
+     *
+     * @param itemClickListener
+     */
+    public void setOnItemClickListener(MyOnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    /**
+     * 列表长按事件
+     *
+     * @param itemLongClickListener
+     */
+    public void setOnItemLongClickListener(MyOnItemLongClickListener itemLongClickListener) {
+        this.itemLongClickListener = itemLongClickListener;
+    }
+
+
+    /**
+     * item点击接口
+     */
+    public interface MyOnItemClickListener {
+        void OnItemClickListener(View view, int position);
+    }
+
+    /**
+     * item长按接口
+     */
+    public interface MyOnItemLongClickListener {
+        void OnItemLongClickListener(View view, int position);
+    }
+
 }
