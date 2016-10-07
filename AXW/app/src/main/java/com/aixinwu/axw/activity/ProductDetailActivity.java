@@ -214,16 +214,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
 
         String category = "种类";
-        /*
-        if (Integer.parseInt(id) > 30000) {
-            category = "书籍";
-        } else if (Integer.parseInt(id) > 20000) {
-            category = "丸剂";
-        } else {
-            category = "保健产品";
-        }
-        */
-
         String name = entity.getProduct_name();  // 购买名称
         String imgurl = entity.getImage_url();
 
