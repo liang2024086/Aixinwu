@@ -1,19 +1,19 @@
 [
     {
-        "merged": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\D:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_top.xml",
-        "source": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\D:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_top.xml"
-    },
-    {
         "merged": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_top.xml",
         "source": "D:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_top.xml"
     },
     {
-        "merged": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_top.xml",
-        "source": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_top.xml"
+        "merged": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\D:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_top.xml",
+        "source": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\D:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_top.xml"
     },
     {
         "merged": "E:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_bottom.xml",
         "source": "E:\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_bottom.xml"
+    },
+    {
+        "merged": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_top.xml",
+        "source": "C:\\home\\d\\workspace\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_top.xml"
     },
     {
         "merged": "C:\\UIUC\\Aixinwu\\AXW\\PullToRefresh\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_out_to_bottom.xml",
