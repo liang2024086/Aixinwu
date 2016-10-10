@@ -406,6 +406,7 @@
                         />
 
                     <RelativeLayout
+                        android:id="@+id/about_aixinwu"
                         style="@style/PersonalBottomStyle"
                         android:layout_marginBottom="10dp" >
 
