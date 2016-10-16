@@ -14,12 +14,27 @@ public class Bean {
     private String type;
     private String doc;
     private int itemId;
+
+    //added by Yuding
+    private String whetherOnSail;
+    private int OnOrNot;
+
     public Bean(int itemId, String picId, String type, String doc) {
         this.picId = picId;
         this.itemId = itemId;
         this.type = type;
         this.doc = doc;
     }
+
+    public Bean(int itemId, String picId, String type, String doc,String whetherOnSail, int onOrNot) {
+        this.picId = picId;
+        this.itemId = itemId;
+        this.type = type;
+        this.doc = doc;
+        this.whetherOnSail = whetherOnSail;
+        this.OnOrNot = onOrNot;
+    }
+
     public void setItemId(int itemID){
         this.itemId = itemID;
     }
@@ -49,4 +64,10 @@ public class Bean {
     public void setType(String type) {
         this.type = type;
     }
+
+    public void setWhetherOnSail(String whetherOnSail){ this.whetherOnSail = whetherOnSail;}
+
+    public String getWhetherOnSail() { return this.whetherOnSail;}
+
+    public int getOnOrNot(){ return this.OnOrNot; }
 }

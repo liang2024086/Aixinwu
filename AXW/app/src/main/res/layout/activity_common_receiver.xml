@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.aixinwu.axw.activity.CommonReceiver">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:text="收货人"
+        android:textColor="#3e3a39"
+        android:background="#eeeeef"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/addReceiver"
+        android:layout_width="320dp"
+        android:layout_height="30dp"
+        android:text="添加收货人"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ea5504"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="16sp"
+        android:background="#eeeeef"/>
+
+
+    <ListView
+        android:id="@+id/receivers"
+        android:layout_above="@id/addReceiver"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="#eeeeef"
+        android:dividerHeight="10dp">
+    </ListView>
+
+</RelativeLayout>

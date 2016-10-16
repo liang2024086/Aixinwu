@@ -219,7 +219,7 @@ public class LoveCoin extends Fragment {
                 typestr = "租赁";
                 break;
             case "cash":
-                typestr = "现金";
+                typestr = "租赁";
                 break;
         }
 
@@ -245,7 +245,7 @@ public class LoveCoin extends Fragment {
                         outjson = new org.json.JSONObject(ostr);
                         result = outjson.getJSONArray("items");
                         start += result.length();
-                        Log.i("Inall", result.length() + "");
+                       // Log.i("Inall", result.length() + "");
                         for (int i = 0; i < result.length(); i++)
                             //if (result.getJSONObject(i).getInt("status") == 0)
                             {
@@ -260,14 +260,14 @@ public class LoveCoin extends Fragment {
                                 String shortdesc = result.getJSONObject(i).getString("short_desc");
                                 String despUrl   = result.getJSONObject(i).getString("desp_url");
                                 int stock = result.getJSONObject(i).getInt("stock");
-                                Log.i("Image Url", imageurl[0]);
+                                /*Log.i("Image Url", imageurl[0]);
                                 Log.i("aixinwuitemid", iid);
                                 Log.i("value", value);
                                 Log.i("name", logname);
-                                Log.i("stock", stock + "");
+                                Log.i("stock", stock + "");*/
                                 //Log.i("xxxx", logname + value + iid);
-                                Log.i("Image Url", imageurl[0]);
-                                Log.i("Desc", descurl + "null");
+                                /*Log.i("Image Url", imageurl[0]);
+                                Log.i("Desc", descurl + "null");*/
                                 if ( imageurl[0].equals("") ) {
                                     //If no images in database, show a default image.
                                     //BitmapFactory.Options cc = new BitmapFactory.Options();
@@ -281,7 +281,7 @@ public class LoveCoin extends Fragment {
                                             shortdesc,
                                             despUrl
                                             ));
-                                    Log.i("Status ", "001");
+                                    /*Log.i("Status ", "001");*/
                                 } else
                                     dbData.add(new Product(result.getJSONObject(i).getInt("id"),
                                             result.getJSONObject(i).getString("name"),
@@ -292,7 +292,7 @@ public class LoveCoin extends Fragment {
                                             shortdesc,
                                             despUrl
                                     ));
-                                Log.i("Status ", "021");
+                                //Log.i("Status ", "021");
                             }
 
                     } catch (JSONException e) {

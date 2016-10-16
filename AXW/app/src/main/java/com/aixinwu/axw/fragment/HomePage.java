@@ -231,7 +231,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
                     }
 
 
-                    initializeGuide(view);   // don't need this guide liangyuding
+                    initializeGuide(view);
                     number1.setText(visitCounter);
                     number2.setText(money);
                     number3.setText(user);

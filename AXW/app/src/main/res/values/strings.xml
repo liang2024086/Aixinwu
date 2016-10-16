@@ -48,5 +48,8 @@
     <string name="user_name">梁玉鼎</string>
     <string name="user_des">书山有路勤为径，学海无涯诺亚舟</string>
     <string name="user_recommend_tip">消息中心</string>
+    <string name="title_activity_my_main">MyMainActivity</string>
+    <string name="title_activity_common_used_address">CommonUsedAddress</string>
+    <string name="title_activity_common_receiver">CommonReceiver</string>
 
 </resources>

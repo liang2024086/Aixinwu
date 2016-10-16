@@ -235,6 +235,7 @@
                         />
 
                     <RelativeLayout
+                        android:id="@+id/myBought"
                         style="@style/PersonalTopStyle"
                         android:layout_marginBottom="10dp" >
 

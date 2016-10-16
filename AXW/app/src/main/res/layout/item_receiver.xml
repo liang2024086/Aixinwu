@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
+    android:paddingRight="20dp"
+    android:paddingEnd="20dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/receiverName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收货人："
+            android:textSize="14sp"
+            android:textColor="#595757"/>
+        <TextView
+            android:id="@+id/name"
+            android:layout_toRightOf="@id/receiverName"
+            android:layout_toEndOf="@id/receiverName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#595757"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/receiverStuId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学号："
+            android:textSize="14sp"
+            android:textColor="#595757" />
+
+        <TextView
+            android:id="@+id/stuId"
+            android:layout_toEndOf="@id/receiverStuId"
+            android:layout_toRightOf="@id/receiverStuId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#595757" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/receiverPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#595757"
+            android:text="联系电话："/>
+
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_toEndOf="@id/receiverPhone"
+            android:layout_toRightOf="@id/receiverPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="#595757" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:id="@+id/relativeDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true">
+
+
+            <ImageView
+                android:id="@+id/deletePic"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/delete"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_toRightOf="@id/deletePic"
+                android:layout_toEndOf="@id/deletePic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="删除"
+                android:textSize="12sp"
+                android:textColor="#595757"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeEdit"
+            android:layout_toLeftOf="@id/relativeDelete"
+            android:layout_toStartOf="@id/relativeDelete"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/editPic"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/edit"
+                android:layout_centerVertical="true"/>
+
+            <TextView
+                android:layout_toRightOf="@id/editPic"
+                android:layout_toEndOf="@id/editPic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="编辑"
+                android:textSize="12sp"
+                android:textColor="#595757"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
