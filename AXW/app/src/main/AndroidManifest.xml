@@ -66,6 +66,14 @@
             android:name=".activity.CommonReceiver"
             android:label="@string/title_activity_common_receiver" >
         </activity>
+        <activity
+            android:name=".activity.ConfirmOrder"
+            android:label="@string/title_activity_confirm_order" >
+        </activity>
+        <activity
+            android:name=".activity.MyCollection"
+            android:label="@string/title_activity_my_collection" >
+        </activity>
     </application>
 
 </manifest>

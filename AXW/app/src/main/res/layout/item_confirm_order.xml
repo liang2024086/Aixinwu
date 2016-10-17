@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#eeefef">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/white"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/img_item_shopping_cart_number"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"/>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/tv_item_shopping_cart_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#3e3a39"/>
+
+            <TextView
+                android:layout_below="@id/tv_item_shopping_cart_name"
+                android:id="@+id/tv_item_shopping_cart_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="种类:健康产品"
+                android:textColor="#ff606461"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                />
+
+            <RelativeLayout
+                android:id="@+id/price_shop_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_item_shopping_cart_category"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                >
+
+                <TextView
+                    android:id="@+id/love_coin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="爱心币: "
+                    android:textSize="14sp"
+                    android:textColor="#ea5404"/>
+                <TextView
+                    android:layout_toRightOf="@id/love_coin"
+                    android:layout_toEndOf="@id/love_coin"
+                    android:id="@+id/tv_item_shopping_cart_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥0"
+                    android:textSize="12sp"
+                    android:textColor="#ea5404"/>
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/price_shop_cart">
+
+                <TextView
+                    android:id="@+id/count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="数量: "
+                    android:textSize="14sp"
+                    android:textColor="#3e3a39"/>
+
+                <TextView
+                    android:id="@+id/tv_item_shopping_cart_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="x1"
+                    android:textSize="12sp"
+                    android:layout_toEndOf="@id/count"
+                    android:layout_toRightOf="@id/count"
+                    android:textColor="#3e3a39"
+                    android:typeface="serif"/>
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

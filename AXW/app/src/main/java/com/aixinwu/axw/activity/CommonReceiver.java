@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aixinwu.axw.Adapter.ReceiverAdapter;
 import com.aixinwu.axw.R;
@@ -39,6 +43,14 @@ public class CommonReceiver extends Activity {
                 receiverInofList);
 
         receiverList.setAdapter(receiverAdapter);
+
+        TextView addReceiver = (TextView)findViewById(R.id.addReceiver);
+        addReceiver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),"add receiver",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
