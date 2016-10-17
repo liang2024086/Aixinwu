@@ -30,12 +30,12 @@ public class dbmessage {
     /**
      * 往数据库添加一条数据
      */
-    public void add(int send, int recv, String doc) {
+    public void add(int send, int recv, String doc, int isRead) {
 
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
         if (db.isOpen()) {
-            db.execSQL("insert into message (send,recv,doc) values (?,?,?)",
-                    new Object[] { send, recv, doc});
+            db.execSQL("insert into message (send,recv,doc,isRead) values (?,?,?,?)",
+                    new Object[] { send, recv, doc, isRead});
             // 关闭数据库 释放数据库的链接
             db.close();
         }
@@ -50,12 +50,15 @@ public class dbmessage {
             Cursor cursor =db.rawQuery("select * from message where (send=? and recv=?) or (send=? and recv=?)", new String[] {sender, recver,recver,sender});
             while (cursor.moveToNext()){
                 talkmessage DbMessage = new talkmessage();
+                int messageIdindex =cursor.getColumnIndex("messageid");
                 int sendindex = cursor.getColumnIndex("send");
                 int recvindex = cursor.getColumnIndex("recv");
                 int docindex = cursor.getColumnIndex("doc");
                 int Sender = cursor.getInt(sendindex);
                 int Recver = cursor.getInt(recvindex);
+                int Messageid = cursor.getInt(messageIdindex);
                 String Docer = cursor.getString(docindex);
+                DbMessage.setMessageid(Messageid);
                 DbMessage.setDoc(Docer);
                 DbMessage.setReceiver(Recver);
                 DbMessage.setSender(Sender);
@@ -77,13 +80,16 @@ public class dbmessage {
             Cursor cursor =db.rawQuery("select * from message where (send=? or recv=?)", new String[] {mem, mem});
             while (cursor.moveToNext()){
                 talkmessage DbMessage = new talkmessage();
+                int messageIdindex =cursor.getColumnIndex("messageid");
                 int sendindex = cursor.getColumnIndex("send");
                 int recvindex = cursor.getColumnIndex("recv");
                 int docindex = cursor.getColumnIndex("doc");
                 int Sender = cursor.getInt(sendindex);
                 int Recver = cursor.getInt(recvindex);
+                int Messageid = cursor.getInt(messageIdindex);
                 String Docer = cursor.getString(docindex);
                 DbMessage.setDoc(Docer);
+                DbMessage.setMessageid(Messageid);
                 DbMessage.setReceiver(Recver);
                 DbMessage.setSender(Sender);
                 newmessage.add(DbMessage);
@@ -94,6 +100,29 @@ public class dbmessage {
 
         return newmessage;
     }
+    public void update(int messageid){
+        SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.execSQL("update message set isRead = 1 where (messageid = ?)",
+                    new String[] { Integer.toString(messageid)});
+            // 关闭数据库 释放数据库的链接
+            db.close();
+        }
+    }
+    public int count(int recv){
+        List<talkmessage> newmessage = null;
+        SQLiteDatabase db= dbOpenHelper.getReadableDatabase();
+        if (db.isOpen()){
 
+            Cursor cursor =db.rawQuery("select * from message where ((recv=? or send = ?) and isRead = 0)", new String[] {Integer.toString(recv), Integer.toString(recv)});
+            int ans = cursor.getCount();
+
+            cursor.close();
+            db.close();
+            return ans;
+        }
+
+        return 0;
+    }
 
 }

@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     GlobalParameterApplication.setLogin_status(1);
                     GlobalParameterApplication.setToken(token);
-                    GlobalParameterApplication.start(token);
+
                     JSONObject data = new JSONObject();
                     data.put("token",token);
                     URL url=new URL(GlobalParameterApplication.getSurl()+"/usr_get");
@@ -207,6 +207,7 @@ public class LoginActivity extends AppCompatActivity {
                     outjson = new org.json.JSONObject(ostr);
                     int result = outjson.getJSONObject("userinfo").getInt("ID");
                     GlobalParameterApplication.setUserID(result);
+                    GlobalParameterApplication.start(token);
                     conn.disconnect();
                 }
             }

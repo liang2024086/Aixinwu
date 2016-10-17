@@ -80,12 +80,15 @@
                 </GridView>
 
 
-                <ListView
-
+                <GridView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:numColumns="2"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="10dp"
+                    android:horizontalSpacing="10dp"
                     android:id="@+id/main_lv_search_results">
-                </ListView>
+                </GridView>
 
 
             </LinearLayout>
