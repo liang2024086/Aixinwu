@@ -1,9 +1,11 @@
 package com.aixinwu.axw.model;
 
+import java.io.Serializable;
+
 /**
  * Created by zhangyan on 2015/10/29.
  */
-public class ShoppingCartEntity {
+public class ShoppingCartEntity implements Serializable {
 
     private String id ;
     private String name;

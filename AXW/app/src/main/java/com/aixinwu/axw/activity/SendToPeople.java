@@ -51,7 +51,7 @@ import java.util.HashMap;
 public class SendToPeople extends AppCompatActivity {
     public String imageSet;
     private GridView mGridView;
-    private Button buttonPublish;
+    private TextView buttonPublish;
     private EditText doc;
     private String Descrip;    private ArrayList<HashMap<String, Object>> imageItem;
     private Bitmap bmp;
@@ -87,7 +87,7 @@ public class SendToPeople extends AppCompatActivity {
 
         setContentView(R.layout.content_send_to_people);
         mGridView = (GridView)findViewById(R.id.gridView1);
-        buttonPublish = (Button)findViewById(R.id.button1);
+        buttonPublish = (TextView)findViewById(R.id.button1);
         doc = (EditText)findViewById(R.id.editText1);
         spinner1 = (Spinner)findViewById(R.id.type);
         spinner2 = (Spinner)findViewById(R.id.neworold);
@@ -108,11 +108,13 @@ public class SendToPeople extends AppCompatActivity {
                 else{
                     _caption = Caption.getText().toString();
                     Descrip = doc.getText().toString();
-                    TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
-                    TypeName = v.getText().toString();
-                    v = (TextView)spinner2.getSelectedView().findViewById(R.id.item);
-                    HowNew = gpa.getNewOldInt(v.getText().toString());//Integer.parseInt(v.getText().toString());
+                    //TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
+                    //TypeName = v.getText().toString();
+                    //v = (TextView)spinner2.getSelectedView().findViewById(R.id.item);
+                    //HowNew = gpa.getNewOldInt(v.getText().toString());//Integer.parseInt(v.getText().toString());
 
+                    TypeName = "电子产品";
+                    HowNew = 1;
                     if (!price.getText().toString().isEmpty()) money = Integer.parseInt(price.getText().toString());
                     if (imageItem.size() == 1) {
                         Toast.makeText(SendToPeople.this, "No Picture", Toast.LENGTH_SHORT).show();

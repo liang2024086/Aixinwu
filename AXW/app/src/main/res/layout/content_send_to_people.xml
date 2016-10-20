@@ -158,20 +158,17 @@
                             android:textSize="16sp"
                             android:textColor="#3e3a39"
                             android:text="添加照片"/>
-                        <ScrollView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+
                         <GridView
                             android:id="@+id/gridView1"
                             android:layout_width="match_parent"
-                            android:layout_height="300dp"
+                            android:layout_height="00dp"
                             android:background="#ffffff"
                             android:numColumns="4"
                             android:stretchMode="columnWidth"
                             android:padding="20dp"
                             android:gravity="center" >
                         </GridView>
-                        </ScrollView>
 
                         <View
                             android:layout_width="match_parent"

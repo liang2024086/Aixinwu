@@ -58,6 +58,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     //content of shoppingcart
     public ArrayList<Integer> CheckedProductId = new ArrayList<>();
+    public ArrayList<ShoppingCartEntity> orderedDatas = new ArrayList<>();
     //public HashSet<Integer> CheckedProductId = new HashSet<>();
     private Button BtnDelChecked;
     private Button BtnDelAll;
@@ -73,7 +74,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private CheckBox mCheckBox;
 
-    private String orderid;
     /**
      * 合计
      */
@@ -108,12 +108,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
         initViews();
-        //initDatas();
+        initDatas();
     }
 
     @Override
     protected void onStart() {
-        initDatas();
+       // initDatas();
         super.onStart();
     }
 
@@ -123,8 +123,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         db.delete(ProductReaderContract.ProductEntry.TABLE_NAME,
-                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID+"=?",
-                new String[]{id+""}
+                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
+                new String[]{id + ""}
         );
         Log.i("Check!", id + " Ok");
     }
@@ -144,129 +144,26 @@ public class ShoppingCartActivity extends AppCompatActivity {
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     mTotalChecked = 0;
                     mTotalMoney = 0;
-                    for (int i = 0; i < mDatas.size(); ++i){
+                    for (int i = 0; i < mDatas.size(); ++i) {
                         CheckedProductId.add(Integer.parseInt(mDatas.get(i).getId()));
-                        mTotalChecked ++;
+                        orderedDatas.add(mDatas.get(i));
+                        mTotalChecked++;
                         mTotalMoney += mDatas.get(i).getPrice() * mDatas.get(i).getNumber();
                     }
-                }
-                else{
+                } else {
                     mTotalChecked = 0;
                     mTotalMoney = 0;
                     CheckedProductId.clear();
+                    orderedDatas.clear();
                 }
                 mAdapter.notifyDataSetChanged();
             }
         });
     }
 
-
-    //创建JSONArray 用于order
-    private void createOrderList () {
-        int quant = 0;
-        for (int i = 0; i < CheckedProductId.size(); i++) {
-            JSONObject orderproduct = new JSONObject();
-            String index = CheckedProductId.get(i).toString();
-            ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME,
-                    new String[]{ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER},
-                    ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
-                    new String[] {index},
-                    null,
-                    null,
-                    null
-                    );
-            //String SELECT_PRODUCT_QUANT = "Select number From entry Where product_id=?";
-            //Cursor cursor = db.rawQuery(SELECT_PRODUCT_QUANT, new String[]{index});
-            if (cursor.moveToNext()) {
-                quant = cursor.getInt(cursor.getColumnIndex("number"));
-            }
-            cursor.close();
-            orderproduct.put("product_id", CheckedProductId.get(i));
-            //orderproduct.put("product_id", CheckedProductId.get(i));
-            orderproduct.put("isbook", 0);
-            orderproduct.put("quantity", quant);
-            Log.i("Orderproduct", orderproduct.toString());
-            OrderedProduct.add(orderproduct);
-            Log.i("Orderedlist:", OrderedProduct.toString());
-        }
-    }
-
-    //链接服务器
-    private void order(){
-        String MyToken= GlobalParameterApplication.getToken();
-        String surl = GlobalParameterApplication.getSurl();
-        int userid = GlobalParameterApplication.getUserID();
-        JSONObject orderrequest = new JSONObject();
-
-        orderrequest.put("token", MyToken);
-        orderrequest.put("order_info", OrderedProduct);
-        orderrequest.put("consignee_id", userid);
-
-
-        //data.put("token", MyToken);
-
-
-        try {
-            URL url = new URL(surl + "/item_aixinwu_item_make_order");
-            try {
-                Log.i("Order","getconnection");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setDoOutput(true);
-
-                Log.i("orderorder", orderrequest.toJSONString());
-                conn.getOutputStream().write(orderrequest.toJSONString().getBytes());
-
-                java.lang.String ostr = IOUtils.toString(conn.getInputStream());
-                org.json.JSONObject outjson = null;
-                try{
-                    outjson = new org.json.JSONObject(ostr);
-                    orderid = outjson.getInt("order_id") + "";
-                    Log.i("Order successful", outjson.toString());
-                }catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-
-    public Thread oThread = new Thread() {
-        @Override
-        public void run() {
-            super.run();
-            order();
-            Message msg = new Message();
-            msg.what = 1994;
-            oHandler.sendMessage(msg);
-        }
-    };
-
-    public Handler oHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg){
-            super.handleMessage(msg);
-            switch (msg.what){
-                case 1994:
-                    Intent intent = new Intent(ShoppingCartActivity.this, DealFinished.class);
-                    intent.putExtra("overallcost", mTotalMoney + "");
-                    intent.putExtra("orderid", orderid);
-                    startActivity(intent);
-            }
-        }
-    };
 
     private void initViews() {
 
@@ -283,18 +180,17 @@ public class ShoppingCartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //create checked list
-                createOrderList();
 
-                //delete from database
-                for (int i = 0; i < CheckedProductId.size(); ++i) {
-                    deleteFromDatabase(CheckedProductId.get(i));
+                Intent intent = new Intent(getApplicationContext(), ConfirmOrder.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("size",Integer.valueOf(orderedDatas.size()));
+                bundle.putSerializable("mTotalMoney",mTotalMoney);
+                for (int i1 = 0; i1 < orderedDatas.size(); ++i1){
+                    bundle.putSerializable("OrderedData"+i1,orderedDatas.get(i1));
+                    bundle.putSerializable("CheckedProductId"+i1,CheckedProductId.get(i1));
                 }
-                //====
-                //send order request to the server
-
-                oThread.start();
-
-
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -418,6 +314,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         private ViewHolder holder;
         public Bitmap bitmap;
 
+
         //public  HashMap<Integer,Boolean> mMaps = new HashMap<>();
 
         //public  HashMap<Integer, Boolean> getMap() {
@@ -454,7 +351,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             holder = null;
             if (convertView == null) {
                 holder = new ViewHolder();
@@ -500,6 +397,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     if (isChecked) {
                         if (!CheckedProductId.contains(itemid)) {
                             CheckedProductId.add(itemid);
+                            orderedDatas.add(mDatas.get(position));
                             mTotalMoney += entity.getNumber() * entity.getPrice();
                             mTotalChecked++;
                             Log.i("Checked3:", CheckedProductId.toString());
@@ -510,6 +408,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                             mTotalMoney -= entity.getNumber() * entity.getPrice();
                             mTotalChecked--;
                             CheckedProductId.remove(CheckedProductId.indexOf(itemid));
+                            orderedDatas.remove(orderedDatas.indexOf(mDatas.get(position)));
                             Log.i("Checked4:", CheckedProductId.toString());
                         }
 
@@ -538,7 +437,14 @@ public class ShoppingCartActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /*
+    @Override
+    protected void onResume(){
+        super.onResume();
+        Log.i("YUDING","onResume");
+        Message message = Message.obtain();
+        message.what = MSG_WHAT;
+        mHandler.sendMessage(message);
+    }*/
 
 }
