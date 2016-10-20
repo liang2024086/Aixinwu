@@ -418,23 +418,22 @@ public class ShoppingCartActivity extends AppCompatActivity {
         private ViewHolder holder;
         public Bitmap bitmap;
 
-        public  HashMap<Integer,Boolean> mMaps = new HashMap<>();
+        //public  HashMap<Integer,Boolean> mMaps = new HashMap<>();
 
-        public  HashMap<Integer, Boolean> getMap() {
-            return mMaps;
-        }
-
-        public void setmMaps(HashMap<Integer, Boolean> mMaps){
-            this.mMaps = mMaps;
-        }
+        //public  HashMap<Integer, Boolean> getMap() {
+         //   return mMaps;
+        //
+        //public void setmMaps(HashMap<Integer, Boolean> mMaps){
+        //    this.mMaps = mMaps;
+        //}
 
 
         public ShoppingCartAdapter(Context context, ArrayList<ShoppingCartEntity> mDatas) {
             mInflater = LayoutInflater.from(context);
             this.mDatas = mDatas;
-            for (int i = 0; i < mDatas.size() ; i++) {
-                mMaps.put(i, false);
-            }
+            //for (int i = 0; i < mDatas.size() ; i++) {
+            //    mMaps.put(i, false);
+            //}
         }
 
         @Override
@@ -487,13 +486,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
             //============================================================
 
             //holder.img.setImageResource(R.drawable.aixinwu);           //缩略图片显示
+//在初始化CheckBox状态和设置状态变化监听事件之前，先把状态变化监听事件设置为null
 
-            if (CheckedProductId.contains(Integer.parseInt(entity.getId()))){
-                holder.cb.setChecked(true);
-            }
-            else{
-                holder.cb.setChecked(false);
-            }
 
 
             //holder.cb.setChecked(getMap().get(position));
@@ -508,12 +502,15 @@ public class ShoppingCartActivity extends AppCompatActivity {
                             CheckedProductId.add(itemid);
                             mTotalMoney += entity.getNumber() * entity.getPrice();
                             mTotalChecked++;
+                            Log.i("Checked3:", CheckedProductId.toString());
+
                         }
                     } else {
                         if (CheckedProductId.contains(itemid)) {
                             mTotalMoney -= entity.getNumber() * entity.getPrice();
                             mTotalChecked--;
                             CheckedProductId.remove(CheckedProductId.indexOf(itemid));
+                            Log.i("Checked4:", CheckedProductId.toString());
                         }
 
                     }
@@ -521,6 +518,15 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     mTVTotal.setText("合计：" + mTotalMoney + " 爱心币");
                 }
             });
+
+            if (CheckedProductId.contains(Integer.parseInt(entity.getId()))){
+                holder.cb.setChecked(true);
+                Log.i("Checked1:", CheckedProductId.toString());
+            }
+            else{
+                holder.cb.setChecked(false);
+                Log.i("Checked2:", CheckedProductId.toString());
+            }
 
             return convertView;
         }
