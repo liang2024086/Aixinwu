@@ -69,6 +69,7 @@ import org.json.simple.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -108,7 +109,7 @@ public class UsedDeal extends CycleViewPager {
     private MyScrollView scrollView;
     View searchHomePage;
     View search;
-    private ListView lvResults;
+    private GridView lvResults;
     private int searchTouchTime = 0;
     private PullToRefreshScrollView mPullRefreshScrollView;
     private Button chatbutton;
@@ -143,7 +144,7 @@ public class UsedDeal extends CycleViewPager {
         metrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
         screenHalfWidth = metrics.widthPixels / 2;
-        lvResults = (ListView) view.findViewById(R.id.main_lv_search_results);
+        lvResults = (GridView) view.findViewById(R.id.main_lv_search_results);
         mPullRefreshScrollView = (PullToRefreshScrollView)view.findViewById(R.id.homepageScroll2);
         mPullRefreshScrollView.getLoadingLayoutProxy().setLastUpdatedLabel("lastUpdateLabel");
         mPullRefreshScrollView.getLoadingLayoutProxy().setPullLabel("PULLLABLE");
@@ -301,16 +302,29 @@ public class UsedDeal extends CycleViewPager {
         @Override
         protected void onPostExecute(LinearLayout result) {
             // Do some stuff here
-
+            int horizontalBorderHeight=0;
+            Class<?> clazz=lvResults.getClass();
+            try {
+                //利用反射，取得每行显示的个数
+                Field column=clazz.getDeclaredField("mRequestedNumColumns");
+                column.setAccessible(true);
+                //利用反射，取得横向分割线高度
+                Field horizontalSpacing=clazz.getDeclaredField("mRequestedHorizontalSpacing");
+                horizontalSpacing.setAccessible(true);
+                horizontalBorderHeight=(Integer)horizontalSpacing.get(lvResults);
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
             int totalHeight = 0;
-            for (int i = 0; i < resultAdapter.getCount(); i++) {
+            for (int i = 0; i < resultAdapter.getCount(); i+=2) {
                 View listItem = resultAdapter.getView(i, null, lvResults);
                 listItem.measure(0, 0);
                 totalHeight += listItem.getMeasuredHeight();
             }
 
             ViewGroup.LayoutParams params = lvResults.getLayoutParams();
-            params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount() - 1));
+            params.height = totalHeight + (horizontalBorderHeight * (resultAdapter.getCount() - 1));
             // params.height = params.height;
             lvResults.setLayoutParams(params);
 
@@ -355,16 +369,29 @@ public class UsedDeal extends CycleViewPager {
         @Override
         protected void onPostExecute(LinearLayout result) {
             // Do some stuff here
-
+            int horizontalBorderHeight=0;
+            Class<?> clazz=lvResults.getClass();
+            try {
+                //利用反射，取得每行显示的个数
+                Field column=clazz.getDeclaredField("mRequestedNumColumns");
+                column.setAccessible(true);
+                //利用反射，取得横向分割线高度
+                Field horizontalSpacing=clazz.getDeclaredField("mRequestedHorizontalSpacing");
+                horizontalSpacing.setAccessible(true);
+                horizontalBorderHeight=(Integer)horizontalSpacing.get(lvResults);
+            } catch (Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
             int totalHeight = 0;
-            for (int i = 0; i < resultAdapter.getCount(); i++) {
+            for (int i = 0; i < resultAdapter.getCount(); i+=2) {
                 View listItem = resultAdapter.getView(i, null, lvResults);
                 listItem.measure(0, 0);
                 totalHeight += listItem.getMeasuredHeight();
             }
 
             ViewGroup.LayoutParams params = lvResults.getLayoutParams();
-            params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount() - 1));
+            params.height = totalHeight + (horizontalBorderHeight * (resultAdapter.getCount() - 1));
             // params.height = params.height;
             lvResults.setLayoutParams(params);
 
@@ -465,8 +492,22 @@ public class UsedDeal extends CycleViewPager {
             switch (msg.what){
                 case 23212:
    //                 lvResults.onRefreshComplete();
+                    int horizontalBorderHeight=0;
+                    Class<?> clazz=lvResults.getClass();
+                    try {
+                        //利用反射，取得每行显示的个数
+                        Field column=clazz.getDeclaredField("mRequestedNumColumns");
+                        column.setAccessible(true);
+                        //利用反射，取得横向分割线高度
+                        Field horizontalSpacing=clazz.getDeclaredField("mRequestedHorizontalSpacing");
+                        horizontalSpacing.setAccessible(true);
+                        horizontalBorderHeight=(Integer)horizontalSpacing.get(lvResults);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                        e.printStackTrace();
+                    }
                     int totalHeight = 0;
-                    for (int i = 0; i < resultAdapter.getCount(); i++) {
+                    for (int i = 0; i < resultAdapter.getCount(); i+=2) {
                         View listItem = resultAdapter.getView(i, null, lvResults);
                         listItem.measure(0, 0);
                         totalHeight += listItem.getMeasuredHeight();
@@ -476,7 +517,7 @@ public class UsedDeal extends CycleViewPager {
                     totalHeight += listItem.getMeasuredHeight();
 */
                     ViewGroup.LayoutParams params = lvResults.getLayoutParams();
-                    params.height = totalHeight + (lvResults.getDividerHeight() * (resultAdapter.getCount()-1));
+                    params.height = totalHeight + (horizontalBorderHeight * (resultAdapter.getCount()-1));
                     // params.height = params.height;
                     lvResults.setLayoutParams(params);
 

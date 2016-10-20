@@ -99,6 +99,7 @@ public class Chattoother extends Activity{
                 break;
             }
         }*/
+        GlobalParameterApplication.nowchat = From;
         pause = true;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_chat);
@@ -142,6 +143,7 @@ public class Chattoother extends Activity{
 
         num = re00.size();
         for (talkmessage tm: re00){
+            GlobalParameterApplication.update(tm);
             cont.add(tm.getDoc());
             if (tm.getSender()== GlobalParameterApplication.getUserID()){
                 addTextToList(tm.getDoc(),ME);who.add(ME);
@@ -165,6 +167,7 @@ public class Chattoother extends Activity{
                             for (int i=num; i<ss; i++)
 
                                 if (res.get(i).getSender() != GlobalParameterApplication.getUserID()){
+                                    GlobalParameterApplication.update(res.get(i));
                                     cont.add(res.get(i).getDoc());
                                     who.add(OTHER);}
 
@@ -210,7 +213,7 @@ public class Chattoother extends Activity{
                 editText.setText("");
                 uploadSuccessful = false;
                 GlobalParameterApplication.publish(myWord, From);
-                GlobalParameterApplication.add(To, From, myWord);
+                GlobalParameterApplication.add(To, From, myWord, 1);
                 cont.add(myWord);
                 who.add(ME);
                 addTextToList(myWord, ME);
@@ -313,6 +316,7 @@ public class Chattoother extends Activity{
                     e.printStackTrace();
                 }
             }*/
+        GlobalParameterApplication.nowchat = -1;
         pause= false;
         //   GlobalParameterApplication.setPause(false);
         super.onDestroy();

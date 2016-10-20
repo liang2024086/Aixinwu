@@ -51,5 +51,7 @@
     <string name="title_activity_my_main">MyMainActivity</string>
     <string name="title_activity_common_used_address">CommonUsedAddress</string>
     <string name="title_activity_common_receiver">CommonReceiver</string>
+    <string name="title_activity_confirm_order">ConfirmOrder</string>
+    <string name="title_activity_my_collection">MyCollection</string>
 
 </resources>

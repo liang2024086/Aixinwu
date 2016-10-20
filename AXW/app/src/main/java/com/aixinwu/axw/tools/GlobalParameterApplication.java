@@ -7,11 +7,17 @@ package com.aixinwu.axw.tools;
 import android.app.Application;
 import android.content.SharedPreferences;
 
+import com.aixinwu.axw.Adapter.NotifyMessage;
+
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.TimeoutException;
 
 import io.nats.client.ConnectionFactory;
@@ -27,7 +33,9 @@ public class GlobalParameterApplication extends Application{
     public static dbmessage DataBaseM;
     private static HashMap<String,Integer> newOldStringToInt = new HashMap<String, Integer>();
     private static HashMap<Integer,String> newOldIntToString = new HashMap<Integer, String>();
-
+    public static int notifyid = 0;
+    public static Queue<NotifyMessage> sentMessages = new LinkedList<NotifyMessage>();
+    public static int nowchat = -1;
 
     public GlobalParameterApplication(){
         DataBaseM = new dbmessage(this);
@@ -55,7 +63,17 @@ public class GlobalParameterApplication extends Application{
                         int send = msgs.getJSONObject(i).getInt("from");
                         int recv = msgs.getJSONObject(i).getInt("to");
                         String content = msgs.getJSONObject(i).getString("content");
-                        DataBaseM.add(send, recv, content);
+                        if (nowchat != send && recv == UserID && login_status == 1){
+                            NotifyMessage ma = new NotifyMessage();
+                            ma.setMessage(content);
+                            ma.setWho(String.valueOf(send));
+                            Date date= new Date();//创建一个时间对象，获取到当前的时间
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置时间显示格式
+                            String str = sdf.format(date);//将当前时间格式化为需要的类型
+                            ma.setTime(str);
+                            sentMessages.add(ma);
+                        }
+                        DataBaseM.add(send, recv, content, 0);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -98,12 +116,18 @@ public class GlobalParameterApplication extends Application{
         chat.publish(str, Integer.toString(dest));
         System.out.println("Send :"+str+dest);
     }
-    public static void add(int sender, int recver, String doc){
-        DataBaseM.add(sender, recver, doc);
+    public static void add(int sender, int recver, String doc, int isRead){
+        DataBaseM.add(sender, recver, doc, isRead);
     }
     public static List<talkmessage> gettalk(int sender, int recv){
         List<talkmessage> result = DataBaseM.getIn(Integer.toString(sender), Integer.toString(recv));
         return result;
+    }
+    public static void update(talkmessage st){
+        DataBaseM.update(st.getMessageid());
+    }
+    public static int query(int recv){
+        return DataBaseM.count(recv);
     }
     private static boolean AllowChatThread = true;
     private static int UserID;

@@ -24,6 +24,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aixinwu.axw.Adapter.NotifyMessage;
 import com.aixinwu.axw.Adapter.PicAdapter;
 import com.aixinwu.axw.fragment.HomePage;
 import com.aixinwu.axw.fragment.LoveCoin;
@@ -89,80 +90,8 @@ public class MainActivity extends FragmentActivity{
         setContentView(R.layout.activity_main);
 
 
+        NotifyThread.start();
 
-     //   sharedPreferences = getSharedPreferences("GLOBE", MODE_PRIVATE);
-      /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (GlobalParameterApplication.getPause()) {
-                    if (GlobalParameterApplication.getLogin_status() == 1 && GlobalParameterApplication.getAllowChatThread()) {
-                        //  while (!GlobalParameterApplication.getEnd());
-                        //     GlobalParameterApplication.setEnd(false);
-                        Message msg = new Message();
-                        msg.what = 22234;
-                        msg.arg1 = 0;
-                        int UserID = GlobalParameterApplication.getUserID();
-                        JSONObject data = new JSONObject();
-
-                        try {
-                            URL url = new URL(surl + "/item_get_chart");
-                            try {
-                                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-
-
-                                data.put("token", GlobalParameterApplication.getToken());
-                                conn.setRequestMethod("POST");
-                                conn.setDoOutput(true);
-                                conn.setConnectTimeout(1000);
-                                conn.setReadTimeout(1000);
-                                conn.setRequestProperty("Content-Type", "application/json");
-                                conn.setRequestProperty("Content-Length", String.valueOf(data.toJSONString().length()));
-                                conn.getOutputStream().write(data.toJSONString().getBytes());
-
-                                String ostr = IOUtils.toString(conn.getInputStream());
-                                System.out.println("chat" + ostr);
-
-                                org.json.JSONObject outjson = null;
-                                org.json.JSONArray result = null;
-                                try {
-                                    outjson = new org.json.JSONObject(ostr);
-                                    result = outjson.getJSONArray("chat");
-
-                                    // int chat_num = GlobalParameterApplication.getChat_Num();
-                                    //  while (!GlobalParameterApplication.getChat_othermsg());
-                                    // GlobalParameterApplication.setChat_othermsg(false);
-                                    //   System.out.println(chat_num+"++++++++++"+result.length());
-                                    if (GlobalParameterApplication.getChat_Num() < result.length()) {
-
-                                        GlobalParameterApplication.setChat_Num(result.length());
-                                        //msg.arg1 = 1;
-                                        nHandler.sendMessage(msg);
-                                        //GlobalParameterApplication.setEnd(true);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-            }
-        }).start();*/
-   //     mThread.start();
         init();
         configImageLoader();
         initialize();
@@ -239,120 +168,71 @@ public class MainActivity extends FragmentActivity{
         GlobalParameterApplication.stop();
     }
 
-    /*public Handler nHandler = new Handler(){
+    public Handler NotifyHandler = new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-                switch (msg.what) {
-                    case 22234:
-                        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                        //构建一个通知对象(需要传递的参数有三个,分别是图标,标题和 时间)
-                        Notification notification = new Notification(R.drawable.aixinwu, "通知", System.currentTimeMillis());
-                        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,new Intent(MainActivity.this,ChatList.class),0);//这是一个PendingIntent,关于它的使用昨天我刚写过一个,有兴趣可以去看看
-                        notification.setLatestEventInfo(getApplicationContext(), "通知1", "您有新消息", pendingIntent);//这就是对通知的具体设置了
+            switch (msg.what) {
+                case 123112:
+                    NotifyMessage st = (NotifyMessage) msg.getData().getSerializable("now");
+
+                    NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    //构建一个通知对象(需要传递的参数有三个,分别是图标,标题和 时间)
+                        /*Notification notification = new Notification(R.drawable.aixinwu, "通知", System.currentTimeMillis());
+                        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this,0,new Intent(MainActivity.this,ChatList.class),0);//这是一个PendingIntent,关于它的使用昨天我刚写过一个,有兴趣可以去看
+                        notification.contentIntent = pendingIntent;
+                        notification.
                         notification.flags = Notification.FLAG_AUTO_CANCEL;//点击后自动消失
                         notification.defaults = Notification.DEFAULT_SOUND;//声音默认
                         manager.notify(0, notification);//发动通知
 
                             Toast.makeText(MainActivity.this,"You have new message!!!",Toast.LENGTH_LONG);
-
-
-                        break;
-                }
-        }
-    };
-    public Thread mThread=new Thread(new Runnable() {
-        @Override
-        public void run() {
-
-
-            //GlobalParameterApplication.setChat_Num(sharedPreferences.getInt("Chat_Num", 0 ));
-            while (GlobalParameterApplication.getPause()) {
-                if (GlobalParameterApplication.getLogin_status() == 1 && GlobalParameterApplication.getAllowChatThread()) {
-                    while (!GlobalParameterApplication.getEnd());
-                    GlobalParameterApplication.setEnd(false);
-                    if (GlobalParameterApplication.getPrename()!=GlobalParameterApplication.getUserID()){
-                        if (GlobalParameterApplication.getPrename()==-1){
-                            GlobalParameterApplication.setChat_Num(sharedPreferences.getInt("Chat_Num"+GlobalParameterApplication.getUserID(),0));
-                        }else {
-                            SharedPreferences.Editor editor =  sharedPreferences.edit();
-                            editor.putInt("Chat_Num"+GlobalParameterApplication.getPrename(),GlobalParameterApplication.getChat_Num());
-                            editor.commit();
-                        }
-                        GlobalParameterApplication.setPrename(GlobalParameterApplication.getUserID());
-
-                    }
-                    Message msg = new Message();
-                    msg.what = 12234;
-                    msg.arg1 = 0;
-                    int UserID = GlobalParameterApplication.getUserID();
-                    JSONObject data = new JSONObject();
-
-                    try {
-                        URL url = new URL(surl + "/item_get_chart");
-                        try {
-                            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                            data.put("token", GlobalParameterApplication.getToken());
-                            conn.setRequestMethod("POST");
-                            conn.setDoOutput(true);
-                            conn.setConnectTimeout(1000);
-                            conn.setReadTimeout(1000);
-                            conn.setRequestProperty("Content-Type", "application/json");
-                            conn.setRequestProperty("Content-Length", String.valueOf(data.toJSONString().length()));
-                            conn.getOutputStream().write(data.toJSONString().getBytes());
-
-                            String ostr = IOUtils.toString(conn.getInputStream());
-                            conn.disconnect();
-                            System.out.println("MainActivity1" + ostr);
-                            int chat_num = GlobalParameterApplication.getChat_Num();
-                            org.json.JSONObject outjson = null;
-                            org.json.JSONArray result = null;
-                            try {
-                                outjson = new org.json.JSONObject(ostr);
-                                result = outjson.getJSONArray("chat");
-                                if (chat_num < result.length()) {
-                                    //GlobalParameterApplication.setAllowChatThread(false);
-                                    for (int i = chat_num; i < result.length(); i++) {
-                                        org.json.JSONObject now = (org.json.JSONObject) result.get(i);
-                                        int To = now.getInt("buyer_id");
-                                        int From = now.getInt("publisher_id");
-                                        int itemID = now.getInt("itemID");
-                                        String content = now.getString("content");
-                                        String FileName = To + "$" + From + "$" + itemID + ".txt";
-                                        FileOutputStream fos = openFileOutput(FileName, MODE_APPEND);
-                                        fos.write(("$$" + 1 + "$" + content).getBytes());
-                                        fos.close();
-
-                                    }
-                                    GlobalParameterApplication.setChat_Num(result.length());
-
-                                    msg.arg1 = 1;
-                                    nHandler.sendMessage(msg);
-                                    GlobalParameterApplication.setEnd(true);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
-                }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
+*/                      Intent intent = new Intent(getApplicationContext(), ChatList.class);
+                    //intent.putExtra("To", Integer.valueOf(st.getWho()));
+                    //intent.putExtra("itemID",5);
+                    PendingIntent pendingIntent2 = PendingIntent.getActivity(getApplicationContext(), GlobalParameterApplication.notifyid,
+                            intent, 0);
+                    // 通过Notification.Builder来创建通知，注意API Level
+                    // API11之后才支持
+                    Notification notify2 = new Notification.Builder(getApplicationContext())
+                            .setSmallIcon(R.drawable.aixinwu) // 设置状态栏中的小图片，尺寸一般建议在24×24，这个图片同样也是在下拉状态栏中所显示，如果在那里需要更换更大的图片，可以使用setLargeIcon(Bitmap
+                            // icon)
+                            .setTicker( "您有来自用户"+st.getWho()+"的新消息，请注意查收")// 设置在status
+                            // bar上显示的提示文字
+                            .setContentTitle("来自用户"+st.getWho()+"的新消息")// 设置在下拉status
+                            // bar后Activity，本例子中的NotififyMessage的TextView中显示的标题
+                            .setContentText("点击打开聊天列表")// TextView中显示的详细内容
+                            .setContentIntent(pendingIntent2) // 关联PendingIntent
+                            .setNumber(1) // 在TextView的右方显示的数字，可放大图片看，在最右侧。这个number同时也起到一个序列号的左右，如果多个触发多个通知（同一ID），可以指定显示哪一个。
+                            .getNotification(); // 需要注意build()是在API level
+                    // 16及之后增加的，在API11中可以使用getNotificatin()来代替
+                    notify2.flags |= Notification.FLAG_AUTO_CANCEL;
+                    notify2.defaults = Notification.DEFAULT_SOUND;
+                    manager.notify(GlobalParameterApplication.notifyid, notify2);
+                    GlobalParameterApplication.notifyid++;
+                    break;
             }
         }
-    });*/
+    };
+    public Thread NotifyThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            while (true){
+                if (GlobalParameterApplication.getLogin_status() == 1){
+                    NotifyMessage now = GlobalParameterApplication.sentMessages.peek();
+                    if (now != null){
+                        GlobalParameterApplication.sentMessages.remove();
+                        Message msg = new Message();
+                        msg.what = 123112;
+                        Bundle b = new Bundle();
+                        b.putSerializable("now", now);
+                        msg.setData(b);
+                        NotifyHandler.sendMessage(msg);
+                    }
+                }
+            }
+        }
+    });
     @Override
     protected void onActivityResult(int requestCode, int resultCode,Intent data){
 

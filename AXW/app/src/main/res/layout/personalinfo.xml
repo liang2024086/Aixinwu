@@ -271,7 +271,8 @@
                         />
 
 
-                    <RelativeLayout style="@style/PersonalNormalStyle" >
+                    <RelativeLayout style="@style/PersonalNormalStyle"
+                        android:id="@+id/myExchange">
 
                             <ImageView
                                 android:id="@+id/personal_icon_02"
@@ -304,7 +305,8 @@
                         android:layout_marginBottom="15dp"
                         />
 
-                        <RelativeLayout style="@style/PersonalBottomStyle" >
+                        <RelativeLayout style="@style/PersonalBottomStyle"
+                            android:id="@+id/myCollection">
 
                             <ImageView
                                 android:id="@+id/personal_icon_03"
@@ -320,6 +322,7 @@
                                 android:layout_marginStart="20dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@id/personal_icon_03"
+                                android:layout_toEndOf="@id/personal_icon_03"
                                 android:text="我收藏的" />
 
                             <ImageView

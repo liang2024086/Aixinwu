@@ -20,6 +20,8 @@ import com.aixinwu.axw.activity.LoginActivity;
 import com.aixinwu.axw.activity.PersonalDetailActivity;
 import com.aixinwu.axw.activity.SignupActivity;
 import com.aixinwu.axw.activity.CommonReceiver;
+import com.aixinwu.axw.activity.ConfirmOrder;
+import com.aixinwu.axw.activity.MyCollection;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -168,6 +170,26 @@ public class UserInfo extends Fragment {
             public void onClick(View view) {
                 if (GlobalParameterApplication.getLogin_status()==1){
                     Intent intent = new Intent(getActivity(), CommonReceiver.class);
+                    startActivity(intent);}
+            }
+        });
+
+        RelativeLayout ly_myExchange = (RelativeLayout)getActivity().findViewById(R.id.myExchange);
+        ly_myExchange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==1){
+                    Intent intent = new Intent(getActivity(), ConfirmOrder.class);
+                    startActivity(intent);}
+            }
+        });
+
+        RelativeLayout ly_myCollection = (RelativeLayout)getActivity().findViewById(R.id.myCollection);
+        ly_myCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==0){
+                    Intent intent = new Intent(getActivity(), MyCollection.class);
                     startActivity(intent);}
             }
         });

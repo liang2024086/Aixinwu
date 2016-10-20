@@ -1,0 +1,170 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.aixinwu.axw.activity.ConfirmOrder">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:text="订单确认"
+        android:textColor="#3e3a39"
+        android:background="#eeeeef"
+        android:layout_alignParentTop="true"/>
+
+    <RelativeLayout
+        android:id="@+id/receiver"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:paddingLeft="30dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:paddingRight="30dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/receiverName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="收货人："
+            android:textSize="14sp"
+            android:textColor="#595757"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/receiverName"
+            android:layout_toEndOf="@id/receiverName"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="张小琪"
+            android:layout_marginBottom="5dp"
+            android:textSize="14sp"
+            android:textColor="#595757"/>
+
+        <TextView
+            android:id="@+id/receiverStuId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/receiverName"
+            android:text="学号："
+            android:layout_marginBottom="5dp"
+            android:textSize="14sp"
+            android:textColor="#595757" />
+
+        <TextView
+            android:id="@+id/stuId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/receiverName"
+            android:layout_toEndOf="@id/receiverStuId"
+            android:layout_toRightOf="@id/receiverStuId"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="514xxxxxxx"
+            android:textSize="14sp"
+            android:textColor="#595757" />
+
+        <TextView
+            android:id="@+id/receiverPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/receiverStuId"
+            android:text="联系电话："
+            android:layout_marginBottom="5dp"
+            android:textSize="14sp"
+            android:textColor="#595757" />
+
+        <TextView
+            android:id="@+id/phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/receiverPhone"
+            android:layout_toEndOf="@id/receiverPhone"
+            android:layout_below="@id/receiverStuId"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="182xxxxxxxx"
+            android:textSize="14sp"
+            android:textColor="#595757" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/receiverPhone"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="更多 ＞"
+            android:textSize="12sp"
+            android:textColor="#595757"/>
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/confirmLine1"
+        android:layout_below="@id/receiver"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#eeeeef"/>
+
+    <TextView
+        android:id="@+id/order"
+        android:layout_width="320dp"
+        android:layout_height="30dp"
+        android:text="提交订单"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="#ea5504"
+        android:background="#eeeeef"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"/>
+
+    <TextView
+        android:id="@+id/totalMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/order"
+        android:layout_centerHorizontal="true"
+        android:text="合计：1200"
+        android:textSize="14sp"
+        android:textColor="#595757"/>
+
+    <TextView
+        android:id="@+id/numberOfCommodity"
+        android:layout_above="@id/totalMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="共0件商品"
+        android:textSize="14sp"
+        android:textColor="#595757"/>
+
+    <View
+        android:id="@+id/confirmLine2"
+        android:layout_above="@id/numberOfCommodity"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#eeeeef"/>
+
+    <ListView
+        android:id="@+id/commodityList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/confirmLine1"
+        android:layout_above="@id/confirmLine2"
+        android:dividerHeight="0dp"
+        android:divider="#00000000">
+
+    </ListView>
+
+</RelativeLayout>
