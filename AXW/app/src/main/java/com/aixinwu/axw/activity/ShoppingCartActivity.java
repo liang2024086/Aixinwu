@@ -36,6 +36,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+
 import com.aixinwu.axw.model.ShoppingCartEntity;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -44,6 +46,8 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
+
+import static java.lang.System.in;
 
 public class ShoppingCartActivity extends AppCompatActivity {
 
@@ -54,6 +58,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     //content of shoppingcart
     public ArrayList<Integer> CheckedProductId = new ArrayList<>();
+    //public HashSet<Integer> CheckedProductId = new HashSet<>();
     private Button BtnDelChecked;
     private Button BtnDelAll;
     public ArrayList<JSONObject> OrderedProduct = new ArrayList<>();
@@ -102,9 +107,6 @@ public class ShoppingCartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
-
-
-
         initViews();
         //initDatas();
     }
@@ -138,14 +140,24 @@ public class ShoppingCartActivity extends AppCompatActivity {
     //结算listerner
     private void addListeners() {
 
+        // 全选
         mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                HashMap<Integer, Boolean> map = new HashMap<Integer, Boolean>();
-                for (int i = 0; i < mDatas.size() ; i++) {
-                    map.put(i, isChecked);
+                if (isChecked){
+                    mTotalChecked = 0;
+                    mTotalMoney = 0;
+                    for (int i = 0; i < mDatas.size(); ++i){
+                        CheckedProductId.add(Integer.parseInt(mDatas.get(i).getId()));
+                        mTotalChecked ++;
+                        mTotalMoney += mDatas.get(i).getPrice() * mDatas.get(i).getNumber();
+                    }
                 }
-                mAdapter.setmMaps(map);
+                else{
+                    mTotalChecked = 0;
+                    mTotalMoney = 0;
+                    CheckedProductId.clear();
+                }
                 mAdapter.notifyDataSetChanged();
             }
         });
@@ -266,6 +278,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         BtnDelAll = (Button) findViewById(R.id.btn_delete_all_product);
         mBtnChecking = (Button) findViewById(R.id.btn_activity_shopping_cart_clearing);
 
+        // 最终结算
         mBtnChecking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -285,7 +298,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             }
         });
 
-
+        // 删除所选商品
         BtnDelChecked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -302,7 +315,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             }
         });
 
-
+        // 清空购物车
         BtnDelAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -470,27 +483,38 @@ public class ShoppingCartActivity extends AppCompatActivity {
 //============================================================
             ImageLoader.getInstance().displayImage(entity.getImgUrl(), holder.img);
 
+
             //============================================================
 
             //holder.img.setImageResource(R.drawable.aixinwu);           //缩略图片显示
 
+            if (CheckedProductId.contains(Integer.parseInt(entity.getId()))){
+                holder.cb.setChecked(true);
+            }
+            else{
+                holder.cb.setChecked(false);
+            }
 
 
-
-            holder.cb.setChecked(getMap().get(position));
+            //holder.cb.setChecked(getMap().get(position));
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     int itemid = Integer.parseInt(entity.getId());
+
                     if (isChecked) {
-                        mTotalMoney += entity.getNumber() * entity.getPrice();
-                        mTotalChecked++;
-                        CheckedProductId.add(itemid);
+                        if (!CheckedProductId.contains(itemid)) {
+                            CheckedProductId.add(itemid);
+                            mTotalMoney += entity.getNumber() * entity.getPrice();
+                            mTotalChecked++;
+                        }
                     } else {
-                        mTotalMoney -= entity.getNumber() * entity.getPrice();
-                        mTotalChecked--;
-                        CheckedProductId.remove(CheckedProductId.indexOf(itemid));
+                        if (CheckedProductId.contains(itemid)) {
+                            mTotalMoney -= entity.getNumber() * entity.getPrice();
+                            mTotalChecked--;
+                            CheckedProductId.remove(CheckedProductId.indexOf(itemid));
+                        }
 
                     }
                     mBtnChecking.setText("去结算(" + mTotalChecked + ")");
