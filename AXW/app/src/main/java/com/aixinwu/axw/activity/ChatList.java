@@ -135,6 +135,7 @@ public class ChatList extends Activity {
             if (!chec.contains(ss)) {
                 chec.add(ss);
                 tt.put("Name", ss.toString());
+                int a = GlobalParameterApplication.query(ss);
                 tt.put("Item",String.valueOf(GlobalParameterApplication.query(ss)));
                 chatitem.add(tt);
             }

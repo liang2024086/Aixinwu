@@ -188,7 +188,7 @@ public class UserInfo extends Fragment {
         ly_myCollection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (GlobalParameterApplication.getLogin_status()==0){
+                if (GlobalParameterApplication.getLogin_status()==1){
                     Intent intent = new Intent(getActivity(), MyCollection.class);
                     startActivity(intent);}
             }
@@ -197,8 +197,10 @@ public class UserInfo extends Fragment {
         ly_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ChatList.class);
-                startActivity(intent);
+                if (GlobalParameterApplication.getLogin_status()==1){
+                    Intent intent = new Intent(getActivity(), ChatList.class);
+                    startActivity(intent);
+                }
             }
         });
 

@@ -178,7 +178,7 @@ public class UsedDeal extends CycleViewPager {
         lvResults.setVisibility(View.VISIBLE);
         dbData=new ArrayList<Bean>();
         mThread.start();
-        resultAdapter = new SearchAdapter(getActivity(), dbData, R.layout.item_bean_list);
+        resultAdapter = new SearchAdapter(getActivity(), dbData, R.layout.item_used_commodity);
         lvResults.setAdapter(resultAdapter);
       //  lvResults.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         lvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {

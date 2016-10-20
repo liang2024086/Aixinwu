@@ -215,7 +215,7 @@
                                 android:text="价格  ¥" />
 
                             <EditText
-                                android:id="@+id/donationPrice"
+                                android:id="@+id/price"
                                 android:layout_toRightOf="@id/axwComPrice"
                                 android:layout_toEndOf="@id/axwComPrice"
                                 android:layout_below="@id/axwComSubmit"
@@ -240,6 +240,7 @@
                             android:layout_marginBottom="30dp"
                             android:background="#eeefef">
                             <TextView
+                                android:id="@+id/button1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
@@ -329,7 +330,7 @@
                             android:text="预估价格/元" />
                         <EditText
                             android:layout_weight="1"
-                            android:id="@+id/price"
+                            android:id="@+id/price123"
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:gravity="center"
@@ -359,7 +360,7 @@
 
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/button12"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="18sp"

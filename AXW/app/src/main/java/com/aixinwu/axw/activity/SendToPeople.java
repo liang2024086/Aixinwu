@@ -70,7 +70,7 @@ public class SendToPeople extends AppCompatActivity {
 
     private Spinner spinner2;
 
-    private int HowNew;
+    private int HowNew = 1;
 
     private EditText price;
     private int money;
