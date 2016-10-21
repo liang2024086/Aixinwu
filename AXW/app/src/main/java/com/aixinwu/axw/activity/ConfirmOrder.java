@@ -1,6 +1,8 @@
 package com.aixinwu.axw.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -43,7 +45,7 @@ public class ConfirmOrder extends Activity {
     public ArrayList<JSONObject> OrderedProduct = new ArrayList<>();
     private int mTotalMoney = 0;
     private int size = 0;
-    private String orderid;
+    private int orderid = -1;
     private TextView order;
 
     @Override
@@ -184,8 +186,9 @@ public class ConfirmOrder extends Activity {
                 org.json.JSONObject outjson = null;
                 try{
                     outjson = new org.json.JSONObject(ostr);
-                    orderid = outjson.getInt("order_id") + "";
-                    Log.i("Order successful", outjson.toString());
+                    //orderid = outjson.getInt("order_id") + "";
+                    orderid = outjson.getJSONObject("status").getInt("code");
+                    Log.i("Order successful", outjson.toString()+"id: "+orderid);
                 }catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -205,7 +208,7 @@ public class ConfirmOrder extends Activity {
         public void run() {
             super.run();
             order();
-            Message msg = new Message();
+                        Message msg = new Message();
             msg.what = 1994;
             oHandler.sendMessage(msg);
         }
@@ -217,10 +220,34 @@ public class ConfirmOrder extends Activity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 1994:
-                    Intent intent = new Intent(ConfirmOrder.this, DealFinished.class);
+                    /*Intent intent = new Intent(ConfirmOrder.this, DealFinished.class);
                     intent.putExtra("overallcost", mTotalMoney + "");
                     intent.putExtra("orderid", orderid);
-                    startActivity(intent);
+                    startActivity(intent);*/
+                    String dialogContent = "";
+                    if (orderid == 0)
+                        dialogContent = "商品购买成功";
+                    else
+                        dialogContent = "商品购买失败";
+                    new  AlertDialog.Builder(ConfirmOrder.this)
+                            .setTitle("消息")
+                            .setMessage(dialogContent)
+                            .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int ii) {
+                                    new Thread(){
+                                        @Override
+                                        public void run(){
+                                            super.run();
+
+                                            Intent intent = new Intent(getApplication(), MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(intent);
+                                        }
+                                    }.start();
+                                }
+                            })
+                            .show();
             }
         }
     };

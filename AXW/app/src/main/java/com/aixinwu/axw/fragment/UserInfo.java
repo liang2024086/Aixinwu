@@ -179,7 +179,7 @@ public class UserInfo extends Fragment {
             @Override
             public void onClick(View view) {
                 if (GlobalParameterApplication.getLogin_status()==1){
-                    Intent intent = new Intent(getActivity(), ConfirmOrder.class);
+                    Intent intent = new Intent(getActivity(), MyCollection.class);
                     startActivity(intent);}
             }
         });

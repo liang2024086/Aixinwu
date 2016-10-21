@@ -78,7 +78,7 @@ public class Buy extends Activity{
     private String CommentWord;
     private TextView commentsubmit;
     private ListView comments;
-    private ImageView button2;
+    private TextView button2;
     private String[] picts;
     private List<String> pic_list;
     private PicAdapter sim_adapter;
@@ -104,7 +104,7 @@ public class Buy extends Activity{
         itemID=(int)out.get("itemId");
         _caption = out.getString("caption");
         pictures = (LinearLayout) findViewById(R.id.pics);
-        button2=(ImageView)findViewById(R.id.chat);
+        button2=(TextView)findViewById(R.id.chat);
         textView1 = (TextView)findViewById(R.id.ownerid);
         textView2 = (TextView)findViewById(R.id.desc);
         textView3 = (TextView)findViewById(R.id.price3);

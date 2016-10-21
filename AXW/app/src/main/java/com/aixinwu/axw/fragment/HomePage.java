@@ -124,9 +124,9 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
 
                 if (searchTouchTime == 0) {
                     searchTouchTime++;
-                    Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                    /*Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                     intent.putExtra("param1", "搜索");
-                    getActivity().startActivityForResult(intent, 1);
+                    getActivity().startActivityForResult(intent, 1);*/
                 }
 
                 return false;
@@ -149,9 +149,9 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
         searchHomePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                /*Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                 intent.putExtra("param1", "搜索");
-                getActivity().startActivity(intent);
+                getActivity().startActivity(intent);*/
             }
         });
 

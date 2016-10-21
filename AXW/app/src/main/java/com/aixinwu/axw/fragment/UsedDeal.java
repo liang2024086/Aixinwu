@@ -216,9 +216,9 @@ public class UsedDeal extends CycleViewPager {
 
                 if (searchTouchTime == 0) {
                     searchTouchTime++;
-                    Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                    /*Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                     intent.putExtra("param1", "搜索");
-                    getActivity().startActivityForResult(intent, 2);
+                    getActivity().startActivityForResult(intent, 2);*/
                 }
 
                 return false;
