@@ -35,6 +35,14 @@ public class MyCollection extends Activity {
 
         collectionList = (ListView)findViewById(R.id.collectionList);
         collectList.add(new Bean(12,"http://202.120.47.213:12345/"+"img/product/5570/201311.jpg","爱心屋","你好"));
+        collectList.add(new Bean(12,"http://202.120.47.213:12345/"+"img/product/5570/201311.jpg","爱心屋","你好"));
+        collectList.add(new Bean(12,"http://202.120.47.213:12345/"+"img/product/5570/201311.jpg","爱心屋","你好"));
+        collectList.add(new Bean(12,"http://202.120.47.213:12345/"+"img/product/5570/201311.jpg","爱心屋","你好"));
+        collectList.add(new Bean(12,"http://202.120.47.213:12345/"+"img/product/5570/201311.jpg","爱心屋","你好"));
+        collectList.add(new Bean(12,"http://202.120.47.213:12345/"+"img/product/5570/201311.jpg","爱心屋","你好"));
+        collectList.add(new Bean(12,"http://202.120.47.213:12345/"+"img/product/5570/201311.jpg","爱心屋","你好"));
+        MyCollectionAdapter myCollectionAdapter = new MyCollectionAdapter(getApplicationContext(),collectList);
+        collectionList.setAdapter(myCollectionAdapter);
 
     }
 
@@ -63,11 +71,11 @@ public class MyCollection extends Activity {
     private class MyCollectionAdapter extends BaseAdapter {
 
         private LayoutInflater mInflater;
-        private ArrayList<Bean> mDatas = new ArrayList<>();
+        private List<Bean> mDatas = new ArrayList<>();
         private ViewHolder holder;
 
 
-        public MyCollectionAdapter(Context context, ArrayList<Bean> mDatas) {
+        public MyCollectionAdapter(Context context, List<Bean> mDatas) {
             mInflater = LayoutInflater.from(context);
             this.mDatas = mDatas;
         }
@@ -95,26 +103,20 @@ public class MyCollection extends Activity {
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = mInflater.inflate(R.layout.item_collection, parent, false);
-                holder.name = (TextView) convertView.findViewById(R.id.tv_item_shopping_cart_name);
-                holder.category = (TextView) convertView.findViewById(R.id
-                        .tv_item_shopping_cart_category);
+                holder.name = (TextView) convertView.findViewById(R.id.commodity_name);
                 holder.price = (TextView) convertView.findViewById(R.id
-                        .tv_item_shopping_cart_price);
-                holder.number = (TextView) convertView.findViewById(R.id
-                        .tv_item_shopping_cart_number);
+                        .commodity_price);
                 holder.img = (ImageView) convertView.findViewById(R.id
-                        .img_item_shopping_cart_number);
+                        .collectImg);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            final ShoppingCartEntity entity = (ShoppingCartEntity) getItem(position);
-            holder.category.setText(entity.getCategory());
-            holder.name.setText(entity.getName());
-            holder.price.setText(entity.getPrice() + "");
-            holder.number.setText("x" + entity.getNumber());
-            ImageLoader.getInstance().displayImage(entity.getImgUrl(), holder.img);
+            final Bean entity = (Bean) getItem(position);
+            holder.name.setText(entity.getType());
+            holder.price.setText(entity.getDoc() + "");
+            ImageLoader.getInstance().displayImage(entity.getPicId(), holder.img);
 
 
             return convertView;

@@ -1,9 +1,11 @@
 package com.aixinwu.axw.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,8 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -51,7 +55,7 @@ import java.util.HashMap;
 public class SendToPeople extends AppCompatActivity {
     public String imageSet;
     private GridView mGridView;
-    private Button buttonPublish;
+    private TextView buttonPublish;
     private EditText doc;
     private String Descrip;    private ArrayList<HashMap<String, Object>> imageItem;
     private Bitmap bmp;
@@ -70,7 +74,7 @@ public class SendToPeople extends AppCompatActivity {
 
     private Spinner spinner2;
 
-    private int HowNew;
+    private int HowNew = 1;
 
     private EditText price;
     private int money;
@@ -87,7 +91,7 @@ public class SendToPeople extends AppCompatActivity {
 
         setContentView(R.layout.content_send_to_people);
         mGridView = (GridView)findViewById(R.id.gridView1);
-        buttonPublish = (Button)findViewById(R.id.button1);
+        buttonPublish = (TextView)findViewById(R.id.button1);
         doc = (EditText)findViewById(R.id.editText1);
         spinner1 = (Spinner)findViewById(R.id.type);
         spinner2 = (Spinner)findViewById(R.id.neworold);
@@ -108,11 +112,13 @@ public class SendToPeople extends AppCompatActivity {
                 else{
                     _caption = Caption.getText().toString();
                     Descrip = doc.getText().toString();
-                    TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
-                    TypeName = v.getText().toString();
-                    v = (TextView)spinner2.getSelectedView().findViewById(R.id.item);
-                    HowNew = gpa.getNewOldInt(v.getText().toString());//Integer.parseInt(v.getText().toString());
+                    //TextView v = (TextView)spinner1.getSelectedView().findViewById(R.id.item);
+                    //TypeName = v.getText().toString();
+                    //v = (TextView)spinner2.getSelectedView().findViewById(R.id.item);
+                    //HowNew = gpa.getNewOldInt(v.getText().toString());//Integer.parseInt(v.getText().toString());
 
+                    TypeName = "电子产品";
+                    HowNew = 1;
                     if (!price.getText().toString().isEmpty()) money = Integer.parseInt(price.getText().toString());
                     if (imageItem.size() == 1) {
                         Toast.makeText(SendToPeople.this, "No Picture", Toast.LENGTH_SHORT).show();
@@ -164,7 +170,7 @@ public class SendToPeople extends AppCompatActivity {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                if (imageItem.size() == 10) {
+                if (imageItem.size() == 8) {
                     Toast.makeText(SendToPeople.this, "Picture is enough", Toast.LENGTH_SHORT).show();
                 }
                 else if (position == 0){
@@ -174,6 +180,13 @@ public class SendToPeople extends AppCompatActivity {
                 else {
                     //        Toast.makeText(getActivity(), "Del", Toast.LENGTH_SHORT).show();//DeleteDialog(position);
                 }
+            }
+        });
+        mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DeleteDialog(i);
+                return false;
             }
         });
     }
@@ -205,6 +218,8 @@ public class SendToPeople extends AppCompatActivity {
                 case 133:
                     SendToPeople.this.setResult(RESULT_OK);
                     finish();
+                    break;
+                case 134:
                     break;
             }
         }
@@ -265,6 +280,7 @@ public class SendToPeople extends AppCompatActivity {
                         null);
                 //返回 没找到选择图片
                 if (null == cursor) {
+                    Log.i("FIND PIC","can't find pic");
                     return;
                 }
                 //光标移动至开头 获取图片路径
@@ -318,6 +334,74 @@ public class SendToPeople extends AppCompatActivity {
         builder.create().show();
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1122: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, IMAGE_OPEN);
+                    Log.i("DEBUG_TAG", "user granted the permission!");
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Log.i("DEBUG_TAG", "user denied the permission!");
+                }
+                return;
+            }
+
+            case 3344: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    File outputImage = new File(Environment.getExternalStorageDirectory(), "suishoupai_image"+String.valueOf(NumPhoto)+".jpg");
+                    NumPhoto++;
+                    if (NumPhoto >= 10) NumPhoto = 0;
+                    pathTakePhoto = outputImage.toString();
+                    try {
+                        if(outputImage.exists()) {
+                            outputImage.delete();
+                        }
+                        outputImage.createNewFile();
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                    imageUri = Uri.fromFile(outputImage);
+                    Intent intentPhoto = new Intent("android.media.action.IMAGE_CAPTURE"); //拍照
+                    intentPhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                    try {
+                        startActivityForResult(intentPhoto, TAKE_PHOTO);
+                    }catch(Throwable e){
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Log.i("DEBUG_TAG", "user denied the permission!");
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
        protected  void AddImageDialog(){
            AlertDialog.Builder builder = new AlertDialog.Builder(this);
            builder.setTitle("Add Picture");
@@ -331,29 +415,100 @@ public class SendToPeople extends AppCompatActivity {
                            switch(which) {
                                case 0: //本地相册
                                    dialog.dismiss();
-                                   Intent intent = new Intent(Intent.ACTION_PICK,
-                                           android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                   startActivityForResult(intent, IMAGE_OPEN);
+                                   if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(SendToPeople.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                                       //has permission, do operation directly
+
+                                       Intent intent = new Intent(Intent.ACTION_PICK,
+                                               android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                       startActivityForResult(intent, IMAGE_OPEN);
+                                   } else {
+                                       //do not have permission
+                                       Log.i("DEBUG_TAG", "user do not have this permission!");
+
+                                       // Should we show an explanation?
+                                       if (ActivityCompat.shouldShowRequestPermissionRationale(SendToPeople.this,
+                                               Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                                           // Show an explanation to the user *asynchronously* -- don't block
+                                           // this thread waiting for the user's response! After the user
+                                           // sees the explanation, try again to request the permission.
+                                           Log.i("DEBUG_TAG", "we should explain why we need this permission!");
+                                       } else {
+
+                                           // No explanation needed, we can request the permission.
+                                           Log.i("DEBUG_TAG", "==request the permission==");
+
+                                           try {
+                                               ActivityCompat.requestPermissions(SendToPeople.this,
+                                                       new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                                       1122);
+                                           }catch (Throwable e){
+                                               e.printStackTrace();
+                                           }
+
+                                           // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                                           // app-defined int constant. The callback method gets the
+                                           // result of the request.
+                                       }
+                                   }
+
                                    //通过onResume()刷新数据
                                    break;
                                case 1: //手机相机
                                    dialog.dismiss();
-                                   File outputImage = new File(Environment.getExternalStorageDirectory(), "suishoupai_image"+String.valueOf(NumPhoto)+".jpg");
-                                   NumPhoto++;
-                                   if (NumPhoto >= 10) NumPhoto = 0;
-                                   pathTakePhoto = outputImage.toString();
-                                   try {
-                                       if(outputImage.exists()) {
-                                           outputImage.delete();
+                                   if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(SendToPeople.this, Manifest.permission.CAMERA)) {
+                                       //has permission, do operation directly
+
+                                       File outputImage = new File(Environment.getExternalStorageDirectory(), "suishoupai_image"+String.valueOf(NumPhoto)+".jpg");
+                                       NumPhoto++;
+                                       if (NumPhoto >= 10) NumPhoto = 0;
+                                       pathTakePhoto = outputImage.toString();
+                                       try {
+                                           if(outputImage.exists()) {
+                                               outputImage.delete();
+                                           }
+                                           outputImage.createNewFile();
+                                       } catch(Exception e) {
+                                           e.printStackTrace();
                                        }
-                                       outputImage.createNewFile();
-                                   } catch(Exception e) {
-                                       e.printStackTrace();
+                                       imageUri = Uri.fromFile(outputImage);
+                                       Intent intentPhoto = new Intent("android.media.action.IMAGE_CAPTURE"); //拍照
+                                       intentPhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                                       try {
+                                           startActivityForResult(intentPhoto, TAKE_PHOTO);
+                                       }catch(Throwable e){
+                                           e.printStackTrace();
+                                       }
+                                   } else {
+                                       //do not have permission
+                                       Log.i("DEBUG_TAG", "user do not have this permission!");
+
+                                       // Should we show an explanation?
+                                       if (ActivityCompat.shouldShowRequestPermissionRationale(SendToPeople.this,
+                                               Manifest.permission.CAMERA)) {
+
+                                           // Show an explanation to the user *asynchronously* -- don't block
+                                           // this thread waiting for the user's response! After the user
+                                           // sees the explanation, try again to request the permission.
+                                           Log.i("DEBUG_TAG", "we should explain why we need this permission!");
+                                       } else {
+
+                                           // No explanation needed, we can request the permission.
+                                           Log.i("DEBUG_TAG", "==request the permission==");
+
+                                           try {
+                                               ActivityCompat.requestPermissions(SendToPeople.this,
+                                                       new String[]{Manifest.permission.CAMERA},
+                                                       3344);
+                                           }catch (Throwable e){
+                                               e.printStackTrace();
+                                           }
+
+                                           // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                                           // app-defined int constant. The callback method gets the
+                                           // result of the request.
+                                       }
                                    }
-                                   imageUri = Uri.fromFile(outputImage);
-                                   Intent intentPhoto = new Intent("android.media.action.IMAGE_CAPTURE"); //拍照
-                                   intentPhoto.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                                   startActivityForResult(intentPhoto, TAKE_PHOTO);
                                    break;
                                case 2: //取消添加
                                    dialog.dismiss();

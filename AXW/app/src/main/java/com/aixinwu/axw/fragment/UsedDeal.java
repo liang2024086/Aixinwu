@@ -178,7 +178,7 @@ public class UsedDeal extends CycleViewPager {
         lvResults.setVisibility(View.VISIBLE);
         dbData=new ArrayList<Bean>();
         mThread.start();
-        resultAdapter = new SearchAdapter(getActivity(), dbData, R.layout.item_bean_list);
+        resultAdapter = new SearchAdapter(getActivity(), dbData, R.layout.item_used_commodity);
         lvResults.setAdapter(resultAdapter);
       //  lvResults.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         lvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -216,9 +216,9 @@ public class UsedDeal extends CycleViewPager {
 
                 if (searchTouchTime == 0) {
                     searchTouchTime++;
-                    Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                    /*Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                     intent.putExtra("param1", "搜索");
-                    getActivity().startActivityForResult(intent, 2);
+                    getActivity().startActivityForResult(intent, 2);*/
                 }
 
                 return false;

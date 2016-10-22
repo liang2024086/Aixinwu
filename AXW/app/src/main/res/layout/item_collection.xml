@@ -1,46 +1,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="110dp"
+    android:background="#eeeeef"
     tools:context="com.aixinwu.axw.activity.MyCollection">
 
-    <TextView
-        android:id="@+id/title"
+    <View
+        android:id="@+id/item_collection_line"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:text="我收藏的"
-        android:textColor="#3e3a39"
-        android:background="#eeeeef"
-        android:layout_alignParentTop="true"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="10dp"
+        android:background="@color/white"/>
 
     <ImageView
         android:id="@+id/collectImg"
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
         android:scaleType="fitXY"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"/>
+        android:layout_marginLeft="20dp"
+        android:layout_below="@id/item_collection_line"/>
 
     <RelativeLayout
         android:id="@+id/information"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/collectImg"
-        android:layout_toEndOf="@id/collectImg">
+        android:layout_toEndOf="@id/collectImg"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_below="@id/item_collection_line">
 
         <TextView
             android:id="@+id/commodity_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#595757"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
 
         <TextView
             android:id="@+id/commodity_price"
+            android:layout_below="@id/commodity_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="#595757"
+            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -49,26 +55,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@id/item_collection_line">
 
         <RelativeLayout
+            android:id="@+id/collectComodity"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
 
             <ImageView
                 android:id="@+id/star"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/star"/>
 
             <TextView
+                android:layout_toEndOf="@id/star"
+                android:layout_toRightOf="@id/star"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="取消收藏"
+                android:textColor="#ea5504"
+                android:textSize="14sp" />
 
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/shareCommodity"
+            android:layout_below="@id/collectComodity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -79,8 +100,15 @@
                 android:src="@drawable/share"/>
 
             <TextView
+                android:layout_toRightOf="@id/share"
+                android:layout_toEndOf="@id/share"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="分享商品"
+                android:textColor="#595757"
+                android:textSize="14sp"/>
 
         </RelativeLayout>
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_margin="0dp">
+
+    <ImageView
+        android:src="@drawable/icon"
+        android:scaleType="centerInside"
+        android:id="@+id/item_search_iv_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"/>
+
+
+    <RelativeLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/item_search_iv_icon">
+
+        <TextView
+            android:id="@+id/item_search_tv_title"
+            android:layout_alignParentTop="true"
+            android:text="Title"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="18sp"
+            android:textColor="#3e3a39"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/whether_on_sail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/item_search_tv_title"
+            android:layout_centerHorizontal="true"
+            android:text="￥3600"
+            android:textSize="14sp"
+            android:textColor="#ea5404"/>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/item_bean_list_line"
+        android:layout_below="@id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeef"
+        android:layout_marginTop="5dp"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/item_bean_list_content_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_bean_list_line"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/item_search_tv_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:text="content"
+            android:lines="2"
+            android:ellipsize="end"
+            android:textSize="16sp"
+            android:textColor="#9fa0a0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+</RelativeLayout>

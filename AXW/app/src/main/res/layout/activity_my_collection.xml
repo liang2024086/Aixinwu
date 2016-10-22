@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context="com.aixinwu.axw.activity.MyCollection">
 
     <TextView
@@ -13,14 +14,15 @@
         android:textColor="#3e3a39"
         android:background="#eeeeef"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="0dp" />
 
     <ListView
         android:id="@+id/collectionList"
+        android:layout_below="@id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="#eeeeef"
-        android:dividerHeight="10dp">
+        android:divider="@color/white"
+        android:dividerHeight="0dp">
 
     </ListView>
 

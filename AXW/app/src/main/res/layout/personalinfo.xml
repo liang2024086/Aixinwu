@@ -283,12 +283,12 @@
                                 android:layout_height="18dp"
                                 android:src="@drawable/personal3" />
 
-                            <TextView
-                                style="@style/PersonalTextStyle"
-                                android:layout_marginStart="20dp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_toRightOf="@id/personal_icon_02"
-                                android:text="我交换的" />
+                        <TextView
+                            style="@style/PersonalTextStyle"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/personal_icon_02"
+                            android:text="我交换的" />
 
                             <ImageView
                                 style="@style/PersonalRightIconStyle"

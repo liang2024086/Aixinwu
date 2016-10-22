@@ -40,6 +40,8 @@ public class SignupActivity extends AppCompatActivity {
     Button _signupButton;
     @Bind(R.id.link_login)
     TextView _loginLink;
+    @Bind(R.id.catchVerificationCode)
+    Button _catchVerificationCode;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,23 @@ public class SignupActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        _catchVerificationCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        String phone_number = _nameText.getText().toString();
+                        if (phone_number.length() == 11)
+                            catchVerficationCode(phone_number);
+                    }
+                }).start();
+                Toast.makeText(getApplicationContext(),"nihao",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void signup() {
@@ -79,13 +98,13 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("创建账户中...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
 
-        String email = _emailText.getText().toString();
+        String phoneNumber = _nameText.getText().toString();
         String password = _passwordText.getText().toString();
+        String verifyCode = _emailText.getText().toString();
         // TODO: Implement your own signup logic here.
 
-        RegisterThread registerThread = new RegisterThread(email, password);
+        RegisterThread registerThread = new RegisterThread(phoneNumber, verifyCode, password);
 
         registerThread.start();
 
@@ -104,7 +123,7 @@ public class SignupActivity extends AppCompatActivity {
                         // depending on success
 
 
-                            onSignupSuccess();
+                        onSignupSuccess();
                         // onSignupFailed();
                         progressDialog.dismiss();
                     }
@@ -132,14 +151,14 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("至少三个字符");
+            _nameText.setError("请输入手机号");
             valid = false;
         } else {
             _nameText.setError(null);
         }
 
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText.setError("请输入合法的邮箱名");
+        if (email.isEmpty() /*|| !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()*/) {
+            _emailText.setError("请输入验证码");
             valid = false;
         } else {
             _emailText.setError(null);
@@ -155,8 +174,50 @@ public class SignupActivity extends AppCompatActivity {
         return valid;
     }
 
+    protected void catchVerficationCode(String phoneNumber){
+        JSONObject phone = new JSONObject();
+        phone.put("phone",phoneNumber);
+        String jsonstr = phone.toJSONString();
 
-    protected int AddUser (String username, String password){
+        URL url  = null;
+        try {
+            url = new URL(GlobalParameterApplication.getSurl()+"/phone_verification");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            conn.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+        conn.setDoOutput(true);
+        conn.setConnectTimeout(1000);
+        conn.setReadTimeout(1000);
+        conn.setRequestProperty("Content-Type","application/json");
+        conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
+        try {
+            conn.getOutputStream().write(jsonstr.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String ostr = null;
+        try {
+            ostr = IOUtils.toString(conn.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(ostr);
+
+    }
+
+    protected int AddUser (String username, String verifyCode, String password){
         //GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
 
         //String result = null;
@@ -167,8 +228,10 @@ public class SignupActivity extends AppCompatActivity {
         JSONObject userinfo = new JSONObject();
         userinfo.put("username", username);
         userinfo.put("password", password);
+        userinfo.put("verification_code",verifyCode);
 
         String jsonstr = userinfo.toJSONString();
+        System.out.println("注册信息:"+jsonstr);
         URL url  = null;
         try {
             url = new URL(GlobalParameterApplication.getSurl()+"/usr_add");
@@ -203,6 +266,7 @@ public class SignupActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.print("注册");
         System.out.println(ostr);
 
         return 1;
@@ -211,15 +275,16 @@ public class SignupActivity extends AppCompatActivity {
 
     class RegisterThread extends Thread{
 
-        private String email,password;
-        public RegisterThread(String email,String password){
-            this.email = email;
+        private String phoneNumber,verifyCode,password;
+        public RegisterThread(String phoneNumber,String verifyCode, String password){
+            this.phoneNumber = phoneNumber;
+            this.verifyCode = verifyCode;
             this.password = password;
         }
 
         @Override
         public void run(){
-            AddUser(email, password);
+            AddUser(phoneNumber,verifyCode, password);
         }
     }
 
