@@ -80,6 +80,7 @@ public class LoveCoin extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProductListActivity.class);
+                intent.putExtra("type", "exchange");
                 getActivity().startActivity(intent);
             }
         });
@@ -90,6 +91,8 @@ public class LoveCoin extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProductListActivity.class);
+                String s = "rent";
+                intent.putExtra("type", s);
                 getActivity().startActivity(intent);
             }
         });
@@ -99,6 +102,8 @@ public class LoveCoin extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ProductListActivity.class);
+                intent.putExtra("type", "cash");
+
                 getActivity().startActivity(intent);
             }
         });
@@ -219,7 +224,7 @@ public class LoveCoin extends Fragment {
                 typestr = "租赁";
                 break;
             case "cash":
-                typestr = "租赁";
+                typestr = "现金";
                 break;
         }
 
