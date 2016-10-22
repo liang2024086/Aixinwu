@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
