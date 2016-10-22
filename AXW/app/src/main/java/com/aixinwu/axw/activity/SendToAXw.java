@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +38,7 @@ import java.util.HashMap;
 
 public class SendToAXw extends Activity {
 
-    private Button buttonPublish;
+    private RelativeLayout buttonPublish;
     private EditText itemname;
     private String ItemName;
     private EditText itemnumber;
@@ -54,7 +55,7 @@ public class SendToAXw extends Activity {
         itemname=(EditText)findViewById(R.id.itemname1);
         itemnumber=(EditText)findViewById(R.id.itemnumber);
         jaccount=(EditText)findViewById(R.id.jaccountID);
-        buttonPublish = (Button)findViewById(R.id.button2);
+        buttonPublish = (RelativeLayout)findViewById(R.id.donate);
         buttonPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,10 +63,11 @@ public class SendToAXw extends Activity {
                 if(gpa.getLogin_status()==0) Toast.makeText(SendToAXw.this,"你跪了",Toast.LENGTH_LONG).show();
                 else{
 
+                    Toast.makeText(SendToAXw.this,"nih",Toast.LENGTH_SHORT).show();
                     ItemName = itemname.getText().toString();
                     if (!itemnumber.getText().toString().isEmpty())
                         itemnum = Integer.parseInt(itemnumber.getText().toString());
-                    JaccountID = jaccount.getText().toString();
+                    JaccountID = "liangyuding";//jaccount.getText().toString();
 
 
 
@@ -90,7 +92,8 @@ public class SendToAXw extends Activity {
             MyToken=GlobalParameterApplication.getToken();
             JSONObject data = new JSONObject();
             JSONObject iteminfo = new JSONObject();
-            iteminfo.put("jacount_id",JaccountID);
+            //iteminfo.put("jacount_id",JaccountID);
+            iteminfo.put("jacount_id","liangyuding");
             iteminfo.put("desc",ItemName);
             data.put("itemInfo",iteminfo);
             data.put("token",MyToken);

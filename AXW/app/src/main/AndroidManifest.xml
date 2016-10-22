@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 申明权限 操作SD卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 申请拍照权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -58,10 +59,6 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".activity.AXWInfo" />
-        <activity
-            android:name=".activity.CommonUsedAddress"
-            android:label="@string/title_activity_common_used_address" >
-        </activity>
         <activity
             android:name=".activity.CommonReceiver"
             android:label="@string/title_activity_common_receiver" >
