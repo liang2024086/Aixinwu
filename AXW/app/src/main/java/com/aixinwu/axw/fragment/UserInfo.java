@@ -23,6 +23,11 @@ import com.aixinwu.axw.activity.CommonReceiver;
 import com.aixinwu.axw.activity.ConfirmOrder;
 import com.aixinwu.axw.activity.MyCollection;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
+import com.aixinwu.axw.database.Sqlite;
+
+
+import android.database.sqlite.SQLiteDatabase;
+
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -51,11 +56,14 @@ public class UserInfo extends Fragment {
     private String username;
     private String coins;
 
+    private Sqlite userDbHelper;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.personalinfo, null);
         configImageLoader();
+        userDbHelper = new Sqlite(getActivity());
         return view;
     }
 
@@ -128,6 +136,25 @@ public class UserInfo extends Fragment {
             @Override
             public void onClick(View view) {
                 //GlobalParameterApplication gpa = (GlobalParameterApplication) getActivity().getApplicationContext();
+
+
+                
+                new Thread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Log.e("1111", "111111111");
+                        // TODO Auto-generated method stub  
+                        try{
+                        SQLiteDatabase db = userDbHelper.getWritableDatabase();
+                        db.execSQL("delete from AXWuser where userId = 1"); }
+                        catch(Throwable e){
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
                 GlobalParameterApplication.setToken("");
                 GlobalParameterApplication.setLogin_status(0);
                 GlobalParameterApplication.stop();
