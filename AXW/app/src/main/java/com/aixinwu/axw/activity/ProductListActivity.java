@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.aixinwu.axw.Adapter.ProductAdapter;
 import com.aixinwu.axw.Adapter.ProductListAdapter;
@@ -41,7 +42,7 @@ public class ProductListActivity extends AppCompatActivity {
     private ArrayList<Product> productList = new ArrayList<Product>();
     private XRecyclerView mRecyclerView;
     private int times = 0;
-
+    private String type;
     private ProductListAdapter mAdapter;
 
 
@@ -100,6 +101,9 @@ public class ProductListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        type = getIntent().getStringExtra("type");
+
+
         setContentView(R.layout.activity_product_list);
         mRecyclerView = (XRecyclerView) this.findViewById(R.id.recyclerview);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
@@ -107,7 +111,18 @@ public class ProductListActivity extends AppCompatActivity {
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
         mRecyclerView.setArrowImageView(R.drawable.iconfont_downgrey);
-
+        TextView title = (TextView) this.findViewById(R.id.product_list_title);
+        switch (type) {
+            case "exchange":
+                title.setText("置换专区");
+                break;
+            case "rent":
+                title.setText("租赁专区");
+                break;
+            case "cash":
+                title.setText("公益专区");
+                break;
+        }
         //=========================
 
 
@@ -117,18 +132,22 @@ public class ProductListActivity extends AppCompatActivity {
             public void onRefresh() {
                 times = 0;
                 productList.clear();
-                Thread plthread1 = new thread("exchange", 1);
+
+                Thread plthread1 = new thread(type, 1);
+
                 plthread1.start();
             }
             @Override
             public void onLoadMore() {
                 times++;
-                Thread plthread2 = new thread("rent", 2);
+                
+                Thread plthread2 = new thread(type, 2);
+
                 plthread2.start();
             }
         });
 
-        Thread plthread = new thread("cash", 0);
+        Thread plthread = new thread(type, 0);
         plthread.start();
 
     }
@@ -163,6 +182,7 @@ public class ProductListActivity extends AppCompatActivity {
         itemsrequest.put("type", typestr);
         //data.put("token", MyToken);
         Log.i("LoveCoin", "get");
+        Log.i("Request", itemsrequest.toString());
 
         try {
             URL url = new URL(surl + "/item_aixinwu_item_get_list");

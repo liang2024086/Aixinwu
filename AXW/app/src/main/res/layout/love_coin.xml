@@ -166,7 +166,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="租赁专区"
+                    android:text="公益专区"
                     android:textSize="18dp"
                     android:textColor="#3e3a39"
                     android:layout_marginLeft="10dp"
