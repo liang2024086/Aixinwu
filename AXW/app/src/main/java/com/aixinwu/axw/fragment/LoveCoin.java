@@ -219,7 +219,7 @@ public class LoveCoin extends Fragment {
                 typestr = "租赁";
                 break;
             case "cash":
-                typestr = "租赁";
+                typestr = "现金";
                 break;
         }
 

@@ -178,7 +178,8 @@ public class SendToPeople extends AppCompatActivity {
                     AddImageDialog();
                 }
                 else {
-                    //        Toast.makeText(getActivity(), "Del", Toast.LENGTH_SHORT).show();//DeleteDialog(position);
+                    //        Toast.makeText(getActivity(), "Del", Toast.LENGTH_SHORT).show();//
+                    //DeleteDialog(position);
                 }
             }
         });
