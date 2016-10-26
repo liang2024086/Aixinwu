@@ -62,6 +62,7 @@ public class GlobalParameterApplication extends Application{
                     for (int i = 0; i < msgs.length(); i++){
                         int send = msgs.getJSONObject(i).getInt("from");
                         int recv = msgs.getJSONObject(i).getInt("to");
+                        String time = msgs.getJSONObject(i).getString("time");
                         String content = msgs.getJSONObject(i).getString("content");
                         if (nowchat != send && recv == UserID && login_status == 1){
                             NotifyMessage ma = new NotifyMessage();
@@ -73,7 +74,7 @@ public class GlobalParameterApplication extends Application{
                             ma.setTime(str);
                             sentMessages.add(ma);
                         }
-                        DataBaseM.add(send, recv, content, 0);
+                        DataBaseM.add(send, recv, content, 0,time);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -116,8 +117,8 @@ public class GlobalParameterApplication extends Application{
         chat.publish(str, Integer.toString(dest));
         System.out.println("Send :"+str+dest);
     }
-    public static void add(int sender, int recver, String doc, int isRead){
-        DataBaseM.add(sender, recver, doc, isRead);
+    public static void add(int sender, int recver, String doc, int isRead,String time){
+        DataBaseM.add(sender, recver, doc, isRead,time);
     }
     public static List<talkmessage> gettalk(int sender, int recv){
         List<talkmessage> result = DataBaseM.getIn(Integer.toString(sender), Integer.toString(recv));

@@ -22,6 +22,7 @@ import com.aixinwu.axw.activity.SignupActivity;
 import com.aixinwu.axw.activity.CommonReceiver;
 import com.aixinwu.axw.activity.ConfirmOrder;
 import com.aixinwu.axw.activity.MyCollection;
+import com.aixinwu.axw.activity.ShoppingCartActivity;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.database.Sqlite;
 
@@ -201,12 +202,12 @@ public class UserInfo extends Fragment {
             }
         });
 
-        RelativeLayout ly_myExchange = (RelativeLayout)getActivity().findViewById(R.id.myExchange);
-        ly_myExchange.setOnClickListener(new View.OnClickListener() {
+        RelativeLayout ly_shopCart = (RelativeLayout)getActivity().findViewById(R.id.shopCart);
+        ly_shopCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (GlobalParameterApplication.getLogin_status()==1){
-                    Intent intent = new Intent(getActivity(), MyCollection.class);
+                    Intent intent = new Intent(getActivity(), ShoppingCartActivity.class);
                     startActivity(intent);}
             }
         });

@@ -194,6 +194,8 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
                 Intent intent = new Intent();
                 intent.putExtra("itemId", dbData.get(i).getItemId());
                 intent.putExtra("caption",dbData.get(i).getType());
+                intent.putExtra("pic_url",dbData.get(i).getPicId());
+                intent.putExtra("description",dbData.get(i).getDoc());
                 intent.setClass(getActivity(), Buy.class);
                 startActivity(intent);
             }

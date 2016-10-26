@@ -189,6 +189,8 @@ public class UsedDeal extends CycleViewPager {
                 Intent intent = new Intent();
                 intent.putExtra("itemId", dbData.get(i).getItemId());
                 intent.putExtra("caption",dbData.get(i).getType());
+                intent.putExtra("pic_url",dbData.get(i).getPicId());
+                intent.putExtra("description",dbData.get(i).getDoc());
                 intent.setClass(getActivity(), Buy.class);
                 startActivity(intent);
 
@@ -561,8 +563,9 @@ public class UsedDeal extends CycleViewPager {
                                 BitmapFactory.Options cc = new BitmapFactory.Options();
                                 cc.inSampleSize = 20;
                                 dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
-                            } else
-                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/"+rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
+                            } else{
+                                dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/"+rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),result.getJSONObject(i).getInt("estimatedPriceByUser")));
+                            }
                         }
 
                     } catch (JSONException e) {

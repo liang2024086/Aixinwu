@@ -10,6 +10,12 @@
         android:layout_height="10dp"
         android:background="@color/white"/>
 
+    <RelativeLayout
+        android:id="@+id/seeDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_collection_line">
+
     <ImageView
         android:id="@+id/collectImg"
         android:layout_width="80dp"
@@ -18,8 +24,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_below="@id/item_collection_line"/>
+        android:layout_marginLeft="20dp"/>
 
     <RelativeLayout
         android:id="@+id/information"
@@ -29,15 +34,14 @@
         android:layout_toEndOf="@id/collectImg"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_below="@id/item_collection_line">
+        android:layout_marginStart="20dp">
 
         <TextView
             android:id="@+id/commodity_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#595757"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:layout_marginBottom="20dp"/>
 
         <TextView
@@ -47,6 +51,8 @@
             android:layout_height="wrap_content"
             android:textColor="#595757"
             android:textSize="14sp" />
+
+    </RelativeLayout>
 
     </RelativeLayout>
 
@@ -91,7 +97,8 @@
             android:id="@+id/shareCommodity"
             android:layout_below="@id/collectComodity"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/share"

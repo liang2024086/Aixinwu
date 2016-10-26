@@ -23,12 +23,28 @@ public class Sqlite extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + "AXWuser" + " (" +
-                    "userId" + " INTEGER PRIMARY KEY AUTOINCREMENT" +
+                    "userId" + " INTEGER PRIMARY KEY" +
                     COMMA_SEP +
                     "phoneNumber" + TEXT_TYPE +
                     COMMA_SEP +
                     "pwd" + TEXT_TYPE +
                     " )";
+
+    private static final String SQL_CREATE_COLLECT = "CREATE TABLE " + "AXWcollect" + " (" +
+            "collectId" + " INTEGER PRIMARY KEY AUTOINCREMENT" +
+            ","+
+            "itemId" + " INTEGER" +
+            "," +
+            "userName" + " TEXT"+
+            ","+
+            "type" + " TEXT" +
+            "," +
+            "desc" + " TEXT" +
+            ","+
+            "picUrl" + " TEXT"+
+            ","+
+            "price" + " INTEGER"+
+            " )";
 
 
     //private static final String SQL_CREATE_ENTRIES = "CREATE TABLE cart (id varchar(255), name varchar(255), price integer)";
@@ -39,7 +55,14 @@ public class Sqlite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+        Log.i("SDF", SQL_CREATE_COLLECT);
+        try{
+            db.execSQL(SQL_CREATE_ENTRIES);
+            db.execSQL(SQL_CREATE_COLLECT);
+        }catch (Throwable e){
+            e.printStackTrace();
+        }
+
 
 
         Log.d("debug", "create table!");

@@ -8,6 +8,7 @@ public class talkmessage {
     private int sender;
     private int receiver;
     private String doc;
+    private String time;
     public void setMessageid(int _messageid){
         messageid = _messageid;
     }
@@ -32,5 +33,7 @@ public class talkmessage {
     public String getDoc(){
         return doc;
     }
+    public void setTime(String _time){ time = _time;}
+    public String getTime(){return time;}
 
 }

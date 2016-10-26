@@ -66,6 +66,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private int productId;
 
+    private int pastPrice = 1000;
+
     private WebView mTVDetails;
     private TextView mTVList;
     private TextView mTVNumber;
@@ -75,6 +77,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView mTVPopCategory;
     private TextView mProductCaption;
     private TextView StockNum;
+    private TextView pastPriceText;
     private Button mBtnAddToCart;
     private Button mBtnMinute;
     private Button mBtnPlus;
@@ -377,6 +380,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         //PopHeight = PopHeight * 0.6;
         mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1500);
         StockNum = (TextView) findViewById(R.id.tv_activity_product_details_stock);
+
+        pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
     }
 
 
@@ -455,6 +460,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         //mTVDetails.setText(entity.getDescription());
         mTVTopPrice.setText("爱心币：" + entity.getPrice());
         mTVPrice.setText("爱心币：" + entity.getPrice());
+        pastPriceText.setText("爱心币："+pastPrice);
         mTVPopDetails.setText(entity.getShortdescription());
         StockNum.setText("库存： " + (entity.getStock() + ""));
         //mTVList.setText("￥" + (entity.getPrice() + 900));
