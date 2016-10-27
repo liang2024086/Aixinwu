@@ -13,15 +13,17 @@ public class ShoppingCartEntity implements Serializable {
     private int price;
     private int number ;
     private String imgUrl;
+    private int stock;
 
     public ShoppingCartEntity(String id, String name, String category, int price, int number,
-                              String imgUrl) {
+                              String imgUrl, int stock) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.price = price;
         this.number = number;
         this.imgUrl = imgUrl;
+        this.stock = stock;
     }
 
     public String getId() {
@@ -71,4 +73,6 @@ public class ShoppingCartEntity implements Serializable {
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
     }
+
+    public int getStock(){return stock;}
 }

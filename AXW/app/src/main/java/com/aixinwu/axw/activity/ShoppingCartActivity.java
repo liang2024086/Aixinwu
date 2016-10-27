@@ -1,5 +1,6 @@
 package com.aixinwu.axw.activity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -52,7 +53,7 @@ import static java.lang.System.in;
 public class ShoppingCartActivity extends AppCompatActivity {
 
     private static final int MSG_WHAT = 0x223;
-
+    private static final int MSG_NUM = 233;
     private ListView mListView;
 
 
@@ -97,6 +98,21 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     mAdapter = new ShoppingCartAdapter(getApplication(), mDatas);
                     mListView.setAdapter(mAdapter);
                     addListeners();
+                    break;
+                case MSG_NUM:
+                    for(int i = 0; i < mDatas.size(); ++i){
+                        ShoppingCartEntity spc = mDatas.get(i);
+                        if(spc.getId().equals(msg.getData().getString("id"))) {
+                            if (msg.getData().getInt("op") == 1)
+                                spc.setNumber(spc.getNumber() + 1);
+                            else if (msg.getData().getInt("op") == 2)
+                                spc.setNumber(spc.getNumber() - 1);
+                            mDatas.set(i, spc);
+                            break;
+                        }
+                    }
+
+                    mAdapter.notifyDataSetChanged();
                     break;
             }
         }
@@ -366,6 +382,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         .tv_item_shopping_cart_number);
                 holder.img = (ImageView) convertView.findViewById(R.id
                         .img_item_shopping_cart_number);
+                holder.add_amount = (Button) convertView.findViewById(R.id.shopping_cart_add);
+                holder.reduce_amount = (Button) convertView.findViewById(R.id.shopping_cart_minus);
+
+
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -375,19 +395,69 @@ public class ShoppingCartActivity extends AppCompatActivity {
             holder.category.setText(entity.getCategory());
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
-            holder.number.setText("x" + entity.getNumber());
-//============================================================
+            holder.number.setText(entity.getNumber() + "");
+
             ImageLoader.getInstance().displayImage(entity.getImgUrl(), holder.img);
+            //============================================================
+            holder.add_amount.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Thread() {
+                                @Override
+                                public void run(){
+                                    ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
+                                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                                    ContentValues cv = new ContentValues();
+                                    int amount = entity.getNumber();
+                                    amount ++;
+                                    cv.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, amount);
+                                    db.update(ProductReaderContract.ProductEntry.TABLE_NAME, cv,
+                                            ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
+                                            new String[]{entity.getId()});
+                                    Message msg = new Message();
+                                    msg.what=MSG_NUM;
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("id", entity.getId());
+                                    bundle.putInt("op", 1);
+                                    msg.setData(bundle);
+                                    mHandler.sendMessage(msg);
+                                }
+                            }.start();
+                        }
+                    }
+            );
 
-
+            holder.reduce_amount.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            new Thread() {
+                                @Override
+                                public void run(){
+                                    ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
+                                    SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                                    ContentValues cv = new ContentValues();
+                                    int amount = entity.getNumber();
+                                    amount --;
+                                    cv.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, amount);
+                                    db.update(ProductReaderContract.ProductEntry.TABLE_NAME, cv,
+                                            ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
+                                            new String[]{entity.getId()});
+                                    Message msg = new Message();
+                                    msg.what=MSG_NUM;
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("id", entity.getId());
+                                    bundle.putInt("op", 2);
+                                    msg.setData(bundle);
+                                    mHandler.sendMessage(msg);
+                                }
+                            }.start();
+                        }
+                    }
+            );
             //============================================================
 
-            //holder.img.setImageResource(R.drawable.aixinwu);           //缩略图片显示
-//在初始化CheckBox状态和设置状态变化监听事件之前，先把状态变化监听事件设置为null
-
-
-
-            //holder.cb.setChecked(getMap().get(position));
 
             holder.cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -434,6 +504,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             CheckBox cb;
             ImageView img;
             TextView name, category, price, number;
+            Button add_amount, reduce_amount;
         }
     }
 
