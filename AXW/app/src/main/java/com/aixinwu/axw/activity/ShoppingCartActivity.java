@@ -55,6 +55,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
     private static final int MSG_WHAT = 0x223;
     private static final int MSG_NUM = 233;
+    private static final int MSG_TOTAL = 456;
     private ListView mListView;
 
 
@@ -115,9 +116,22 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
                     mAdapter.notifyDataSetChanged();
                     break;
+                case MSG_TOTAL:
+                    mBtnChecking.setText("去结算(" + mTotalChecked + ")");
+                    mTVTotal.setText("合计：" + mTotalMoney + "爱心币");
+                    break;
             }
         }
     };
+
+    private Thread totalThread = new Thread() {
+        @Override
+        public void run() {
+            super.run();
+            updateTotal();
+        }
+    };
+
 
     @Override
 
@@ -154,6 +168,38 @@ public class ShoppingCartActivity extends AppCompatActivity {
         Log.i("Delete all", " Ok");
     }
 
+    //从数据库中获取商品总数和总价并更新
+    private void updateTotal() {
+        ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        int totalprice = 0;
+        for (int i = 0; i < CheckedProductId.size(); ++i){
+            int checkedid = CheckedProductId.get(i);
+            Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME,
+                    new String[]{ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE, ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER},
+                    ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?", new String[]{checkedid + ""},
+                    null, null, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int price = Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                        (ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE)));
+
+                int number = Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                        (ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER)));
+
+                totalprice += price * number;
+            }
+            //tableName, tableColumns, whereClause, whereArgs, groupBy, having, orderBy);
+            cursor.close();
+        }
+        mTotalChecked = CheckedProductId.size();
+        mTotalMoney = totalprice;
+        Message msg = new Message();
+        msg.what=MSG_TOTAL;
+        mHandler.sendMessage(msg);
+        Log.i("Total Price", mTotalMoney + " " + mTotalChecked);
+    }
+
     //结算listerner
     private void addListeners() {
 
@@ -167,12 +213,12 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     for (int i = 0; i < mDatas.size(); ++i) {
                         CheckedProductId.add(Integer.parseInt(mDatas.get(i).getId()));
                         orderedDatas.add(mDatas.get(i));
-                        mTotalChecked++;
-                        mTotalMoney += mDatas.get(i).getPrice() * mDatas.get(i).getNumber();
+                        //mTotalChecked++;
+                        //mTotalMoney += mDatas.get(i).getPrice() * mDatas.get(i).getNumber();
                     }
                 } else {
-                    mTotalChecked = 0;
-                    mTotalMoney = 0;
+                    //mTotalChecked = 0;
+                    //mTotalMoney = 0;
                     CheckedProductId.clear();
                     orderedDatas.clear();
                 }
@@ -408,6 +454,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             holder.number.setText(entity.getNumber() + "");
             holder.stock.setText(entity.getStock() + "");
             ImageLoader.getInstance().displayImage(entity.getImgUrl(), holder.img);
+
             //============================================================
             holder.add_amount.setOnClickListener(
                     new View.OnClickListener() {
@@ -434,6 +481,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                         bundle.putInt("op", 1);
                                         msg.setData(bundle);
                                         mHandler.sendMessage(msg);
+                                        totalThread.run();
                                     }
                                 }
                             }.start();
@@ -468,6 +516,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                         bundle.putInt("op", 2);
                                         msg.setData(bundle);
                                         mHandler.sendMessage(msg);
+                                        totalThread.run();
                                     }
                                 }
                             }.start();
@@ -486,23 +535,23 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         if (!CheckedProductId.contains(itemid)) {
                             CheckedProductId.add(itemid);
                             orderedDatas.add(mDatas.get(position));
-                            mTotalMoney += entity.getNumber() * entity.getPrice();
-                            mTotalChecked++;
+                            //mTotalMoney += entity.getNumber() * entity.getPrice();
+                            //mTotalChecked++;
                             Log.i("Checked3:", CheckedProductId.toString());
-
                         }
                     } else {
                         if (CheckedProductId.contains(itemid)) {
-                            mTotalMoney -= entity.getNumber() * entity.getPrice();
-                            mTotalChecked--;
+                            //mTotalMoney -= entity.getNumber() * entity.getPrice();
+                            //mTotalChecked--;
                             CheckedProductId.remove(CheckedProductId.indexOf(itemid));
                             orderedDatas.remove(orderedDatas.indexOf(mDatas.get(position)));
                             Log.i("Checked4:", CheckedProductId.toString());
                         }
 
                     }
-                    mBtnChecking.setText("去结算(" + mTotalChecked + ")");
-                    mTVTotal.setText("合计：" + mTotalMoney + " 爱心币");
+                    //mBtnChecking.setText("去结算(" + mTotalChecked + ")");
+                    //mTVTotal.setText("合计：" + mTotalMoney + " 爱心币");
+                    totalThread.run();
                 }
             });
 
