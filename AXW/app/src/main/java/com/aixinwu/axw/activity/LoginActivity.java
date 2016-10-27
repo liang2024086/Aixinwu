@@ -1,6 +1,7 @@
 package com.aixinwu.axw.activity;
 
 import android.app.ProgressDialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,6 +18,7 @@ import com.aixinwu.axw.R;
 import butterknife.ButterKnife;
 import butterknife.Bind;
 
+import com.aixinwu.axw.database.Sqlite;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 
 import org.apache.commons.io.IOUtils;
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+    private Sqlite userDbHelper = new Sqlite(this);
 
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password) EditText _passwordText;
@@ -48,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
@@ -178,6 +182,9 @@ public class LoginActivity extends AppCompatActivity {
         public LoginThread(String email,String password){
             this.email = email;
             this.password = password;
+            SQLiteDatabase db = userDbHelper.getWritableDatabase();
+            db.execSQL("delete from AXWuser where userId = 1");
+            db.execSQL("insert into AXWuser(userId,phoneNumber,pwd) values(1,'"+email+"','"+password+"')");
         }
 
         @Override

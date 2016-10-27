@@ -147,13 +147,15 @@
                 />
 
             <RelativeLayout
+                android:id="@+id/relativeCollect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp">
+                android:layout_marginRight="20dp"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/collect"
@@ -169,6 +171,35 @@
                     android:src="@drawable/personal4"
                     android:layout_toEndOf="@id/collect"
                     android:layout_toRightOf="@id/collect"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeCollected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/collected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="已收藏"
+                    android:textColor="#ea5405"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/star"
+                    android:layout_toEndOf="@id/collected"
+                    android:layout_toRightOf="@id/collected"/>
 
             </RelativeLayout>
 

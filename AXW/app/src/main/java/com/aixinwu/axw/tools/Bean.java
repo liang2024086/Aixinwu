@@ -18,6 +18,7 @@ public class Bean {
     //added by Yuding
     private String whetherOnSail;
     private int OnOrNot;
+    private int price = 0;
 
     public Bean(int itemId, String picId, String type, String doc) {
         this.picId = picId;
@@ -35,6 +36,16 @@ public class Bean {
         this.OnOrNot = onOrNot;
     }
 
+    public Bean(int itemId, String picId, String type, String doc,int price) {
+        this.picId = picId;
+        this.itemId = itemId;
+        this.type = type;
+        this.doc = doc;
+        this.price = price;
+    }
+
+    public int getPrice(){return this.price;}
+    public void getPrice(int price) {this.price = price;}
     public void setItemId(int itemID){
         this.itemId = itemID;
     }

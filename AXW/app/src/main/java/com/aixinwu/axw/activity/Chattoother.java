@@ -23,7 +23,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
@@ -213,7 +215,12 @@ public class Chattoother extends Activity{
                 editText.setText("");
                 uploadSuccessful = false;
                 GlobalParameterApplication.publish(myWord, From);
-                GlobalParameterApplication.add(To, From, myWord, 1);
+
+                Date date= new Date();//创建一个时间对象，获取到当前的时间
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置时间显示格式
+                String str = sdf.format(date);//将当前时间格式化为需要的类型
+
+                GlobalParameterApplication.add(To, From, myWord, 1,str);
                 cont.add(myWord);
                 who.add(ME);
                 addTextToList(myWord, ME);
@@ -288,6 +295,7 @@ public class Chattoother extends Activity{
         });
 
         chatListView.setAdapter(adapter);
+        chatListView.setSelection(chatList.size() - 1);
 
     }
     @Override
@@ -350,7 +358,7 @@ public class Chattoother extends Activity{
                     addTextToList(cont.get(i),who.get(i));
                 }
                 adapter.notifyDataSetChanged();
-                chatListView.setSelection(chatList.size()-1);
+                //chatListView.setSelection(chatList.size()-1);
                 break;
             case 233333:
                 if(uploadSuccessful) {
@@ -378,7 +386,7 @@ public class Chattoother extends Activity{
                  * 更新数据列表，并且通过setSelection方法使ListView始终滚动在最底端
                  */
                 adapter.notifyDataSetChanged();
-                chatListView.setSelection(chatList.size()-1);
+                //chatListView.setSelection(chatList.size()-1);
 
                 break;
         }

@@ -73,8 +73,10 @@ public class SendToAXw extends Activity {
 
                     ItemName = ItemName+"*"+itemnum;
                     // String itemID = AddItem(TypeName,money,Descrip,YesorNo);
-                    if (!itemname.getText().toString().isEmpty() && !itemnumber.getText().toString().isEmpty() && !jaccount.getText().toString().isEmpty())
-                    new Thread(runnable1).start();
+                    //if (!itemname.getText().toString().isEmpty() && !itemnumber.getText().toString().isEmpty() && !jaccount.getText().toString().isEmpty())
+                    if (!ItemName.isEmpty() && itemnum != 0 && !JaccountID.isEmpty())
+
+                        new Thread(runnable1).start();
                 }
 
 //                Toast.makeText(getActivity(), "Upload Successful", Toast.LENGTH_SHORT).show();

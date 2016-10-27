@@ -64,7 +64,7 @@ public class ChatList extends Activity {
         refreshbutton = (Button)findViewById(R.id.refresh);
         chatitem.clear();
         mThread.start();
-        sim_adapter = new SimpleAdapter(this,chatitem,R.layout.chatlist_item,new String[]{"Name","Item"},new int[]{R.id.name,R.id.itemid});
+        sim_adapter = new SimpleAdapter(this,chatitem,R.layout.chatlist_item,new String[]{"Name","Item","Doc","Time"},new int[]{R.id.name,R.id.itemid,R.id.product,R.id.messageTime});
         sim_adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
             @Override
             public boolean setViewValue(View view, Object o, String s) {
@@ -129,14 +129,16 @@ public class ChatList extends Activity {
         ArrayList<Integer> chec = new ArrayList<Integer>();
         result = GlobalParameterApplication.gettalklist(GlobalParameterApplication.getUserID());
         chatitem.clear();
-        for (talkmessage re0: result){
+        for (int i = result.size()-1; i>= 0 ; --i){
+            talkmessage re0 = result.get(i);
             HashMap<String,String> tt = new HashMap<String,String>();
             Integer ss = re0.getSender()+re0.getReceiver()-GlobalParameterApplication.getUserID();
             if (!chec.contains(ss)) {
                 chec.add(ss);
                 tt.put("Name", ss.toString());
-                int a = GlobalParameterApplication.query(ss);
                 tt.put("Item",String.valueOf(GlobalParameterApplication.query(ss)));
+                tt.put("Doc",re0.getDoc());
+                tt.put("Time",re0.getTime());
                 chatitem.add(tt);
             }
         }

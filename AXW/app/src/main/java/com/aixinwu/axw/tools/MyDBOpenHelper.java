@@ -22,7 +22,7 @@ public class MyDBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         System.out.println("我被调用了 oncreate");
-        db.execSQL("CREATE TABLE message (messageid integer primary key autoincrement, send integer, recv integer, doc varchar(40), isRead integer)");
+        db.execSQL("CREATE TABLE message (messageid integer primary key autoincrement, send integer, recv integer, doc varchar(40),time TEXT, isRead integer)");
     }
     // 通过version的增加来执行数据库版本更新，版本号改为6的同时，调用onUpgrade ，让程序员执行具体更新；
     @Override

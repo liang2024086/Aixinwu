@@ -132,13 +132,17 @@ public class ProductListActivity extends AppCompatActivity {
             public void onRefresh() {
                 times = 0;
                 productList.clear();
+
                 Thread plthread1 = new thread(type, 1);
+
                 plthread1.start();
             }
             @Override
             public void onLoadMore() {
                 times++;
+
                 Thread plthread2 = new thread(type, 2);
+
                 plthread2.start();
             }
         });

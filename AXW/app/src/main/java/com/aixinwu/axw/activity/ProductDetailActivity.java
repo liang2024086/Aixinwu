@@ -15,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,12 +36,24 @@ import com.aixinwu.axw.R;
 import com.aixinwu.axw.database.ProductReadDbHelper;
 import com.aixinwu.axw.database.ProductReaderContract;
 import com.aixinwu.axw.model.Product;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.simple.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -51,6 +64,9 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private Product entity;
     private Bitmap bitmap;
+    private int productId;
+
+    private int pastPrice = 1000;
 
     private WebView mTVDetails;
     private TextView mTVList;
@@ -61,6 +77,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView mTVPopCategory;
     private TextView mProductCaption;
     private TextView StockNum;
+    private TextView pastPriceText;
     private Button mBtnAddToCart;
     private Button mBtnMinute;
     private Button mBtnPlus;
@@ -98,9 +115,13 @@ public class ProductDetailActivity extends AppCompatActivity {
                 case QUERY_NO:
                     insert2Sqlite();
                     break;
+                case 5566:
+                    initDatas();
+                    break;
             }
         }
     };
+
 
     private SQLiteDatabase db;
 
@@ -116,8 +137,20 @@ public class ProductDetailActivity extends AppCompatActivity {
         //为了让下面的背景色一致，还需要添加一行代码：
         //actionBar.setSplitBackgroundDrawable(new ColorDrawable(Color.parseColor("#33000000")));
 
+        Intent intent = this.getIntent();
+        productId = (Integer) intent.getSerializableExtra("productId");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                entity = getProduct();
+                Message msg = new Message();
+                msg.what=5566;
+                handler.sendMessage(msg);
+            }
+        }).start();
+
         initViews();
-        initDatas();
 
         addListeners();
         cartBtn = (Button) findViewById(R.id.btn_activity_product_details_buy_now);
@@ -347,6 +380,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         //PopHeight = PopHeight * 0.6;
         mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1500);
         StockNum = (TextView) findViewById(R.id.tv_activity_product_details_stock);
+
+        pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
     }
 
 
@@ -363,8 +398,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     };
 */
     private void initDatas() {
-        Intent intent = this.getIntent();
-        entity= (Product) intent.getSerializableExtra("product");
+                //entity= (Product) intent.getSerializableExtra("product");
 //        entity = (Product) getIntent().getSerializableExtra("param1");
         //entity = new Product("A new Compiler Principle book", 100, R.mipmap.product1);
         String category = "";
@@ -426,6 +460,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         //mTVDetails.setText(entity.getDescription());
         mTVTopPrice.setText("爱心币：" + entity.getPrice());
         mTVPrice.setText("爱心币：" + entity.getPrice());
+        pastPriceText.setText("爱心币："+pastPrice);
         mTVPopDetails.setText(entity.getShortdescription());
         StockNum.setText("库存： " + (entity.getStock() + ""));
         //mTVList.setText("￥" + (entity.getPrice() + 900));
@@ -446,6 +481,96 @@ public class ProductDetailActivity extends AppCompatActivity {
         mTVPopCategory.setText(category);
         //mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
+    }
+
+    private Product getProduct(){
+        Product dbData = null;
+
+        try {
+            URL url = new URL(GlobalParameterApplication.getSurl() + "/item_aixinwu_item_get/"+productId);
+            try {
+                Log.i("LoveCoin", "getconnection");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-Type", "application/json");
+                java.lang.String ostr ;
+                org.json.JSONObject outjson = null;
+
+                if (conn.getResponseCode() == 200){
+                    InputStream is = conn.getInputStream();
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    int i;
+                    while ((i = is.read()) != -1) {
+                        baos.write(i);
+                    }
+                    ostr = baos.toString();
+                    try {
+                        org.json.JSONArray result = null;
+                        outjson = new org.json.JSONObject(ostr);
+                        result = outjson.getJSONArray("items");
+                        // Log.i("Inall", result.length() + "");
+
+                        String jsonall = result.toString();
+                        Log.i("JSONALL", jsonall);
+                        String [] imageurl = result.getJSONObject(0).getString("image").split(",");//==========================
+                        String logname = result.getJSONObject(0).getString("name");
+                        String value = result.getJSONObject(0).getInt("price") + "";
+                        String iid = result.getJSONObject(0).getInt("id") + "";
+                        String descurl = result.getJSONObject(0).getString("desp_url");
+                        String descdetail = result.getJSONObject(0).getString("desc");
+                        String shortdesc = result.getJSONObject(0).getString("short_desc");
+                        String despUrl   = result.getJSONObject(0).getString("desp_url");
+                        int stock = result.getJSONObject(0).getInt("stock");
+                                /*Log.i("Image Url", imageurl[0]);
+                                Log.i("aixinwuitemid", iid);
+                                Log.i("value", value);
+                                Log.i("name", logname);
+                                Log.i("stock", stock + "");*/
+                        //Log.i("xxxx", logname + value + iid);
+                                /*Log.i("Image Url", imageurl[0]);
+                                Log.i("Desc", descurl + "null");*/
+                        if ( imageurl[0].equals("") ) {
+                            //If no images in database, show a default image.
+                            //BitmapFactory.Options cc = new BitmapFactory.Options();
+                            //cc.inSampleSize = 20;
+                            dbData = new Product(result.getJSONObject(0).getInt("id"),
+                                    result.getJSONObject(0).getString("name"),
+                                    result.getJSONObject(0).getInt("price"),
+                                    stock,
+                                    "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
+                                    descdetail,
+                                    shortdesc,
+                                    despUrl
+                            );
+                                    /*Log.i("Status ", "001");*/
+                        } else
+                            dbData = new Product(result.getJSONObject(0).getInt("id"),
+                                    result.getJSONObject(0).getString("name"),
+                                    result.getJSONObject(0).getInt("price"),
+                                    stock,
+                                    "http://202.120.47.213:12345/"+imageurl[0],
+                                    descdetail,
+                                    shortdesc,
+                                    despUrl
+                            );
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return dbData;
     }
 
     @Override

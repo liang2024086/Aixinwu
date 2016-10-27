@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Date;
+import java.util.TreeMap;
 
 
 import org.apache.commons.io.IOUtils;
@@ -50,6 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 
+import com.aixinwu.axw.database.Sqlite;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.tools.MyAlertDialog;
 import com.aixinwu.axw.tools.Tool;
@@ -69,6 +73,10 @@ public class Buy extends Activity{
     private String Desc;
     private int Price;
     private String Picset;
+
+    private String picId;
+    private String description;
+
 //    private ListView pics;
     private TextView textView1;
     private TextView textView2;
@@ -93,6 +101,12 @@ public class Buy extends Activity{
     private TextView Caption;
     private String _caption;
     private LinearLayout pictures;
+
+    private RelativeLayout relativeLayoutCollect;
+    private RelativeLayout relativeLayoutCollected;
+
+    private Sqlite userDbHelper = new Sqlite(this);
+
     //private Handler nhandler;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -103,6 +117,8 @@ public class Buy extends Activity{
         Bundle out = intent.getExtras();
         itemID=(int)out.get("itemId");
         _caption = out.getString("caption");
+        picId = out.getString("pic_url");
+        description = out.getString("description");
         pictures = (LinearLayout) findViewById(R.id.pics);
         button2=(TextView)findViewById(R.id.chat);
         textView1 = (TextView)findViewById(R.id.ownerid);
@@ -119,6 +135,24 @@ public class Buy extends Activity{
         comment_list=new ArrayList<HashMap<String, Object>>();
         mContext = this;
         flag=false;
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SQLiteDatabase db = userDbHelper.getWritableDatabase();
+                Cursor cursor = db.rawQuery("select * from AXWcollect where itemId = " + itemID + " and userName = '" + GlobalParameterApplication.getUser_name() + "'", null);
+                while (cursor.moveToNext()) {
+                    Message msg=new Message();
+                    msg.what=521521;
+                    dHandler.sendMessage(msg);
+                    break;
+                }
+                cursor.close();
+                db.close();
+            }
+        }).start();
+
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,8 +238,67 @@ public class Buy extends Activity{
 
 
 
+        //collection
+        relativeLayoutCollect = (RelativeLayout)findViewById(R.id.relativeCollect);
+        relativeLayoutCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relativeLayoutCollected.setVisibility(View.VISIBLE);
+                relativeLayoutCollect.setVisibility(View.GONE);
+                try {
+
+                    SQLiteDatabase db = userDbHelper.getWritableDatabase();
+                    db.execSQL("insert into AXWcollect(itemId,userName,type,desc,picUrl,price) values(" +itemID+",'"+GlobalParameterApplication.getUser_name() + "','" + _caption + "','" + description + "','" + picId + "',"+Price+")");
+                    db.close();
+                }catch (Throwable e){
+                    e.printStackTrace();
+                }
+                Toast.makeText(Buy.this,"收藏成功",Toast.LENGTH_SHORT).show();
+            }
+        });
+        relativeLayoutCollected = (RelativeLayout) findViewById(R.id.relativeCollected);
+        relativeLayoutCollected.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relativeLayoutCollect.setVisibility(View.VISIBLE);
+                relativeLayoutCollected.setVisibility(View.GONE);
+
+                try {
+                    SQLiteDatabase db = userDbHelper.getWritableDatabase();
+                    db.execSQL("delete from AXWcollect where itemId = " + itemID +" and userName='"+GlobalParameterApplication.getUser_name()+"'");
+                    db.close();
+                }catch (Throwable e){
+                    e.printStackTrace();
+                }
+                /*new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        SQLiteDatabase db = userDbHelper.getWritableDatabase();
+                        db.execSQL("delete from COLLECT where itemId = "+itemID);
+                    }
+                }).start();*/
+                Toast.makeText(Buy.this,"已成功取消收藏",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
+
+    public Handler dHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 521521:
+
+                    relativeLayoutCollected.setVisibility(View.VISIBLE);
+                    relativeLayoutCollect.setVisibility(View.GONE);
+                    break;
+        }
+    };
+
+};
+
     Handler nhandler = new Handler(){
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

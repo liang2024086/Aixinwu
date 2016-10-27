@@ -197,16 +197,22 @@ public class ShoppingCartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //create checked list
 
-                Intent intent = new Intent(getApplicationContext(), ConfirmOrder.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("size",Integer.valueOf(orderedDatas.size()));
-                bundle.putSerializable("mTotalMoney",mTotalMoney);
-                for (int i1 = 0; i1 < orderedDatas.size(); ++i1){
-                    bundle.putSerializable("OrderedData"+i1,orderedDatas.get(i1));
-                    bundle.putSerializable("CheckedProductId"+i1,CheckedProductId.get(i1));
+                if (GlobalParameterApplication.getLogin_status() == 1) {
+                    Intent intent = new Intent(getApplicationContext(), ConfirmOrder.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("size", Integer.valueOf(orderedDatas.size()));
+                    bundle.putSerializable("mTotalMoney", mTotalMoney);
+                    for (int i1 = 0; i1 < orderedDatas.size(); ++i1) {
+                        bundle.putSerializable("OrderedData" + i1, orderedDatas.get(i1));
+                        bundle.putSerializable("CheckedProductId" + i1, CheckedProductId.get(i1));
+                    }
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
-                intent.putExtras(bundle);
-                startActivity(intent);
+                else{
+                    Intent intent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 

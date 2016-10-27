@@ -30,12 +30,14 @@ public class dbmessage {
     /**
      * 往数据库添加一条数据
      */
-    public void add(int send, int recv, String doc, int isRead) {
+    public void add(int send, int recv, String doc, int isRead, String time) {
 
         SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+        String mytime = "";
+        mytime += time.substring(0,10)+" "+time.substring(11,19);
         if (db.isOpen()) {
-            db.execSQL("insert into message (send,recv,doc,isRead) values (?,?,?,?)",
-                    new Object[] { send, recv, doc, isRead});
+            db.execSQL("insert into message (send,recv,doc,isRead,time) values (?,?,?,?,?)",
+                    new Object[] { send, recv, doc, isRead,mytime});
             // 关闭数据库 释放数据库的链接
             db.close();
         }
@@ -84,6 +86,7 @@ public class dbmessage {
                 int sendindex = cursor.getColumnIndex("send");
                 int recvindex = cursor.getColumnIndex("recv");
                 int docindex = cursor.getColumnIndex("doc");
+                int timeIndex = cursor.getColumnIndex("time");
                 int Sender = cursor.getInt(sendindex);
                 int Recver = cursor.getInt(recvindex);
                 int Messageid = cursor.getInt(messageIdindex);
@@ -92,6 +95,7 @@ public class dbmessage {
                 DbMessage.setMessageid(Messageid);
                 DbMessage.setReceiver(Recver);
                 DbMessage.setSender(Sender);
+                DbMessage.setTime(cursor.getString(timeIndex));
                 newmessage.add(DbMessage);
             }
             cursor.close();

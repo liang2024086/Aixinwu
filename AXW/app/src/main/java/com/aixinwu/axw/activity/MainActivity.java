@@ -90,11 +90,16 @@ public class MainActivity extends FragmentActivity{
         setContentView(R.layout.activity_main);
 
 
-        NotifyThread.start();
+        try{
+        	NotifyThread.start();
 
-        init();
-        configImageLoader();
-        initialize();
+	        init();
+	        configImageLoader();
+	        initialize();
+        }catch (Throwable e){
+        	e.printStackTrace();
+        }
+        
     }
 
     private void init(){

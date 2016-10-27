@@ -2,6 +2,8 @@ package com.aixinwu.axw.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -10,7 +12,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aixinwu.axw.database.Sqlite;
+
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
+
+import org.apache.commons.io.IOUtils;
+import org.json.simple.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * Created by liangyuding on 2016/4/25.
@@ -23,6 +36,8 @@ public class WelcomeActivity extends Activity {
     private MyCountDownTimer mc;
 
     private boolean judge = true;
+
+    private Sqlite userDbHelper = new Sqlite(this);
 
     private myRunnable my = new myRunnable();
 
@@ -46,8 +61,23 @@ public class WelcomeActivity extends Activity {
        mc = new MyCountDownTimer(5000, 1000);
        mc.start();*/
 
+        final SQLiteDatabase db = userDbHelper.getReadableDatabase();
+        final Cursor cursor = db.rawQuery("select phoneNumber,pwd from AXWuser where userId = 1",null);
+        while (cursor.moveToNext()) {
+            String phoneNumber = cursor.getString(0); //获取第一列的值,第一列的索引从0开始
+            String pwd = cursor.getString(1);//获取第二列的值
+            LoginThread loginThread = new LoginThread(phoneNumber,pwd);
+            loginThread.start();
+            try{
+                loginThread.join();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        cursor.close();
+        db.close();
 
-        handler.postDelayed(my,SPLASH_LENGTH);
+        handler.postDelayed(my, SPLASH_LENGTH);
     /*    handler.postDelayed(new Runnable() {  //使用handler的postDelayed实现延时跳转
 
             public void run() {
@@ -56,7 +86,9 @@ public class WelcomeActivity extends Activity {
                 finish();
             }
         }, SPLASH_LENGTH);//2秒后跳转至应用主界面MainActivity
+
 */
+
     }
 
     class myRunnable implements Runnable{
@@ -104,5 +136,96 @@ public class WelcomeActivity extends Activity {
             Log.i("MainActivity", millisUntilFinished + "");
             time.setText("跳过\n"+millisUntilFinished / 1000 + "秒");
         }
+    }
+
+
+    class LoginThread extends Thread{
+
+        private String email,password;
+        public LoginThread(String email,String password){
+            this.email = email;
+            this.password = password;
+        }
+
+        @Override
+        public void run(){
+            //GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
+
+            try {
+                String token = getToken(GlobalParameterApplication.getSurl(), email, password);
+                if (token.length() == 0) {
+
+                }
+                else {
+                    GlobalParameterApplication.setLogin_status(1);
+                    GlobalParameterApplication.setToken(token);
+
+                    JSONObject data = new JSONObject();
+                    data.put("token",token);
+                    URL url=new URL(GlobalParameterApplication.getSurl()+"/usr_get");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setRequestMethod("POST");
+                    conn.setDoOutput(true);
+                    conn.getOutputStream().write(data.toJSONString().getBytes());
+                    InputStream input = conn.getInputStream();
+                    String ostr = IOUtils.toString(input);
+                    org.json.JSONObject outjson = null;
+                    outjson = new org.json.JSONObject(ostr);
+                    int result = outjson.getJSONObject("userinfo").getInt("ID");
+                    GlobalParameterApplication.setUserID(result);
+                    GlobalParameterApplication.start(token);
+                    conn.disconnect();
+                }
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public String genJson(String name, String psw) {
+        JSONObject matadata = new JSONObject();
+        matadata.put("TimeStamp", 123124233);
+        matadata.put("Device", "android");
+        JSONObject userinfo = new JSONObject();
+        userinfo.put("username", name);
+        userinfo.put("password", psw);
+
+        JSONObject data = new JSONObject();
+        data.put("mataData", matadata);
+        data.put("userinfo", userinfo);
+        return data.toJSONString();
+    }
+
+
+    public String getToken(String surl, String name, String psw) throws IOException {
+        String jsonstr = genJson(name, psw);
+        URL url = new URL(surl + "/login");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setConnectTimeout(1000);
+        conn.setReadTimeout(1000);
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
+        conn.getOutputStream().write(jsonstr.getBytes());
+
+        String ostr = IOUtils.toString(conn.getInputStream());
+        System.out.println(ostr);
+
+        org.json.JSONObject outjson = null;
+        String result = null;
+        try {
+            outjson = new org.json.JSONObject(ostr);
+            result = outjson.getString("token");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        conn.disconnect();
+        return result;
     }
 }

@@ -172,7 +172,7 @@ public class LoveCoin extends Fragment {
                             //getActivity().startActivity(intent);
 
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("product", product);
+                            bundle.putSerializable("productId", product.getId());
                             intent.putExtras(bundle);
                             getActivity().startActivity(intent);
                         }
@@ -185,7 +185,7 @@ public class LoveCoin extends Fragment {
                             Product product = leaseList.get(i);
                             Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("product", product);
+                            bundle.putSerializable("productId", product.getId());
                             intent.putExtras(bundle);
                             getActivity().startActivity(intent);
                         }
@@ -198,7 +198,7 @@ public class LoveCoin extends Fragment {
                             Product product = volList.get(i);
                             Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("product", product);
+                            bundle.putSerializable("productId", product.getId());
                             intent.putExtras(bundle);
                             getActivity().startActivity(intent);
                         }
