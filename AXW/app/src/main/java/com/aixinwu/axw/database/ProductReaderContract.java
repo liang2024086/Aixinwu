@@ -2,9 +2,6 @@ package com.aixinwu.axw.database;
 
 import android.provider.BaseColumns;
 
-/**
- * Created by zhangyan on 2015/10/29.
- */
 public final class ProductReaderContract {
 
     public ProductReaderContract() {
@@ -18,6 +15,6 @@ public final class ProductReaderContract {
         public static final String COLUMN_NAME_PRICE = "price";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_IMG = "imgurl";
-
+        public static final String COLUMN_NAME_STOCK = "stock";
     }
 }

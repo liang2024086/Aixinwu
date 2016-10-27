@@ -217,7 +217,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         mBtnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ++number;
+                if (number < entity.getStock()) {
+                    ++number;
+                }
                 mTVNumber.setText(number + "");
             }
         });
@@ -249,7 +251,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         String category = "种类";
         String name = entity.getProduct_name();  // 购买名称
         String imgurl = entity.getImage_url();
-
+        int stock = entity.getStock();
 
         //database operation
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
@@ -263,7 +265,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number + "");
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY, category);
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_IMG, imgurl);
-
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK, stock);
         long rawID = -1;
 
         rawID = db.insert(
@@ -381,7 +383,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1500);
         StockNum = (TextView) findViewById(R.id.tv_activity_product_details_stock);
 
-        pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
+        //pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
     }
 
 
@@ -411,32 +413,6 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgDetails);
         ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgIcon);
-        /*
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    //创建一个url对象
-                    URL url=new URL(entity.getImage_url());
-                    //打开URL对应的资源输入流
-                    InputStream is= url.openStream();
-                    //从InputStream流中解析出图片
-                    bitmap = BitmapFactory.decodeStream(is);
-                    //  imageview.setImageBitmap(bitmap);
-                    //发送消息，通知UI组件显示图片
-                    bitmaphandler.sendEmptyMessage(0x9527);
-                    //关闭输入流
-                    is.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-*/
-        //mImgDetails.setImageResource(R.mipmap.product1);
-
-
-
 
 
         mProductCaption.setText(entity.getProduct_name());
@@ -460,24 +436,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         //mTVDetails.setText(entity.getDescription());
         mTVTopPrice.setText("爱心币：" + entity.getPrice());
         mTVPrice.setText("爱心币：" + entity.getPrice());
-        pastPriceText.setText("爱心币："+pastPrice);
         mTVPopDetails.setText(entity.getShortdescription());
-        StockNum.setText("库存： " + (entity.getStock() + ""));
+        StockNum.setText("库存： " +(entity.getStock() + ""));
         //mTVList.setText("￥" + (entity.getPrice() + 900));
 
         //mImgIcon.setImageResource(entity.getImage_id());changed in 38
 
         //mImgIcon.setImageResource(R.mipmap.product1);
 
-        /*
-        if (Integer.parseInt(entity.getId()) / 10000 == 1) {
-            category = "保健产品";
-        } else if (Integer.parseInt(entity.getId()) / 10000 == 2) {
-            category = "丸剂";
-        } else {
-            category = "书籍";
-        }
-*/
         mTVPopCategory.setText(category);
         //mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
@@ -488,6 +454,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         try {
             URL url = new URL(GlobalParameterApplication.getSurl() + "/item_aixinwu_item_get/"+productId);
+            Log.i("Find product", "1");
             try {
                 Log.i("LoveCoin", "getconnection");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -514,40 +481,33 @@ public class ProductDetailActivity extends AppCompatActivity {
                         String jsonall = result.toString();
                         Log.i("JSONALL", jsonall);
                         String [] imageurl = result.getJSONObject(0).getString("image").split(",");//==========================
-                        String logname = result.getJSONObject(0).getString("name");
-                        String value = result.getJSONObject(0).getInt("price") + "";
-                        String iid = result.getJSONObject(0).getInt("id") + "";
+                        String productname = result.getJSONObject(0).getString("name");
+                        int productprice = result.getJSONObject(0).getInt("price");
+                        int productid = result.getJSONObject(0).getInt("id");
                         String descurl = result.getJSONObject(0).getString("desp_url");
                         String descdetail = result.getJSONObject(0).getString("desc");
                         String shortdesc = result.getJSONObject(0).getString("short_desc");
                         String despUrl   = result.getJSONObject(0).getString("desp_url");
                         int stock = result.getJSONObject(0).getInt("stock");
-                                /*Log.i("Image Url", imageurl[0]);
-                                Log.i("aixinwuitemid", iid);
-                                Log.i("value", value);
-                                Log.i("name", logname);
-                                Log.i("stock", stock + "");*/
-                        //Log.i("xxxx", logname + value + iid);
-                                /*Log.i("Image Url", imageurl[0]);
-                                Log.i("Desc", descurl + "null");*/
+
                         if ( imageurl[0].equals("") ) {
                             //If no images in database, show a default image.
                             //BitmapFactory.Options cc = new BitmapFactory.Options();
                             //cc.inSampleSize = 20;
-                            dbData = new Product(result.getJSONObject(0).getInt("id"),
-                                    result.getJSONObject(0).getString("name"),
-                                    result.getJSONObject(0).getInt("price"),
+                            dbData = new Product(productid,
+                                    productname,
+                                    productprice,
                                     stock,
                                     "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
                                     descdetail,
                                     shortdesc,
                                     despUrl
                             );
-                                    /*Log.i("Status ", "001");*/
+                            Log.i("Status ", "001");
                         } else
-                            dbData = new Product(result.getJSONObject(0).getInt("id"),
-                                    result.getJSONObject(0).getString("name"),
-                                    result.getJSONObject(0).getInt("price"),
+                            dbData = new Product(productid,
+                                    productname,
+                                    productprice,
                                     stock,
                                     "http://202.120.47.213:12345/"+imageurl[0],
                                     descdetail,

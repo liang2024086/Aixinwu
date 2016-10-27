@@ -136,6 +136,29 @@
                     android:text="+"
                     android:textColor="#000000"/>
 
+                <TextView
+                    android:id="@+id/shopping_cart_stock_text1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/shopping_cart_add"
+                    android:text="（库存"
+                    android:textSize="14sp"
+                    />
+                <TextView
+                    android:id="@+id/shopping_cart_stock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/shopping_cart_stock_text1"
+                    android:textSize="14sp"
+                    />
+                <TextView
+                    android:id="@+id/shopping_cart_stock_text2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/shopping_cart_stock"
+                    android:text="件)"
+                    android:textSize="14sp"
+                    />
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>

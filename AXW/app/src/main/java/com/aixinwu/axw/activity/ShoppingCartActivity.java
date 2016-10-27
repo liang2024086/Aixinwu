@@ -47,6 +47,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Text;
 
 import static java.lang.System.in;
 
@@ -282,8 +283,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         String imgurl = cursor.getString(cursor.getColumnIndex(
                                 ProductReaderContract.ProductEntry.COLUMN_NAME_IMG));
 
+                        int stock = Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                                (ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK)));
                         ShoppingCartEntity entity = new ShoppingCartEntity(id, name, category,
-                                price, number, imgurl);
+                                price, number, imgurl, stock);
 
 
                         mDatas.add(entity);
@@ -390,6 +393,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                         .img_item_shopping_cart_number);
                 holder.add_amount = (Button) convertView.findViewById(R.id.shopping_cart_add);
                 holder.reduce_amount = (Button) convertView.findViewById(R.id.shopping_cart_minus);
+                holder.stock = (TextView) convertView.findViewById(R.id.shopping_cart_stock);
 
 
                 convertView.setTag(holder);
@@ -402,7 +406,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             holder.name.setText(entity.getName());
             holder.price.setText(entity.getPrice() + "");
             holder.number.setText(entity.getNumber() + "");
-
+            holder.stock.setText(entity.getStock() + "");
             ImageLoader.getInstance().displayImage(entity.getImgUrl(), holder.img);
             //============================================================
             holder.add_amount.setOnClickListener(
@@ -416,18 +420,21 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
                                     ContentValues cv = new ContentValues();
                                     int amount = entity.getNumber();
-                                    amount ++;
-                                    cv.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, amount);
-                                    db.update(ProductReaderContract.ProductEntry.TABLE_NAME, cv,
-                                            ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
-                                            new String[]{entity.getId()});
-                                    Message msg = new Message();
-                                    msg.what=MSG_NUM;
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("id", entity.getId());
-                                    bundle.putInt("op", 1);
-                                    msg.setData(bundle);
-                                    mHandler.sendMessage(msg);
+                                    if(amount < entity.getStock()) {
+                                        amount++;
+
+                                        cv.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, amount);
+                                        db.update(ProductReaderContract.ProductEntry.TABLE_NAME, cv,
+                                                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
+                                                new String[]{entity.getId()});
+                                        Message msg = new Message();
+                                        msg.what = MSG_NUM;
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("id", entity.getId());
+                                        bundle.putInt("op", 1);
+                                        msg.setData(bundle);
+                                        mHandler.sendMessage(msg);
+                                    }
                                 }
                             }.start();
                         }
@@ -445,18 +452,23 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                     SQLiteDatabase db = mDbHelper.getWritableDatabase();
                                     ContentValues cv = new ContentValues();
                                     int amount = entity.getNumber();
-                                    amount --;
-                                    cv.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, amount);
-                                    db.update(ProductReaderContract.ProductEntry.TABLE_NAME, cv,
-                                            ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
-                                            new String[]{entity.getId()});
-                                    Message msg = new Message();
-                                    msg.what=MSG_NUM;
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("id", entity.getId());
-                                    bundle.putInt("op", 2);
-                                    msg.setData(bundle);
-                                    mHandler.sendMessage(msg);
+                                    Log.i("Amount", amount + "");
+                                    if (amount > 1) {
+                                        amount--;
+
+                                        Log.i("Amount", amount + "");
+                                        cv.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, amount);
+                                        db.update(ProductReaderContract.ProductEntry.TABLE_NAME, cv,
+                                                ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + "=?",
+                                                new String[]{entity.getId()});
+                                        Message msg = new Message();
+                                        msg.what = MSG_NUM;
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("id", entity.getId());
+                                        bundle.putInt("op", 2);
+                                        msg.setData(bundle);
+                                        mHandler.sendMessage(msg);
+                                    }
                                 }
                             }.start();
                         }
@@ -509,7 +521,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         class ViewHolder {
             CheckBox cb;
             ImageView img;
-            TextView name, category, price, number;
+            TextView name, category, price, number, stock;
             Button add_amount, reduce_amount;
         }
     }
