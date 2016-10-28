@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -15,16 +16,21 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.model.Product;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.tools.talkmessage;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.json.simple.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,8 +104,9 @@ public class ChatList extends Activity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(ChatList.this,Chattoother.class);
-                intent.putExtra("To",Integer.parseInt(chatitem.get(i).get("Name")));
+                intent.putExtra("To",Integer.parseInt(chatitem.get(i).get("usrId")));
                 intent.putExtra("itemID",Integer.parseInt(chatitem.get(i).get("Item")));
+                intent.putExtra("ToName",chatitem.get(i).get("Name"));
                 startActivity(intent);
             }
         });
@@ -124,6 +131,56 @@ public class ChatList extends Activity {
             }
         }
     };
+
+    static public String getUserName(String userId){
+        //Product dbData = null;
+        String usrName = "";
+
+        try {
+            URL url = new URL(GlobalParameterApplication.getSurl() + "/usr_get_by_id/"+userId);
+            Log.i("Find product", "1");
+            try {
+                Log.i("LoveCoin", "getconnection");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-Type", "application/json");
+                java.lang.String ostr ;
+                org.json.JSONObject outjson = null;
+
+                if (conn.getResponseCode() == 200){
+                    InputStream is = conn.getInputStream();
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    int i;
+                    while ((i = is.read()) != -1) {
+                        baos.write(i);
+                    }
+                    ostr = baos.toString();
+                    try {
+                        outjson = new org.json.JSONObject(ostr);
+                        // Log.i("Inall", result.length() + "");
+
+                        usrName = outjson.getString("username");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return usrName;
+    }
+
+
+
     public void getChatlist(){
         List<talkmessage> result = new ArrayList<>();
         ArrayList<Integer> chec = new ArrayList<Integer>();
@@ -135,16 +192,50 @@ public class ChatList extends Activity {
             Integer ss = re0.getSender()+re0.getReceiver()-GlobalParameterApplication.getUserID();
             if (!chec.contains(ss)) {
                 chec.add(ss);
-                tt.put("Name", ss.toString());
+
+                String usrName = null;
+                GetNameThread getNameThread = new GetNameThread(ss.toString());
+                getNameThread.start();
+                try {
+                    getNameThread.join();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+                tt.put("usrId",ss.toString());
+                tt.put("Name", getNameThread.getUsrName());
                 tt.put("Item",String.valueOf(GlobalParameterApplication.query(ss)));
                 tt.put("Doc",re0.getDoc());
                 tt.put("Time",re0.getTime());
                 chatitem.add(tt);
             }
         }
+    }
 
+    class GetNameThread extends Thread{
 
+        private String usrId;
+        private String usrName;
 
+        public GetNameThread(String usrId){
+            this.usrId = usrId;
+        }
 
+        public String getUsrName(){
+            return this.usrName;
+        }
+        @Override
+        public void interrupt() {
+            super.interrupt();
+        }
+
+        @Override
+        public void run(){
+            try{
+                usrName = getUserName(usrId);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 }

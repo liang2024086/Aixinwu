@@ -23,6 +23,7 @@ import com.aixinwu.axw.activity.CommonReceiver;
 import com.aixinwu.axw.activity.ConfirmOrder;
 import com.aixinwu.axw.activity.MyCollection;
 import com.aixinwu.axw.activity.ShoppingCartActivity;
+import com.aixinwu.axw.activity.SettingActivity;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.database.Sqlite;
 
@@ -168,6 +169,7 @@ public class UserInfo extends Fragment {
 
         });
 
+/*
         ly_personalinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,7 +177,7 @@ public class UserInfo extends Fragment {
                 getActivity().startActivity(intent);
             }
 
-        });
+        });*/
 
 
 
@@ -188,6 +190,16 @@ public class UserInfo extends Fragment {
             public void onClick(View view) {
                 if (GlobalParameterApplication.getLogin_status()==1){
                     Intent intent = new Intent(getActivity(), ItemList.class);
+                    startActivity(intent);}
+            }
+        });
+
+        RelativeLayout ly_mySetting = (RelativeLayout)getActivity().findViewById(R.id.userSetting);
+        ly_mySetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==1){
+                    Intent intent = new Intent(getActivity(), SettingActivity.class);
                     startActivity(intent);}
             }
         });

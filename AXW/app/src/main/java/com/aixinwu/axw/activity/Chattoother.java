@@ -67,6 +67,7 @@ public class Chattoother extends Activity{
     public final static int OTHER=1;
     public final static int ME=0;
 
+    private String otherName = "数据的佛";
 
     protected ListView chatListView=null;
     protected TextView chatSendButton=null;
@@ -90,6 +91,7 @@ public class Chattoother extends Activity{
         GlobalParameterApplication.setAllowChatThread(false);
         ItemID=out.getInt("itemID");
         From=out.getInt("To");
+        otherName = out.getString("ToName");
 
         To = GlobalParameterApplication.getUserID();
 /*        FileName = To+"$"+From+"$"+ItemID+".txt";
@@ -101,7 +103,6 @@ public class Chattoother extends Activity{
                 break;
             }
         }*/
-        GlobalParameterApplication.nowchat = From;
         pause = true;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_chat);
@@ -145,7 +146,6 @@ public class Chattoother extends Activity{
 
         num = re00.size();
         for (talkmessage tm: re00){
-            GlobalParameterApplication.update(tm);
             cont.add(tm.getDoc());
             if (tm.getSender()== GlobalParameterApplication.getUserID()){
                 addTextToList(tm.getDoc(),ME);who.add(ME);
@@ -169,7 +169,6 @@ public class Chattoother extends Activity{
                             for (int i=num; i<ss; i++)
 
                                 if (res.get(i).getSender() != GlobalParameterApplication.getUserID()){
-                                    GlobalParameterApplication.update(res.get(i));
                                     cont.add(res.get(i).getDoc());
                                     who.add(OTHER);}
 
@@ -187,8 +186,20 @@ public class Chattoother extends Activity{
 
             }
         }).start();
+
+        /*
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                otherName = ChatList.getUserName(""+From);
+                Message msg = new Message();
+                msg.what = 537485;
+                nHandler.sendMessage(msg);
+            }
+        }).start();*/
+
         chatt =(TextView)findViewById(R.id.chat_contact_name);
-        chatt.setText("用户 "+From);
+        chatt.setText(otherName);
         chatSendButton=(TextView)findViewById(R.id.chat_bottom_sendbutton);
         editText=(EditText)findViewById(R.id.chat_bottom_edittext);
         chatListView=(ListView)findViewById(R.id.chat_list);
@@ -215,7 +226,6 @@ public class Chattoother extends Activity{
                 editText.setText("");
                 uploadSuccessful = false;
                 GlobalParameterApplication.publish(myWord, From);
-
                 Date date= new Date();//创建一个时间对象，获取到当前的时间
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置时间显示格式
                 String str = sdf.format(date);//将当前时间格式化为需要的类型
@@ -295,7 +305,6 @@ public class Chattoother extends Activity{
         });
 
         chatListView.setAdapter(adapter);
-        chatListView.setSelection(chatList.size() - 1);
 
     }
     @Override
@@ -324,7 +333,6 @@ public class Chattoother extends Activity{
                     e.printStackTrace();
                 }
             }*/
-        GlobalParameterApplication.nowchat = -1;
         pause= false;
         //   GlobalParameterApplication.setPause(false);
         super.onDestroy();
@@ -338,6 +346,9 @@ public class Chattoother extends Activity{
         super.handleMessage(msg);
 
         switch (msg.what) {
+            case 537485:
+                chatt.setText(otherName);
+                break;
             case 22234:
                 /*if (msg.arg1 == 1){
                     if (OtherMsg.size()-1>=start+1){
@@ -358,7 +369,7 @@ public class Chattoother extends Activity{
                     addTextToList(cont.get(i),who.get(i));
                 }
                 adapter.notifyDataSetChanged();
-                //chatListView.setSelection(chatList.size()-1);
+                chatListView.setSelection(chatList.size()-1);
                 break;
             case 233333:
                 if(uploadSuccessful) {
@@ -386,7 +397,7 @@ public class Chattoother extends Activity{
                  * 更新数据列表，并且通过setSelection方法使ListView始终滚动在最底端
                  */
                 adapter.notifyDataSetChanged();
-                //chatListView.setSelection(chatList.size()-1);
+                chatListView.setSelection(chatList.size()-1);
 
                 break;
         }

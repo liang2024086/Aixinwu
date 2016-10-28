@@ -297,7 +297,8 @@
                         android:background="#eeefef"
                         />
 
-                    <RelativeLayout style="@style/PersonalNormalStyle" >
+                    <RelativeLayout style="@style/PersonalNormalStyle"
+                        android:id="@+id/userSetting">
 
                         <ImageView
                             android:id="@+id/personal_icon_05"

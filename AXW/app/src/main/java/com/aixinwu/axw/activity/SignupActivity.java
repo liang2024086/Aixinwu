@@ -77,7 +77,7 @@ public class SignupActivity extends AppCompatActivity {
                             catchVerficationCode(phone_number);
                     }
                 }).start();
-                Toast.makeText(getApplicationContext(),"nihao",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"开始获取验证码……",Toast.LENGTH_SHORT).show();
             }
         });
     }

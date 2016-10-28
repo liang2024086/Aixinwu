@@ -74,15 +74,19 @@ public class ProductListActivity extends AppCompatActivity {
                     mAdapter.setOnItemClickListener(new ProductListAdapter.MyOnItemClickListener() {
                         @Override
                         public void OnItemClickListener(View view, int i) {
-                            Product product = productList.get(i-1);
+                            Product product = productList.get(i);
                             Intent intent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
                             //intent.putExtra("param1", product.getProduct_name());
                             //getActivity().startActivity(intent);
 
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("product", product);
-                            intent.putExtras(bundle);
-                            ProductListActivity.this.startActivity(intent);
+                            try {
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("productId", product.getId());
+                                intent.putExtras(bundle);
+                                ProductListActivity.this.startActivity(intent);
+                            } catch(Throwable e){
+                                e.printStackTrace();
+                            }
                         }
                     });
                     break;

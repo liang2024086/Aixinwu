@@ -53,5 +53,6 @@
     <string name="title_activity_common_receiver">CommonReceiver</string>
     <string name="title_activity_confirm_order">ConfirmOrder</string>
     <string name="title_activity_my_collection">MyCollection</string>
+    <string name="title_activity_setting">SettingActivity</string>
 
 </resources>

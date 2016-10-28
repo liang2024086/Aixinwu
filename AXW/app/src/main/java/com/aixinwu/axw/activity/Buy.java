@@ -74,6 +74,8 @@ public class Buy extends Activity{
     private int Price;
     private String Picset;
 
+    private String ownerName;
+
     private String picId;
     private String description;
 
@@ -164,6 +166,7 @@ public class Buy extends Activity{
                     //intent.setClass();
                     intent2.putExtra("itemID",itemID);
                     intent2.putExtra("To",OwnerID);
+                    intent2.putExtra("ToName",ownerName);
                     startActivity(intent2);}
 
             }
@@ -202,6 +205,7 @@ public class Buy extends Activity{
                 MyToken=GlobalParameterApplication.getToken();
                 GetComments(itemID);
                 GetInfo(itemID);
+                ownerName = ChatList.getUserName(""+OwnerID);
                 /*
                 textView1.setText("用户："+OwnerID);
                 textView2.setText("描述："+Desc);
@@ -363,7 +367,7 @@ public class Buy extends Activity{
                     case 2310231:
 
                         flag=false;
-                        textView1.setText("用户："+OwnerID);
+                        textView1.setText("用户："+ownerName);
                         textView2.setText("描述："+Desc);
                         textView3.setText("价格："+Price);
 

@@ -98,18 +98,21 @@
                     android:id="@+id/count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="数量: "
                     android:textSize="14sp"
                     android:textColor="#3e3a39"/>
                 <Button
                     android:id="@+id/shopping_cart_minus"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
                     android:layout_toRightOf="@id/count"
+                    android:layout_toEndOf="@id/count"
                     android:layout_alignTop="@id/count"
                     android:layout_alignBottom="@id/count"
-                    android:padding="0dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/shopcart_selector"
                     android:textSize="12sp"
                     android:text="－"
                     android:textColor="#000000"/>
@@ -117,23 +120,26 @@
                     android:id="@+id/tv_item_shopping_cart_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:text="1"
                     android:textSize="12sp"
-
+                    android:layout_toEndOf="@id/shopping_cart_minus"
                     android:layout_toRightOf="@id/shopping_cart_minus"
                     android:textColor="#3e3a39"
                     android:typeface="serif"/>
                 <Button
                     android:id="@+id/shopping_cart_add"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/tv_item_shopping_cart_number"
                     android:layout_toRightOf="@id/tv_item_shopping_cart_number"
                     android:layout_alignTop="@id/count"
                     android:layout_alignBottom="@id/count"
-                    android:padding="0dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/shopcart_selector"
                     android:textSize="12sp"
-                    android:text="+"
+                    android:text="＋"
                     android:textColor="#000000"/>
 
                 <TextView

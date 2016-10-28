@@ -102,6 +102,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
+                        android:visibility="gone"
                         />
 
                 </RelativeLayout>
@@ -226,6 +227,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentBottom="true"
+                        android:visibility="gone"
                         />
 
                 </RelativeLayout>
@@ -277,7 +279,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="本月物品捐赠"
+                            android:text="物品总流转量"
                             android:textSize="18dp"
                             android:textColor="#3e3a39"
                             android:layout_centerHorizontal="true"/>
@@ -306,7 +308,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="本月物品流转"
+                            android:text="用户注册量"
                             android:textSize="18dp"
                             android:textColor="#3e3a39"
                             android:layout_centerHorizontal="true"/>
@@ -338,7 +340,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/donation1"
                             android:gravity="center"
-                            android:text="累计物品捐赠"
+                            android:text="用户访问量"
                             android:textSize="18dp"
                             android:textColor="#3e3a39"
                             android:layout_centerHorizontal="true"/>
@@ -369,7 +371,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="累计物品流转"
+                            android:text="爱心币置换总量"
                             android:textSize="18dp"
                             android:textColor="#3e3a39"
                             android:layout_centerHorizontal="true"/>
