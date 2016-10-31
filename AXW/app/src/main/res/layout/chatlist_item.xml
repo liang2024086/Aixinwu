@@ -79,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:id="@+id/itemid"
-                android:textColor="#9fa0a0"/>
+                android:textColor="#9fa0a0"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 
@@ -97,8 +98,4 @@
             android:textColor="#9fa0a0"/>
 
     </RelativeLayout>
-
-
-
-
 </LinearLayout>

@@ -38,7 +38,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 
-public class ProductListActivity extends AppCompatActivity {
+public class ProductListActivity extends Activity {
     private ArrayList<Product> productList = new ArrayList<Product>();
     private XRecyclerView mRecyclerView;
     private int times = 0;
@@ -74,7 +74,7 @@ public class ProductListActivity extends AppCompatActivity {
                     mAdapter.setOnItemClickListener(new ProductListAdapter.MyOnItemClickListener() {
                         @Override
                         public void OnItemClickListener(View view, int i) {
-                            Product product = productList.get(i);
+                            Product product = productList.get(i-1);
                             Intent intent = new Intent(ProductListActivity.this, ProductDetailActivity.class);
                             //intent.putExtra("param1", product.getProduct_name());
                             //getActivity().startActivity(intent);
@@ -110,7 +110,7 @@ public class ProductListActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_product_list);
         mRecyclerView = (XRecyclerView) this.findViewById(R.id.recyclerview);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallSpinFadeLoader);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallRotate);
@@ -242,7 +242,7 @@ public class ProductListActivity extends AppCompatActivity {
                             //cc.inSampleSize = 20;
                             productList.add(new Product(result.getJSONObject(i).getInt("id"),
                                     result.getJSONObject(i).getString("name"),
-                                    result.getJSONObject(i).getInt("price"),
+                                    result.getJSONObject(i).getDouble("price"),
                                     stock,
                                     "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
                                     descdetail,
@@ -253,7 +253,7 @@ public class ProductListActivity extends AppCompatActivity {
                         } else
                             productList.add(new Product(result.getJSONObject(i).getInt("id"),
                                     result.getJSONObject(i).getString("name"),
-                                    result.getJSONObject(i).getInt("price"),
+                                    result.getJSONObject(i).getDouble("price"),
                                     stock,
                                     "http://202.120.47.213:12345/" + imageurl[0],
                                     descdetail,

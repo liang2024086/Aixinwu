@@ -1,5 +1,6 @@
 package com.aixinwu.axw.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -32,7 +33,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends Activity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
 

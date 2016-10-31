@@ -52,7 +52,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SendToPeople extends AppCompatActivity {
+public class SendToPeople extends Activity {
     public String imageSet;
     private GridView mGridView;
     private TextView buttonPublish;

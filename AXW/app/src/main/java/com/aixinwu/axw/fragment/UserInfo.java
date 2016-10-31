@@ -3,6 +3,8 @@ package com.aixinwu.axw.fragment;
 //import android.app.Activity;
 import android.content.Intent;
 import android.os.Message;
+import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 //import android.support.v4.app.FragmentActivity;
@@ -24,6 +26,7 @@ import com.aixinwu.axw.activity.ConfirmOrder;
 import com.aixinwu.axw.activity.MyCollection;
 import com.aixinwu.axw.activity.ShoppingCartActivity;
 import com.aixinwu.axw.activity.SettingActivity;
+import com.aixinwu.axw.activity.ItemRecord;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.database.Sqlite;
 
@@ -35,6 +38,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.imageaware.ImageViewAware;
 
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONObject;
@@ -60,12 +64,17 @@ public class UserInfo extends Fragment {
 
     private Sqlite userDbHelper;
 
+    private String headProtrait;
+
+    private ImageView headImageView;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.personalinfo, null);
         configImageLoader();
         userDbHelper = new Sqlite(getActivity());
+        headImageView = (ImageView) view.findViewById(R.id.headImage);
         return view;
     }
 
@@ -209,7 +218,7 @@ public class UserInfo extends Fragment {
             @Override
             public void onClick(View view) {
                 if (GlobalParameterApplication.getLogin_status()==1){
-                    Intent intent = new Intent(getActivity(), CommonReceiver.class);
+                    Intent intent = new Intent(getActivity(), ItemRecord.class);
                     startActivity(intent);}
             }
         });
@@ -295,7 +304,8 @@ public Thread mThread = new Thread(new Runnable() {
                 TextView usernameText = (TextView) getActivity().findViewById(R.id.username);
                 coinsText.setText("爱心币： " + coins);
                 usernameText.setText(username);
-
+                if (headProtrait.length() != 0)
+                    ImageLoader.getInstance().displayImage("http://202.120.47.213:12345/img/"+headProtrait,headImageView);
             }
         }
     };
@@ -338,8 +348,16 @@ public Thread mThread = new Thread(new Runnable() {
 
 
             userinfojson = new org.json.JSONObject(userinfo);
+            System.out.println("HEELO\n"+userinfojson.toString());
             coins = userinfojson.getString("coins");
-            username = userinfojson.getString("username");
+            String myUserName = userinfojson.getString("username");
+            String myNickName = userinfojson.getString("nickname");
+            if (myNickName.length() == 0)
+                username = myUserName;
+            else username = myNickName;
+
+            headProtrait = userinfojson.getString("image");
+            //username = userinfojson.getString("username");
 
 
 

@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,10 +26,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aixinwu.axw.R;
+import com.aixinwu.axw.tools.GlobalParameterApplication;
+import com.aixinwu.axw.tools.Tool;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
+import org.json.simple.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SettingActivity extends Activity {
 
@@ -36,9 +51,38 @@ public class SettingActivity extends Activity {
     private TextView resetJaccount;
     private EditText nickName;
 
+    private RelativeLayout submit;
+
     private ImageView myPic;
 
-    private String pathImage;
+    private String pathImage="";
+
+    private Tool am = new Tool();
+
+    private Handler dHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 843023:
+                    Toast.makeText(SettingActivity.this,"淇敼鎴愬姛",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplication(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    break;
+                case 932466:
+                    Toast.makeText(SettingActivity.this,"淇敼澶辫触",Toast.LENGTH_SHORT).show();
+                    break;
+                case 490345:
+                    Toast.makeText(SettingActivity.this,"缁戝畾鎴愬姛",Toast.LENGTH_SHORT).show();
+                    finish();
+                    break;
+                case 285392:
+                    Toast.makeText(SettingActivity.this,"缁戝畾澶辫触",Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        };
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +94,40 @@ public class SettingActivity extends Activity {
         resetJaccount = (TextView) findViewById(R.id.reSet);
         nickName = (EditText)findViewById(R.id.editNickName);
         myPic = (ImageView) findViewById(R.id.myPic);
+        submit = (RelativeLayout) findViewById(R.id.submit);
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String nickname = nickName.getText().toString();
+
+                 /*if (pathImage.length() <= 1){
+                    Message msg = new Message();
+                   if (changeUsrInfo(nickname,"") == 0){
+                        msg.what = 843023;
+                    }
+                    else
+                        msg.what = 932466;
+                    dHandler.sendMessage(msg);
+                }else{*/
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String imgUrl = uploadPic();
+                            Message msg = new Message();
+                            System.out.println("JSIDF  "+imgUrl);
+                            if (changeUsrInfo(nickname,imgUrl) == 0){
+                                msg.what = 843023;
+                            }
+                            else
+                                msg.what = 932466;
+                            dHandler.sendMessage(msg);
+                        }
+                    }).start();
+
+                }
+            //}
+        });
 
         personalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,9 +181,58 @@ public class SettingActivity extends Activity {
         resetJaccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message msg = new Message();
+                        if (bindJaccount() == 0){
+                            msg.what = 490345;
+                        }
+                        else
+                            msg.what = 285392;
+                        dHandler.sendMessage(msg);
+                    }
+                }).start();
 
             }
         });
+    }
+
+    private int bindJaccount(){
+        int status = -1;
+        String MyToken= GlobalParameterApplication.getToken();
+        String surl = GlobalParameterApplication.getSurl();
+        JSONObject orderrequest = new JSONObject();
+        orderrequest.put("token", MyToken);
+
+        try {
+            URL url = new URL(surl + "/aixinwu_associate_jaccount");
+            try {
+                Log.i("Order","getconnection");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                Log.i("usr_update", orderrequest.toJSONString());
+                conn.getOutputStream().write(orderrequest.toJSONString().getBytes());
+
+                java.lang.String ostr = IOUtils.toString(conn.getInputStream());
+                org.json.JSONObject outjson = null;
+                try{
+                    outjson = new org.json.JSONObject(ostr);
+                    status = outjson.getJSONObject("status").getInt("code");
+                    System.out.println(outjson);
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 
     @Override
@@ -173,33 +300,93 @@ public class SettingActivity extends Activity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //打开图片
+
         if(resultCode== Activity.RESULT_OK && requestCode==1) {
             Uri uri = data.getData();
             if (!TextUtils.isEmpty(uri.getAuthority())) {
-                //查询选择图片
                 Cursor cursor = getContentResolver().query(
                         uri,
                         new String[] { MediaStore.Images.Media.DATA },
                         null,
                         null,
                         null);
-                //返回 没找到选择图片
                 if (null == cursor) {
                     Log.i("FIND PIC","can't find pic");
                     return;
                 }
-                //光标移动至开头 获取图片路径
                 cursor.moveToFirst();
                 pathImage = cursor.getString(cursor
                         .getColumnIndex(MediaStore.Images.Media.DATA));
-                //向处理活动传递数据
                 //Toast.makeText(this, path, Toast.LENGTH_SHORT).show();
 
             } else {
                 pathImage = uri.getPath();
 
             }
-        }  //end if 打开图片
+        }
+    }
+
+    protected  String uploadPic(){
+        String Picset = "";
+            //   Toast.makeText(getActivity(),"Begin transication",Toast.LENGTH_SHORT).show();
+
+            try {
+                String imageID = am.sendFile(GlobalParameterApplication.getSurl(),pathImage);
+                Picset = imageID;
+                //      Toast.makeText(getActivity(),Picset.size(),Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        return Picset;
+
+    }
+
+    private int changeUsrInfo(String nickName, String imgId){
+        int status = -1;
+        String MyToken= GlobalParameterApplication.getToken();
+        String surl = GlobalParameterApplication.getSurl();
+        JSONObject orderrequest = new JSONObject();
+
+        JSONObject userInfo = new JSONObject();
+
+        orderrequest.put("token", MyToken);
+        if (nickName.length() > 0)
+            userInfo.put("nickname",nickName);
+
+        if (imgId.length() > 0)
+            userInfo.put("image", imgId);
+
+        orderrequest.put("userinfo",userInfo);
+        //data.put("token", MyToken);
+
+
+        try {
+            URL url = new URL(surl + "/usr_update");
+            try {
+                Log.i("Order","getconnection");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                Log.i("usr_update", orderrequest.toJSONString());
+                conn.getOutputStream().write(orderrequest.toJSONString().getBytes());
+
+                java.lang.String ostr = IOUtils.toString(conn.getInputStream());
+                org.json.JSONObject outjson = null;
+                try{
+                    outjson = new org.json.JSONObject(ostr);
+                    status = outjson.getJSONObject("status").getInt("code");
+                    System.out.println(outjson);
+                }catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 }

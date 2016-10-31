@@ -8,7 +8,8 @@ import java.io.Serializable;
 public class Product implements Serializable {
     private String product_name;
     //private int amount;
-    private int price;
+    private double price;
+    private double past_price;
     private String description;
     private String shortdescription;
     private String image_url;
@@ -17,7 +18,7 @@ public class Product implements Serializable {
     private int stock;
 
 
-    public Product (int Id, String name, int price, int stock, String image_url, String description, String shortdescription, String descriptionUrl) {
+    public Product (int Id, String name, double price, int stock, String image_url, String description, String shortdescription, String descriptionUrl) {
         this.product_name = name;
         this.price = price;
         this.stock = stock;
@@ -32,8 +33,12 @@ public class Product implements Serializable {
         return product_name;
     }
 
-    public int getPrice () {
+    public double getPrice () {
         return price;
+    }
+
+    public double getPast_price(){
+        return past_price;
     }
 
     public String getImage_url () {

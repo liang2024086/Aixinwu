@@ -1,5 +1,6 @@
 package com.aixinwu.axw.activity;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -51,7 +52,7 @@ import org.w3c.dom.Text;
 
 import static java.lang.System.in;
 
-public class ShoppingCartActivity extends AppCompatActivity {
+public class ShoppingCartActivity extends Activity {
 
     private static final int MSG_WHAT = 0x223;
     private static final int MSG_NUM = 233;
@@ -80,7 +81,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     /**
      * 合计
      */
-    private int mTotalMoney = 0;
+    private double mTotalMoney = 0;
     private int mTotalChecked = 0;
 
 
@@ -172,7 +173,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     private void updateTotal() {
         ProductReadDbHelper mDbHelper = new ProductReadDbHelper(getApplicationContext());
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        int totalprice = 0;
+        double totalprice = 0;
         for (int i = 0; i < CheckedProductId.size(); ++i){
             int checkedid = CheckedProductId.get(i);
             Cursor cursor = db.query(ProductReaderContract.ProductEntry.TABLE_NAME,
@@ -181,7 +182,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                     null, null, null);
             if (cursor != null) {
                 cursor.moveToFirst();
-                int price = Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                double price = Double.parseDouble(cursor.getString(cursor.getColumnIndex
                         (ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE)));
 
                 int number = Integer.parseInt(cursor.getString(cursor.getColumnIndex
@@ -320,7 +321,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
                                 (ProductReaderContract.ProductEntry
                                         .COLUMN_NAME_CATEGORY));
 
-                        int price = Integer.parseInt(cursor.getString(cursor.getColumnIndex
+                        double price = Double.parseDouble(cursor.getString(cursor.getColumnIndex
                                 (ProductReaderContract.ProductEntry.COLUMN_NAME_PRICE)));
 
                         int number = Integer.parseInt(cursor.getString(cursor.getColumnIndex

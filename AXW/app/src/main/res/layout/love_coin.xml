@@ -4,19 +4,6 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     <EditText
         android:id="@+id/love_coin_search"
         android:layout_gravity="center_vertical"
@@ -192,7 +179,7 @@
 
             <HorizontalScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="176dp"
+                android:layout_height="200dp"
                 android:scrollbars="none">
                 <LinearLayout
                     android:layout_width="fill_parent"

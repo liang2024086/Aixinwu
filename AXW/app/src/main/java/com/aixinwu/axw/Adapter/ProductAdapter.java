@@ -57,7 +57,6 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
         ImageLoader.getInstance().displayImage(product.getImage_url(), productImage);
 
-
         productName.setText(product.getProduct_name());
         productPrice.setText(String.valueOf(product.getPrice()));
         return view;

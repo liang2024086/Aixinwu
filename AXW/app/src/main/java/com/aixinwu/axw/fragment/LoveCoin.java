@@ -15,15 +15,22 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.aixinwu.axw.Adapter.ProductAdapter;
+import com.aixinwu.axw.Adapter.VolunteerAdapter;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.HelloWorld;
 import com.aixinwu.axw.activity.ProductDetailActivity;
 import com.aixinwu.axw.activity.ProductListActivity;
+import com.aixinwu.axw.activity.VolActivityList;
+import com.aixinwu.axw.activity.VolunteerApply;
+import com.aixinwu.axw.activity.VolActivityList;
 import com.aixinwu.axw.model.Product;
+import com.aixinwu.axw.model.VolunteerActivity;
 import com.aixinwu.axw.tools.Bean;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -46,7 +53,7 @@ public class LoveCoin extends Fragment {
 
     private List<Product> productList = new ArrayList<Product>();
     private List<Product> leaseList = new ArrayList<Product>();
-    private List<Product> volList = new ArrayList<Product>();
+    private List<VolunteerActivity> volList = new ArrayList<VolunteerActivity>();
 
     //public List<Product> dbData = new ArrayList<Product>();
 
@@ -63,7 +70,6 @@ public class LoveCoin extends Fragment {
 
 
         mThread.start();
-
 
         return view;
     }
@@ -101,8 +107,7 @@ public class LoveCoin extends Fragment {
         vollist.setOnClickListener (new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), ProductListActivity.class);
-                intent.putExtra("type", "cash");
+                Intent intent = new Intent(getActivity(), VolActivityList.class);
 
                 getActivity().startActivity(intent);
             }
@@ -131,7 +136,7 @@ public class LoveCoin extends Fragment {
             //getDbData();
             productList = new ArrayList<Product> (getDbData("exchange"));
             leaseList =  new ArrayList<Product> (getDbData("rent"));
-            volList =  new ArrayList<Product> (getDbData("cash"));
+            volList =  new ArrayList<VolunteerActivity> (getVolunteer());
             Message msg = new Message();
             msg.what=1321;
             nHandler.sendMessage(msg);
@@ -155,9 +160,9 @@ public class LoveCoin extends Fragment {
                             R.layout.product_item,
                             leaseList
                     );
-                    ProductAdapter adapter3 = new ProductAdapter(
+                    VolunteerAdapter adapter3 = new VolunteerAdapter(
                             getActivity(),
-                            R.layout.product_item,
+                            R.layout.volunteer_item,
                             volList
                     );
                     //Log.i("LoveCoin", "init end" + productList.get(0).getImage_url() );
@@ -195,10 +200,10 @@ public class LoveCoin extends Fragment {
                     gridView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                            Product product = volList.get(i);
-                            Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                            VolunteerActivity product = volList.get(i);
+                            Intent intent = new Intent(getActivity(), VolunteerApply.class);
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("productId", product.getId());
+                            bundle.putSerializable("volActivityId", product);
                             intent.putExtras(bundle);
                             getActivity().startActivity(intent);
                         }
@@ -258,7 +263,7 @@ public class LoveCoin extends Fragment {
                                 Log.i("JSONALL", jsonall);
                                 String [] imageurl = result.getJSONObject(i).getString("image").split(",");//==========================
                                 String logname = result.getJSONObject(i).getString("name");
-                                String value = result.getJSONObject(i).getInt("price") + "";
+                                String value = result.getJSONObject(i).getString("price") + "";
                                 String iid = result.getJSONObject(i).getInt("id") + "";
                                 String descurl = result.getJSONObject(i).getString("desp_url");
                                 String descdetail = result.getJSONObject(i).getString("desc");
@@ -279,7 +284,7 @@ public class LoveCoin extends Fragment {
                                     //cc.inSampleSize = 20;
                                     dbData.add(new Product(result.getJSONObject(i).getInt("id"),
                                             result.getJSONObject(i).getString("name"),
-                                            result.getJSONObject(i).getInt("price"),
+                                            result.getJSONObject(i).getDouble("price"),
                                             stock,
                                             "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
                                             descdetail,
@@ -290,7 +295,7 @@ public class LoveCoin extends Fragment {
                                 } else
                                     dbData.add(new Product(result.getJSONObject(i).getInt("id"),
                                             result.getJSONObject(i).getString("name"),
-                                            result.getJSONObject(i).getInt("price"),
+                                            result.getJSONObject(i).getDouble("price"),
                                             stock,
                                             "http://202.120.47.213:12345/"+imageurl[0],
                                             descdetail,
@@ -314,6 +319,60 @@ public class LoveCoin extends Fragment {
         return dbData;
     }
 
+    static public List<VolunteerActivity> getVolunteer(){
+        List<VolunteerActivity> dbData = new ArrayList<VolunteerActivity>();
+        String MyToken= GlobalParameterApplication.getToken();
+        String surl = GlobalParameterApplication.getSurl();
+        JSONObject itemsrequest = new JSONObject();
+        itemsrequest.put("token",MyToken);
+
+        try {
+            URL url = new URL(surl + "/aixinwu_volunteer_act_get");
+            try {
+                Log.i("LoveCoin","getconnection");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                conn.getOutputStream().write(itemsrequest.toJSONString().getBytes());
+                java.lang.String ostr = IOUtils.toString(conn.getInputStream());
+
+                try {
+                    JSONArray outjson = null;
+                    outjson = new org.json.JSONArray(ostr);
+                    System.out.println(ostr);
+                    for (int i1 = 0; i1 < outjson.length(); ++i1){
+                        int need = outjson.getJSONObject(i1).getInt("num_needed");
+                        int signed = outjson.getJSONObject(i1).getInt("num_signed");
+                        dbData.add(new VolunteerActivity(outjson.getJSONObject(i1).getInt("id"),
+                                outjson.getJSONObject(i1).getString("image"),
+                                //"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
+                                outjson.getJSONObject(i1).getString("name"),
+                                outjson.getJSONObject(i1).getDouble("pay_cash"),
+                                outjson.getJSONObject(i1).getString("work_date"),
+                                need,
+                                signed,
+                                outjson.getJSONObject(i1).getDouble("workload"),
+                                outjson.getJSONObject(i1).getString("site"),
+                                outjson.getJSONObject(i1).getInt("joined")
+                        ));
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return dbData;
+    }
 
 
 }

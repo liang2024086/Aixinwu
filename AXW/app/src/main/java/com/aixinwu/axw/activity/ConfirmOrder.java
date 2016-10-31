@@ -14,20 +14,27 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aixinwu.axw.Adapter.ConfirmOrderAdapter;
+import com.aixinwu.axw.Adapter.ReceiverAdapter;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.database.ProductReadDbHelper;
 import com.aixinwu.axw.database.ProductReaderContract;
 import com.aixinwu.axw.model.Product;
 import com.aixinwu.axw.model.ShoppingCartEntity;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
+import com.aixinwu.axw.model.Consignee;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -43,15 +50,152 @@ public class ConfirmOrder extends Activity {
     private ConfirmOrderAdapter mAdapter;
     private ListView commodityList;
     public ArrayList<JSONObject> OrderedProduct = new ArrayList<>();
-    private int mTotalMoney = 0;
+    private double mTotalMoney = 0;
     private int size = 0;
     private int orderid = -1;
     private TextView order;
+
+    private TextView consigneeName;
+    private TextView stuId;
+    private TextView phone;
+
+    private List<Consignee> consignees = new ArrayList<>();
+    private Consignee commonConsigne;
+
+    private RelativeLayout edit;
+    private RelativeLayout submitRelative;
+
+    private TextView submit;
+    private TextView cancel;
+
+    private EditText editName;
+    private EditText editStuId;
+    private EditText editPhone;
+
+    private Handler dHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 532394:
+                    Toast.makeText(ConfirmOrder.this,"请检查输入信息是否正确",Toast.LENGTH_SHORT).show();
+                    break;
+                case 234567:
+                    consigneeName.setText(commonConsigne.getName());
+                    stuId.setText(commonConsigne.getStuId());
+                    phone.setText(commonConsigne.getPhoneNumber());
+                    break;
+                case 234242 :
+                    Toast.makeText(ConfirmOrder.this,"修改成功",Toast.LENGTH_SHORT).show();
+                    submitRelative.setVisibility(View.GONE);
+                    edit.setVisibility(View.VISIBLE);
+                    consigneeName.setVisibility(View.VISIBLE);
+                    stuId.setVisibility(View.VISIBLE);
+                    phone.setVisibility(View.VISIBLE);
+                    editName.setVisibility(View.GONE);
+                    editName.setText("");
+                    editStuId.setText("");
+                    editPhone.setText("");
+                    editStuId.setVisibility(View.GONE);
+                    editPhone.setVisibility(View.GONE);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            GetAddress();
+                            Message msg = new Message();
+                            msg.what = 234567;
+                            dHandler.sendMessage(msg);
+                        }
+                    }).start();
+
+                    break;
+            }
+        };
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
+
+        editName = (EditText) findViewById(R.id.editName);
+        editStuId = (EditText) findViewById(R.id.editStuId);
+        editPhone = (EditText) findViewById(R.id.editPhone);
+
+        consigneeName = (TextView) findViewById(R.id.name);
+        stuId = (TextView) findViewById(R.id.stuId);
+        phone = (TextView) findViewById(R.id.phone);
+
+        submitRelative = (RelativeLayout) findViewById(R.id.submitRelative);
+
+        cancel = (TextView) findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitRelative.setVisibility(View.GONE);
+                edit.setVisibility(View.VISIBLE);
+                consigneeName.setVisibility(View.VISIBLE);
+                stuId.setVisibility(View.VISIBLE);
+                phone.setVisibility(View.VISIBLE);
+                editName.setVisibility(View.GONE);
+                editName.setText("");
+                editStuId.setText("");
+                editPhone.setText("");
+                editStuId.setVisibility(View.GONE);
+                editPhone.setVisibility(View.GONE);
+            }
+        });
+
+        submit = (TextView) findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(ConfirmOrder.this,"SUBMIT",Toast.LENGTH_SHORT).show();
+                        Message msg = new Message();
+                        int status = changeCosingnee();
+                        if (status == 0){
+                            msg.what=234242;
+                            dHandler.sendMessage(msg);
+                        }
+                        else{
+                            msg.what = 532394;
+                            dHandler.sendMessage(msg);
+                        }
+                    }
+                }).start();
+            }
+        });
+
+        edit = (RelativeLayout) findViewById(R.id.editRelative);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submitRelative.setVisibility(View.VISIBLE);
+                edit.setVisibility(View.GONE);
+                consigneeName.setVisibility(View.GONE);
+                stuId.setVisibility(View.GONE);
+                phone.setVisibility(View.GONE);
+                editName.setVisibility(View.VISIBLE);
+                editStuId.setVisibility(View.VISIBLE);
+                editPhone.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                GetAddress();
+                Message msg = new Message();
+                msg.what = 234567;
+                dHandler.sendMessage(msg);
+            }
+        }).start();
 
         initData();
         commodityList = (ListView)findViewById(R.id.commodityList);
@@ -88,7 +232,7 @@ public class ConfirmOrder extends Activity {
     public void initData(){
         Intent intent = this.getIntent();
         size = (Integer)intent.getSerializableExtra("size");
-        mTotalMoney = (Integer)intent.getSerializableExtra("mTotalMoney");
+        mTotalMoney = (Double)intent.getSerializableExtra("mTotalMoney");
         for (int i = 0; i < size; ++i){
             mDatas.add((ShoppingCartEntity)intent.getSerializableExtra("OrderedData"+i));
             CheckedProductId.add((Integer)intent.getSerializableExtra("CheckedProductId"+i));
@@ -251,5 +395,108 @@ public class ConfirmOrder extends Activity {
             }
         }
     };
+
+    public void GetAddress(){
+        URL url = null;
+        try {
+            url = new URL(GlobalParameterApplication.getSurl() + "/usr_get_address");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        try {
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-Type","application/json");
+            JSONObject data = new JSONObject();
+            data.put("token",GlobalParameterApplication.getToken());
+            conn.getOutputStream().write(data.toJSONString().getBytes());
+            String ostr = IOUtils.toString(conn.getInputStream());
+            System.out.println(ostr);
+            org.json.JSONObject result=null;
+            try {
+                org.json.JSONObject outjson = new org.json.JSONObject(ostr);
+                org.json.JSONArray outt=null;
+                outt=outjson.getJSONArray("address");
+
+                for (int i = 0; i < outt.length(); ++i){
+                    consignees.add(new Consignee(
+                            outt.getJSONObject(i).getString("consignee"),
+                            outt.getJSONObject(i).getString("snum"),
+                            outt.getJSONObject(i).getString("mobile"),
+                            outt.getJSONObject(i).getInt("id"),
+                            outt.getJSONObject(i).getInt("customer_id"),
+                            outt.getJSONObject(i).getString("email"),
+                            outt.getJSONObject(i).getInt("is_default")
+                    ));
+
+                    if (outt.getJSONObject(i).getInt("is_default")==1){
+                        commonConsigne = new Consignee(
+                                outt.getJSONObject(i).getString("consignee"),
+                                outt.getJSONObject(i).getString("snum"),
+                                outt.getJSONObject(i).getString("mobile"),
+                                outt.getJSONObject(i).getInt("id"),
+                                outt.getJSONObject(i).getInt("customer_id"),
+                                outt.getJSONObject(i).getString("email"),
+                                outt.getJSONObject(i).getInt("is_default")
+                        );
+                    }
+                }
+                System.out.println("GOOD\n"+outt.toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int changeCosingnee(){
+        URL url = null;
+        int status = -1;
+        try {
+            url = new URL(GlobalParameterApplication.getSurl() + "/usr_set_address");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        String newName = editName.getText().toString();
+        String newStuId = stuId.getText().toString();
+        String newPhone = editPhone.getText().toString();
+        if (newName.length() >= 2 && newStuId.length() >= 10 && newPhone.length()==11){
+
+            try {
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-Type","application/json");
+                JSONObject data = new JSONObject();
+                data.put("token",GlobalParameterApplication.getToken());
+                data.put("consignee",newName);
+                data.put("snum",newStuId);
+                data.put("mobile",newPhone);
+                conn.getOutputStream().write(data.toJSONString().getBytes());
+                String ostr = IOUtils.toString(conn.getInputStream());
+                System.out.println(ostr);
+                org.json.JSONObject result=null;
+                try {
+                    org.json.JSONObject outjson = new org.json.JSONObject(ostr);
+                    org.json.JSONArray outt=null;
+
+                    status = outjson.getJSONObject("status").getInt("code");
+
+                    System.out.println("GOOD\n"+outjson.toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return status;
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.aixinwu.axw.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import com.aixinwu.axw.R;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.json.simple.JSONObject;
 
 import java.io.IOException;
@@ -27,7 +29,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends Activity {
     private static final String TAG = "SignupActivity";
 
     @Bind(R.id.input_name)
@@ -42,6 +44,8 @@ public class SignupActivity extends AppCompatActivity {
     TextView _loginLink;
     @Bind(R.id.catchVerificationCode)
     Button _catchVerificationCode;
+
+    private int signUpStatus = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,29 +120,35 @@ public class SignupActivity extends AppCompatActivity {
 
 
 
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
+        if (signUpStatus == 0){
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            // On complete call either onSignupSuccess or onSignupFailed
+                            // depending on success
 
 
-                        onSignupSuccess();
-                        // onSignupFailed();
-                        progressDialog.dismiss();
-                    }
-                }, 3000);
+                            onSignupSuccess();
+                            // onSignupFailed();
+                            progressDialog.dismiss();
+                        }
+                    }, 3000);
+        }
+        else
+            Toast.makeText(getBaseContext(), "注册失败", Toast.LENGTH_LONG).show();
+
     }
 
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
+        Toast.makeText(getBaseContext(), "注册成功", Toast.LENGTH_LONG).show();
         setResult(RESULT_OK, null);
         finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "登录失败", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "注册失败", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
@@ -263,6 +273,14 @@ public class SignupActivity extends AppCompatActivity {
         String ostr = null;
         try {
             ostr = IOUtils.toString(conn.getInputStream());
+            org.json.JSONObject outjson = null;
+            try{
+                outjson = new org.json.JSONObject(ostr);
+                signUpStatus = outjson.getJSONObject("status").getInt("code");
+                System.out.println(outjson);
+            }catch (JSONException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

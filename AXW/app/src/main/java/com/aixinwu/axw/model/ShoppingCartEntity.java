@@ -10,12 +10,12 @@ public class ShoppingCartEntity implements Serializable {
     private String id ;
     private String name;
     private String category;
-    private int price;
+    private double price;
     private int number ;
     private String imgUrl;
     private int stock;
 
-    public ShoppingCartEntity(String id, String name, String category, int price, int number,
+    public ShoppingCartEntity(String id, String name, String category, double price, int number,
                               String imgUrl, int stock) {
         this.id = id;
         this.name = name;
@@ -50,7 +50,7 @@ public class ShoppingCartEntity implements Serializable {
         this.category = category;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

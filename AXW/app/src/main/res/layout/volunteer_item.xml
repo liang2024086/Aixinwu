@@ -7,21 +7,21 @@
     android:background="#eeefef"
     >
 
-
     <ImageView
-    android:id="@+id/product_image"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
-    android:layout_centerHorizontal = "true"
-    />
+        android:id="@+id/product_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal = "true"
+        android:src="@drawable/aixinwu"
+        />
 
     <TextView
-    android:id="@+id/product_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal = "true"
-    android:layout_below="@id/product_image"
-    />
+        android:id="@+id/product_name"
+        android:layout_width="wrap_content"
+        android:maxLines="1"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_image"
+        />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -46,6 +46,20 @@
             android:layout_toEndOf="@id/product_love_coin"
             android:textColor="#ea5404"
             />
+
+        <TextView
+            android:id="@+id/workDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/product_love_coin"/>
+
+        <TextView
+            android:id="@+id/fullOrNot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_below="@id/workDate"/>
     </RelativeLayout>
 
 </RelativeLayout>

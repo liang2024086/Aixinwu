@@ -1,5 +1,6 @@
 package com.aixinwu.axw.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 import com.aixinwu.axw.R;
 
-public class DealFinished extends AppCompatActivity {
+public class DealFinished extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

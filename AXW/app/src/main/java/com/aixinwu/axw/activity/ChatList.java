@@ -160,7 +160,11 @@ public class ChatList extends Activity {
                         outjson = new org.json.JSONObject(ostr);
                         // Log.i("Inall", result.length() + "");
 
-                        usrName = outjson.getString("username");
+                        String myUserName = outjson.getString("username");
+                        String myNickName = outjson.getString("nickname");
+                        if (myNickName.length() == 0)
+                            usrName = myUserName;
+                        else usrName = myNickName;
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

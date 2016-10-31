@@ -1,5 +1,6 @@
 package com.aixinwu.axw.activity;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,7 +15,10 @@ import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,7 +31,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +61,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class ProductDetailActivity extends Activity {
 
     private static final int QUERY_YES = 0x100;
     private static final int QUERY_NO = 0x101;
@@ -66,11 +72,13 @@ public class ProductDetailActivity extends AppCompatActivity {
     private Bitmap bitmap;
     private int productId;
 
-    private int pastPrice = 1000;
+    private double pastPrice = 1000;
+
+    private LinearLayout body;
 
     private WebView mTVDetails;
     private TextView mTVList;
-    private TextView mTVNumber;
+    private EditText mTVNumber;
     private TextView mTVPopDetails;
     private TextView mTVPrice;
     private TextView mTVTopPrice;
@@ -152,6 +160,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         initViews();
 
+        pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
+
         addListeners();
         cartBtn = (Button) findViewById(R.id.btn_activity_product_details_buy_now);
         cartBtn.setOnClickListener(new View.OnClickListener() {
@@ -215,8 +225,11 @@ public class ProductDetailActivity extends AppCompatActivity {
         //number 表示添加商品数量
         //增加商品数量
         mBtnPlus.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                String num = mTVNumber.getText().toString();
+                number = Integer.valueOf(num);
                 if (number < entity.getStock()) {
                     ++number;
                 }
@@ -228,6 +241,8 @@ public class ProductDetailActivity extends AppCompatActivity {
         mBtnMinute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String num = mTVNumber.getText().toString();
+                number = Integer.valueOf(num);
                 if (number != 1) {
                     number--;
                     mTVNumber.setText(number + "");
@@ -244,7 +259,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         // 购买数量 number
         // 购买种类
-        int price = entity.getPrice();   // 购买价格
+        double price = entity.getPrice();   // 购买价格
         String id = entity.getId() + ""; // 购买id
 
 
@@ -273,7 +288,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                 null,
                 values);
 
-        Toast.makeText(getApplication(), "rawID = " + rawID, Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplication(), "rawID = " + rawID, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -313,7 +328,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                             .ProductEntry
                             .COLUMN_NAME_NUMBER)));
                     if (itemId.equals(entity.getId() + "")) {
-                        Toast.makeText(getApplication(), "true", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplication(), "true", Toast.LENGTH_LONG).show();
                         ISQUERYED = true;
                         Message message = Message.obtain();
                         message.what = QUERY_YES;
@@ -356,8 +371,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                 values,
                 selection,
                 selectionArgs);
-        Toast.makeText(getApplication(), "count = " + count + "\r\n number=" + sqlNumber, Toast
-                .LENGTH_LONG).show();
+        //Toast.makeText(getApplication(), "count = " + count + "\r\n number=" + sqlNumber, Toast
+          //      .LENGTH_LONG).show();
     }
 
 
@@ -374,16 +389,57 @@ public class ProductDetailActivity extends AppCompatActivity {
         mBtnMinute = (Button) mPop.findViewById(R.id.btn_pop_minute);
         mBtnPlus = (Button) mPop.findViewById(R.id.btn_pop_plus);
         mImgClose = (ImageView) mPop.findViewById(R.id.img_pop_close);
-        mTVNumber = (TextView) mPop.findViewById(R.id.tv_pop_number);
+        mTVNumber = (EditText) mPop.findViewById(R.id.tv_pop_number);
         mTVPopDetails = (TextView) mPop.findViewById(R.id.tv_pop_details);
         mTVPrice = (TextView) mPop.findViewById(R.id.tv_pop_price);
         mTVPopCategory = (TextView) mPop.findViewById(R.id.tv_pop_category);
-        //double PopHeight = getWindow().getAttributes().height;
-        //PopHeight = PopHeight * 0.6;
-        mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, 1500);
+
+        mTVNumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String num = mTVNumber.getText().toString();
+                if (!num.equals("")){
+                    int numberTmp = Integer.valueOf(num);
+                /*if (numberTmp < 1){
+                    Toast.makeText(ProductDetailActivity.this,"数量不能小于1",Toast.LENGTH_SHORT).show();
+                    number = 1;
+                    mTVNumber.setText("1");
+                }
+                else */
+                    if (numberTmp > entity.getStock()){
+                        Toast.makeText(ProductDetailActivity.this,"库存只有"+entity.getStock(),Toast.LENGTH_SHORT).show();
+                        number = entity.getStock();
+                        mTVNumber.setText(number+"");
+                    }else{
+                        number = numberTmp;
+                    }
+                }else
+                    number = 1;
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+
+        mPop.setFocusable(true);
+        int PopHeight = getWindow().getAttributes().height;
+
+
+        //PopHeight =  PopHeight * 2 / 3;
+        mPopupWindow = new PopupWindow(mPop, getWindow().getAttributes().width, PopHeight*2);
+        mPopupWindow.setFocusable(true);
         StockNum = (TextView) findViewById(R.id.tv_activity_product_details_stock);
 
-        //pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
+        pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
     }
 
 
@@ -413,6 +469,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgDetails);
         ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgIcon);
+
+        pastPriceText.setText("爱心币："+pastPrice);
 
 
         mProductCaption.setText(entity.getProduct_name());
@@ -480,9 +538,11 @@ public class ProductDetailActivity extends AppCompatActivity {
 
                         String jsonall = result.toString();
                         Log.i("JSONALL", jsonall);
+                        System.out.println(jsonall);
                         String [] imageurl = result.getJSONObject(0).getString("image").split(",");//==========================
                         String productname = result.getJSONObject(0).getString("name");
-                        int productprice = result.getJSONObject(0).getInt("price");
+                        double productprice = result.getJSONObject(0).getDouble("price");
+                        pastPrice = result.getJSONObject(0).getDouble("original_price");
                         int productid = result.getJSONObject(0).getInt("id");
                         String descurl = result.getJSONObject(0).getString("desp_url");
                         String descdetail = result.getJSONObject(0).getString("desc");
