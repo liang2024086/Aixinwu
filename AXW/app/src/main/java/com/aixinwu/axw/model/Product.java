@@ -16,6 +16,8 @@ public class Product implements Serializable {
     private String descriptionUrl;
     private int id;
     private int stock;
+    private int limit;
+    private int already_buy;
 
 
     public Product (int Id, String name, double price, int stock, String image_url, String description, String shortdescription, String descriptionUrl) {
@@ -27,6 +29,19 @@ public class Product implements Serializable {
         this.description = description;
         this.shortdescription = shortdescription;
         this.descriptionUrl = descriptionUrl;
+    }
+
+    public Product (int Id, String name, double price, int stock, String image_url, String description, String shortdescription, String descriptionUrl, int limit, int already_buy) {
+        this.product_name = name;
+        this.price = price;
+        this.stock = stock;
+        this.image_url = image_url;
+        this.id = Id;
+        this.description = description;
+        this.shortdescription = shortdescription;
+        this.descriptionUrl = descriptionUrl;
+        this.limit = limit;
+        this.already_buy = already_buy;
     }
 
     public String getProduct_name () {
@@ -54,4 +69,12 @@ public class Product implements Serializable {
     public String getDescriptionUrl(){ return GlobalParameterApplication.getSurl() + "/" +  this.descriptionUrl;}
 
     public int getStock() {return stock;}
+
+    public int getLimit(){
+        return this.limit;
+    }
+
+    public int getAlready_buy(){
+        return this.already_buy;
+    }
 }

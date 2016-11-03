@@ -28,6 +28,7 @@ public class GlobalParameterApplication extends Application{
     private static String user_name;
     private static String token;
     private static boolean pause=true;
+    private static String jaccount;
     private static String surl = "http://202.120.47.213:12300/api";
     public static String imgSurl = "http://202.120.47.213:12300/img/";
     public  static Chat chat = null;
@@ -217,6 +218,14 @@ public class GlobalParameterApplication extends Application{
 
     public static int getNewOldInt(String name){
         return newOldStringToInt.get(name).intValue();
+    }
+
+    public static void setJaccount(String jc){
+        jaccount = jc;
+    }
+
+    public static String getJaccount(){
+        return jaccount;
     }
 
 }

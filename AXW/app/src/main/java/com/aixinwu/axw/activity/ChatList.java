@@ -162,6 +162,7 @@ public class ChatList extends Activity {
 
                         String myUserName = outjson.getString("username");
                         String myNickName = outjson.getString("nickname");
+                        //String imgSrul = outjson.getString("img");
                         if (myNickName.length() == 0)
                             usrName = myUserName;
                         else usrName = myNickName;

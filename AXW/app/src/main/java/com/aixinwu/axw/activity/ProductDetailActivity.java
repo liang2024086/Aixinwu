@@ -57,6 +57,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,8 @@ public class ProductDetailActivity extends Activity {
     private ImageView mImgIcon;
 
     private Button mBtnOK;
+
+    private int numOfCouldBuy = 0;
 
     private Button cartBtn;
     /**
@@ -151,7 +154,11 @@ public class ProductDetailActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                entity = getProduct();
+
+                if (GlobalParameterApplication.getLogin_status() == 1)
+                    entity = getMyProduct();
+                else
+                    entity = getProduct();
                 Message msg = new Message();
                 msg.what=5566;
                 handler.sendMessage(msg);
@@ -198,14 +205,20 @@ public class ProductDetailActivity extends Activity {
                 //TODO 发送请求到后台
                 // 保存产品信息到数据库
 
-                queryDatabase();
+                String num = mTVNumber.getText().toString();
+                int num2 = Integer.valueOf(num);
+                if (num2 == 0){
+                    Toast.makeText(getApplication(), "商品数量不能为0~", Toast.LENGTH_LONG).show();
+                }else{
+                    queryDatabase();
 
-                Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
 
-                if (isPopOpened == true) {
-                    setWindowBehind(false);
-                    mPopupWindow.dismiss();
-                    isPopOpened = false;
+                    if (isPopOpened == true) {
+                        setWindowBehind(false);
+                        mPopupWindow.dismiss();
+                        isPopOpened = false;
+                    }
                 }
             }
         });
@@ -280,7 +293,8 @@ public class ProductDetailActivity extends Activity {
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, number + "");
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_CATEGORY, category);
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_IMG, imgurl);
-        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK, stock);
+        //values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK, stock);
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK, numOfCouldBuy); //limit of buying
         long rawID = -1;
 
         rawID = db.insert(
@@ -361,6 +375,7 @@ public class ProductDetailActivity extends Activity {
         // New value for one column
         ContentValues values = new ContentValues();
         values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, sqlNumber + "");
+        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK, numOfCouldBuy);
 
         // Which row to update, based on the ID
         String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
@@ -394,6 +409,8 @@ public class ProductDetailActivity extends Activity {
         mTVPrice = (TextView) mPop.findViewById(R.id.tv_pop_price);
         mTVPopCategory = (TextView) mPop.findViewById(R.id.tv_pop_category);
 
+        mTVNumber.setText("0");
+
         mTVNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -416,7 +433,13 @@ public class ProductDetailActivity extends Activity {
                         number = entity.getStock();
                         mTVNumber.setText(number+"");
                     }else{
-                        number = numberTmp;
+                        if (numberTmp > numOfCouldBuy){
+                            Toast.makeText(ProductDetailActivity.this,"限购只剩"+numOfCouldBuy+"件可以购买",Toast.LENGTH_SHORT).show();
+                            number = numOfCouldBuy;
+                            mTVNumber.setText(number+"");
+                        }
+                        else
+                            number = numberTmp;
                     }
                 }else
                     number = 1;
@@ -504,6 +527,104 @@ public class ProductDetailActivity extends Activity {
 
         mTVPopCategory.setText(category);
         //mTVList.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+
+    }
+
+    protected Product getMyProduct(){
+
+        Product dbData = null;
+        JSONObject data = new JSONObject();
+        data.put("token", GlobalParameterApplication.getToken());
+        String jsonstr = data.toJSONString();
+        URL url  = null;
+        try {
+            url = new URL(GlobalParameterApplication.getSurl() + "/item_aixinwu_item_get/"+productId);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        HttpURLConnection conn = null;
+        try {
+            conn = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            conn.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        }
+        conn.setDoOutput(true);
+        conn.setConnectTimeout(1000);
+        conn.setReadTimeout(1000);
+        conn.setRequestProperty("Content-Type", "application/json");
+        //conn.setRequestProperty("Content-Length", String.valueOf(jsonstr.length()));
+        try {
+            conn.getOutputStream().write(jsonstr.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String ostr = null;
+        try {
+            ostr = IOUtils.toString(conn.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(ostr);
+
+        org.json.JSONObject outjson = null;
+
+        try{
+            org.json.JSONArray result = null;
+            outjson = new org.json.JSONObject(ostr);
+            result = outjson.getJSONArray("items");
+            String [] imageurl = result.getJSONObject(0).getString("image").split(",");//==========================
+            String productname = result.getJSONObject(0).getString("name");
+            double productprice = result.getJSONObject(0).getDouble("price");
+            pastPrice = result.getJSONObject(0).getDouble("original_price");
+            int productid = result.getJSONObject(0).getInt("id");
+            String descurl = result.getJSONObject(0).getString("desp_url");
+            String descdetail = result.getJSONObject(0).getString("desc");
+            String shortdesc = result.getJSONObject(0).getString("short_desc");
+            String despUrl   = result.getJSONObject(0).getString("desp_url");
+            int stock = result.getJSONObject(0).getInt("stock");
+            int limit = result.getJSONObject(0).getInt("limit");
+            int already_buy = result.getJSONObject(0).getInt("already_buy");
+
+            if ( imageurl[0].equals("") ) {
+                //If no images in database, show a default image.
+                //BitmapFactory.Options cc = new BitmapFactory.Options();
+                //cc.inSampleSize = 20;
+                dbData = new Product(productid,
+                        productname,
+                        productprice,
+                        stock,
+                        "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
+                        descdetail,
+                        shortdesc,
+                        despUrl,
+                        limit,
+                        already_buy
+                );
+                Log.i("Status ", "001");
+            } else
+                dbData = new Product(productid,
+                        productname,
+                        productprice,
+                        stock,
+                        "http://202.120.47.213:12345/"+imageurl[0],
+                        descdetail,
+                        shortdesc,
+                        despUrl,
+                        limit,
+                        already_buy
+                );
+            numOfCouldBuy = (limit - already_buy) > 0 ? (limit-already_buy) : 0;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return dbData;
 
     }
 

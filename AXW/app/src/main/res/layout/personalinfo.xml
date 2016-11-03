@@ -190,7 +190,7 @@
                         android:layout_marginLeft="25dp"
                         android:textColor="#ea5404"
                         android:textSize="16sp"
-                        android:text="交易中心" />
+                        android:text="个人中心" />
 
                         <View
                             android:layout_width="match_parent"

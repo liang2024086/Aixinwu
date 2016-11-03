@@ -44,6 +44,8 @@ public class SignupActivity extends Activity {
     TextView _loginLink;
     @Bind(R.id.catchVerificationCode)
     Button _catchVerificationCode;
+    @Bind(R.id.confirm_password)
+    TextView _confirm_password;
 
     private int signUpStatus = -1;
 
@@ -134,8 +136,17 @@ public class SignupActivity extends Activity {
                         }
                     }, 3000);
         }
-        else
-            Toast.makeText(getBaseContext(), "注册失败", Toast.LENGTH_LONG).show();
+        else{
+            progressDialog.dismiss();
+            if (signUpStatus == 1){
+                Toast.makeText(getBaseContext(), "此手机号已注册", Toast.LENGTH_LONG).show();
+            }
+            else
+                Toast.makeText(getBaseContext(), "注册失败", Toast.LENGTH_LONG).show();
+
+
+        }
+
 
     }
 
@@ -159,6 +170,7 @@ public class SignupActivity extends Activity {
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
+        String confirmPWD = _confirm_password.getText().toString();
 
         if (name.isEmpty() || name.length() < 3) {
             _nameText.setError("请输入手机号");
@@ -174,11 +186,18 @@ public class SignupActivity extends Activity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("4-10个字符");
+        if (password.isEmpty() ) {
+            _passwordText.setError("输入密码");
             valid = false;
         } else {
             _passwordText.setError(null);
+        }
+
+        if (!confirmPWD.equals(password)){
+            _confirm_password.setError("两次输入密码不相同");
+            valid = false;
+        }else{
+            _confirm_password.setError(null);
         }
 
         return valid;

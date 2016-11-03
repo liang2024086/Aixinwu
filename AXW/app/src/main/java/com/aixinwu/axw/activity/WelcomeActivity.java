@@ -177,6 +177,7 @@ public class WelcomeActivity extends Activity {
                     Log.i("LIANGYUDING",jc);
                     if (jc.length() > 0)
                         GlobalParameterApplication.whtherBindJC = 1;
+                    GlobalParameterApplication.setJaccount(jc);
                     GlobalParameterApplication.setUserID(result);
                     GlobalParameterApplication.start(token);
                     conn.disconnect();

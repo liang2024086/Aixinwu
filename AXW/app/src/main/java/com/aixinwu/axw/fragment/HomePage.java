@@ -247,6 +247,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     private void getDbData(){
         MyToken= GlobalParameterApplication.getToken();
         JSONObject data = new JSONObject();
+        dbData.clear();
 
         {
 

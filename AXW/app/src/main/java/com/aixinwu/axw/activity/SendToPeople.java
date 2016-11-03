@@ -109,7 +109,7 @@ public class SendToPeople extends Activity {
             @Override
             public void onClick(View view) {
                 GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
-                if(gpa.getLogin_status()==0)Toast.makeText(SendToPeople.this,"你跪了",Toast.LENGTH_LONG).show();
+                if(gpa.getLogin_status()==0)Toast.makeText(SendToPeople.this,"未登录",Toast.LENGTH_LONG).show();
                 else{
                     _caption = Caption.getText().toString();
                     Descrip = doc.getText().toString();

@@ -1,6 +1,7 @@
 package com.aixinwu.axw.activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -63,20 +64,28 @@ public class SendToAXw extends Activity {
                 if(gpa.getLogin_status()==0) Toast.makeText(SendToAXw.this,"你跪了",Toast.LENGTH_LONG).show();
                 else{
 
-                    Toast.makeText(SendToAXw.this,"nih",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(SendToAXw.this,"nih",Toast.LENGTH_SHORT).show();
                     ItemName = itemname.getText().toString();
                     if (!itemnumber.getText().toString().isEmpty())
                         itemnum = Integer.parseInt(itemnumber.getText().toString());
-                    JaccountID = "liangyuding";//jaccount.getText().toString();
-
+                    //JaccountID = "liangyuding";//jaccount.getText().toString();
+                    JaccountID = GlobalParameterApplication.getJaccount();
 
 
                     ItemName = ItemName+"*"+itemnum;
                     // String itemID = AddItem(TypeName,money,Descrip,YesorNo);
                     //if (!itemname.getText().toString().isEmpty() && !itemnumber.getText().toString().isEmpty() && !jaccount.getText().toString().isEmpty())
-                    if (!ItemName.isEmpty() && itemnum != 0 && !JaccountID.isEmpty())
+                    if (!ItemName.isEmpty() && itemnum != 0 && !JaccountID.isEmpty()){
+                        final ProgressDialog progressDialog = new ProgressDialog(SendToAXw.this,
+                                R.style.AppTheme_Dark_Dialog);
+                                progressDialog.setIndeterminate(true);
+                                progressDialog.setMessage("发布中...");
+                                progressDialog.show();
 
                         new Thread(runnable1).start();
+                    }
+
+
                 }
 
 //                Toast.makeText(getActivity(), "Upload Successful", Toast.LENGTH_SHORT).show();
@@ -94,8 +103,8 @@ public class SendToAXw extends Activity {
             MyToken=GlobalParameterApplication.getToken();
             JSONObject data = new JSONObject();
             JSONObject iteminfo = new JSONObject();
-            //iteminfo.put("jacount_id",JaccountID);
-            iteminfo.put("jacount_id","liangyuding");
+            iteminfo.put("jacount_id",JaccountID);
+            //iteminfo.put("jacount_id","liangyuding");
             iteminfo.put("desc",ItemName);
             data.put("itemInfo",iteminfo);
             data.put("token",MyToken);

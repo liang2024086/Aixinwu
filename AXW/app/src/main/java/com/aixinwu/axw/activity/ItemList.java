@@ -246,7 +246,7 @@ public class ItemList extends Activity {
                                     cc.inSampleSize = 20;
                                     upData.add(new Bean(result.getJSONObject(i).getInt("ID"), "http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),"上架中",1));
                                 } else
-                                    upData.add(new Bean(result.getJSONObject(i).getInt("ID"), "http://202.120.47.213:12345/img/" + rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),"上架中",1));
+                                    upData.add(new Bean(result.getJSONObject(i).getInt("ID"),GlobalParameterApplication.imgSurl + rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),"上架中",1));
                             } else{
                                 if (rr[0] == "") {
                                     BitmapFactory.Options cc = new BitmapFactory.Options();
@@ -255,7 +255,7 @@ public class ItemList extends Activity {
                                     upData.add(new Bean(result.getJSONObject(i).getInt("ID"), "http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),"已下架",0));
                                 } else
                                     //downData.add(new Bean(result.getJSONObject(i).getInt("ID"), "http://202.120.47.213:12345/img/" + rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),"已下架",0));
-                                    upData.add(new Bean(result.getJSONObject(i).getInt("ID"), "http://202.120.47.213:12345/img/" + rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),"已下架",0));
+                                    upData.add(new Bean(result.getJSONObject(i).getInt("ID"), GlobalParameterApplication.imgSurl + rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description"),"已下架",0));
                             }
                         }
 

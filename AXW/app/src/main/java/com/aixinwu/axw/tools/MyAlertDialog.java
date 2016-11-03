@@ -69,12 +69,19 @@ public class MyAlertDialog extends AlertDialog {
 
                 if(GlobalParameterApplication.getLogin_status()==1){
 
-                    Message msg=new Message();
-                    msg.what=2323232;
-                    msg.obj=tvComment.getText().toString();
-                    handler.sendMessage(msg);
+                    String comment = tvComment.getText().toString();
 
-                    dismiss();
+                    if (comment.equals("")){
+                        Toast.makeText(context,"请填写评论",Toast.LENGTH_SHORT).show();
+
+                    }else{
+                        Message msg=new Message();
+                        msg.what=2323232;
+                        msg.obj=tvComment.getText().toString();
+                        handler.sendMessage(msg);
+
+                        dismiss();
+                    }
                 }
 
             }
