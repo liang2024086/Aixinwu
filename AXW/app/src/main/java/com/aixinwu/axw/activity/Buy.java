@@ -218,7 +218,7 @@ public class Buy extends Activity{
                 for (int i = 0; i < picts.length; i++){
 
 
-                    pic_list.add("http://202.120.47.213:12345/img/"+picts[i]);
+                    pic_list.add(GlobalParameterApplication.imgSurl+picts[i]);
                 }
                 comment_list.clear();
                 for (int i = 0; i < Comments.size();i++){

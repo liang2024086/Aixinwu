@@ -305,7 +305,7 @@ public Thread mThread = new Thread(new Runnable() {
                 coinsText.setText("爱心币： " + coins);
                 usernameText.setText(username);
                 if (headProtrait.length() != 0)
-                    ImageLoader.getInstance().displayImage("http://202.120.47.213:12345/img/"+headProtrait,headImageView);
+                    ImageLoader.getInstance().displayImage(GlobalParameterApplication.imgSurl+headProtrait,headImageView);
             }
         }
     };

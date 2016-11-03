@@ -173,6 +173,10 @@ public class WelcomeActivity extends Activity {
                     org.json.JSONObject outjson = null;
                     outjson = new org.json.JSONObject(ostr);
                     int result = outjson.getJSONObject("userinfo").getInt("ID");
+                    String jc = outjson.getJSONObject("userinfo").getString("jaccount");
+                    Log.i("LIANGYUDING",jc);
+                    if (jc.length() > 0)
+                        GlobalParameterApplication.whtherBindJC = 1;
                     GlobalParameterApplication.setUserID(result);
                     GlobalParameterApplication.start(token);
                     conn.disconnect();

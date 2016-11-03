@@ -223,7 +223,7 @@
         android:id="@+id/order"
         android:layout_width="320dp"
         android:layout_height="30dp"
-        android:text="提交订单"
+        android:text="确认付款"
         android:gravity="center"
         android:textSize="16sp"
         android:textColor="#ea5504"

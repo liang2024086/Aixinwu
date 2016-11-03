@@ -66,9 +66,10 @@ public class SettingActivity extends Activity {
             switch (msg.what){
                 case 843023:
                     Toast.makeText(SettingActivity.this,"修改成功",Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplication(), MainActivity.class);
+                    /*Intent intent = new Intent(getApplication(), MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    startActivity(intent);*/
+                    finish();
                     break;
                 case 932466:
                     Toast.makeText(SettingActivity.this,"修改失败",Toast.LENGTH_SHORT).show();

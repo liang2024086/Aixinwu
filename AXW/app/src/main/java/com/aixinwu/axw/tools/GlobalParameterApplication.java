@@ -28,7 +28,8 @@ public class GlobalParameterApplication extends Application{
     private static String user_name;
     private static String token;
     private static boolean pause=true;
-    private static String surl = "http://202.120.47.213:12345/api";
+    private static String surl = "http://202.120.47.213:12300/api";
+    public static String imgSurl = "http://202.120.47.213:12300/img/";
     public  static Chat chat = null;
     public static dbmessage DataBaseM;
     private static HashMap<String,Integer> newOldStringToInt = new HashMap<String, Integer>();
@@ -36,6 +37,7 @@ public class GlobalParameterApplication extends Application{
     public static int notifyid = 0;
     public static Queue<NotifyMessage> sentMessages = new LinkedList<NotifyMessage>();
     public static int nowchat = -1;
+    public static int whtherBindJC = 0;
 
     public GlobalParameterApplication(){
         DataBaseM = new dbmessage(this);

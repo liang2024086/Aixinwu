@@ -11,38 +11,51 @@
         android:background="@color/white"
         />
 
+
+
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:scrollbars="none">
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
         android:orientation="horizontal">
 
+<!--
+            <ListView
+                android:id="@+id/imgList"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"/>
+-->
+
+
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             android:id="@+id/img1"
-            android:scaleType="fitXY"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginLeft="2dp"
+            android:layout_marginStart="2dp"/>
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             android:id="@+id/img2"
-            android:scaleType="fitXY"
             android:layout_marginLeft="2dp"
             android:layout_marginStart="2dp"/>
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center_vertical"
             android:id="@+id/img3"
-            android:scaleType="fitXY"
             android:layout_marginLeft="2dp"
             android:layout_marginStart="2dp"/>
+
+
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -51,6 +64,8 @@
             android:layout_weight="1"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
 
@@ -129,5 +144,5 @@
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
-
+    </HorizontalScrollView>
 </LinearLayout>

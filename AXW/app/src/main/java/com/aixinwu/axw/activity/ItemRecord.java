@@ -76,7 +76,7 @@ public class ItemRecord extends Activity {
 
         data.put("token",MyToken);
         data.put("offset",0);
-        data.put("length",5);
+        data.put("length",0);
 
         {
 

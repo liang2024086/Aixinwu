@@ -3,6 +3,7 @@ package com.aixinwu.axw.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -137,6 +138,12 @@ public class SendToPeople extends Activity {
 
                     // String itemID = AddItem(TypeName,money,Descrip,YesorNo);
 
+                    final ProgressDialog progressDialog = new ProgressDialog(SendToPeople.this,
+                            R.style.AppTheme_Dark_Dialog);
+                    progressDialog.setIndeterminate(true);
+                    progressDialog.setMessage("发布中...");
+                    progressDialog.show();
+
                     new Thread(runnable).start();
                 }
 
@@ -204,12 +211,14 @@ public class SendToPeople extends Activity {
             imageSet = uploadPic(imageItem);
             MyToken=GlobalParameterApplication.getToken();
 
+
             String ss= AddItem(HowNew,money,Descrip,imageSet,_caption);
+
             Message msg = new Message();
             msg.what = 133;
             nHandler.sendMessage(msg);
 
-            Log.i("UPLOAD",ss);
+           // Log.i("UPLOAD",ss);
         }
     };
     public Handler nHandler = new Handler(){
@@ -217,6 +226,7 @@ public class SendToPeople extends Activity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 133:
+
                     SendToPeople.this.setResult(RESULT_OK);
                     finish();
                     break;

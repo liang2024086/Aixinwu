@@ -172,12 +172,9 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     }
 
     private void initializeGuide(View view){
-        homepageGuides.add(new HomepageGuide(dbData.get(0).getItemId(),dbData.get(0).getPicId(),dbData.get(0).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(1).getItemId(),dbData.get(1).getPicId(),dbData.get(1).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(2).getItemId(),dbData.get(2).getPicId(),dbData.get(2).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(3).getItemId(),dbData.get(3).getPicId(),dbData.get(3).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(4).getItemId(),dbData.get(4).getPicId(),dbData.get(4).getType()));
-        homepageGuides.add(new HomepageGuide(dbData.get(5).getItemId(),dbData.get(5).getPicId(),dbData.get(5).getType()));
+        for (int i = 0; i < dbData.size(); ++i){
+            homepageGuides.add(new HomepageGuide(dbData.get(i).getItemId(),dbData.get(i).getPicId(),dbData.get(i).getType()));
+        }
 
 
         HomepageGuiedAdapter homepageGuiedAdapter = new HomepageGuiedAdapter(
@@ -279,7 +276,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
                                     cc.inSampleSize = 20;
                                     dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
                                 } else
-                                    dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/"+rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
+                                    dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),GlobalParameterApplication.imgSurl+rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
                             }
 
                     } catch (JSONException e) {

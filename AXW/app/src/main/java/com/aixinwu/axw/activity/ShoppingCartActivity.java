@@ -25,6 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.database.ProductReadDbHelper;
@@ -245,17 +246,27 @@ public class ShoppingCartActivity extends Activity {
             public void onClick(View view) {
                 //create checked list
 
-                if (GlobalParameterApplication.getLogin_status() == 1) {
-                    Intent intent = new Intent(getApplicationContext(), ConfirmOrder.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("size", Integer.valueOf(orderedDatas.size()));
-                    bundle.putSerializable("mTotalMoney", mTotalMoney);
-                    for (int i1 = 0; i1 < orderedDatas.size(); ++i1) {
-                        bundle.putSerializable("OrderedData" + i1, orderedDatas.get(i1));
-                        bundle.putSerializable("CheckedProductId" + i1, CheckedProductId.get(i1));
+                if (GlobalParameterApplication.getLogin_status() == 1 ) {
+                    if ( GlobalParameterApplication.whtherBindJC == 1){
+                        if (orderedDatas.size() > 0){
+                            Intent intent = new Intent(getApplicationContext(), ConfirmOrder.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("size", Integer.valueOf(orderedDatas.size()));
+                            bundle.putSerializable("mTotalMoney", mTotalMoney);
+                            for (int i1 = 0; i1 < orderedDatas.size(); ++i1) {
+                                bundle.putSerializable("OrderedData" + i1, orderedDatas.get(i1));
+                                bundle.putSerializable("CheckedProductId" + i1, CheckedProductId.get(i1));
+                            }
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }else{
+                            Toast.makeText(ShoppingCartActivity.this,"请选择商品",Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    else{
+                        Toast.makeText(ShoppingCartActivity.this,"请先绑定Jaccount",Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
                     Intent intent = new Intent(ShoppingCartActivity.this, LoginActivity.class);
