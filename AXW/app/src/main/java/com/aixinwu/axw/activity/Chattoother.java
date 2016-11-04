@@ -235,7 +235,7 @@ public class Chattoother extends Activity{
                 who.add(ME);
                 addTextToList(myWord, ME);
                 adapter.notifyDataSetChanged();
-                chatListView.setSelection(chatList.size()-1);
+                chatListView.setSelection(chatList.size() - 1);
                 /*new Thread(new Runnable(){
                     @Override
                     public void run(){
@@ -305,6 +305,7 @@ public class Chattoother extends Activity{
         });
 
         chatListView.setAdapter(adapter);
+        chatListView.setSelection(chatList.size()-1);
 
     }
     @Override
@@ -369,7 +370,7 @@ public class Chattoother extends Activity{
                     addTextToList(cont.get(i),who.get(i));
                 }
                 adapter.notifyDataSetChanged();
-                chatListView.setSelection(chatList.size()-1);
+                //chatListView.setSelection(chatList.size()-1);
                 break;
             case 233333:
                 if(uploadSuccessful) {

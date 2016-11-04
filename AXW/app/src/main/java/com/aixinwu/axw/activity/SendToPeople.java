@@ -161,11 +161,11 @@ public class SendToPeople extends Activity {
         imageItem.add(map);
         simpleAdapeter = new SimpleAdapter(SendToPeople.this, imageItem, R.layout.griditem_addpic,
                 new String[] {"itemImage"}, new int[]{R.id.imageView1});
-        simpleAdapeter.setViewBinder(new SimpleAdapter.ViewBinder(){
+        simpleAdapeter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object o, String s) {
-                if (view instanceof ImageView && o instanceof Bitmap){
-                    ImageView i = (ImageView)view;
+                if (view instanceof ImageView && o instanceof Bitmap) {
+                    ImageView i = (ImageView) view;
                     i.setImageBitmap((Bitmap) o);
                     return true;
                 }
@@ -194,6 +194,7 @@ public class SendToPeople extends Activity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 DeleteDialog(i);
+                ((SimpleAdapter)mGridView.getAdapter()).notifyDataSetChanged();
                 return false;
             }
         });
