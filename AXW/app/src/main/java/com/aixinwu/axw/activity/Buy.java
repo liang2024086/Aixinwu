@@ -104,10 +104,14 @@ public class Buy extends Activity{
     private String _caption;
     private LinearLayout pictures;
 
+    private String imgUrl;
+
     private RelativeLayout relativeLayoutCollect;
     private RelativeLayout relativeLayoutCollected;
 
     private Sqlite userDbHelper = new Sqlite(this);
+
+    private ImageView headProtrait;
 
     //private Handler nhandler;
     @Override
@@ -130,6 +134,8 @@ public class Buy extends Activity{
         commentword = (EditText)findViewById(R.id.commentword);
         commentsubmit = (TextView) findViewById(R.id.commentsubmit);
         comments = (ListView)findViewById(R.id.comments);
+
+        headProtrait = (ImageView)findViewById(R.id.img_activity_product);
     //    pics = (ListView)findViewById(R.id.picdetail);
         Caption = (TextView)findViewById(R.id.caption);
         Caption.setText(_caption);
@@ -205,7 +211,10 @@ public class Buy extends Activity{
                 MyToken=GlobalParameterApplication.getToken();
                 GetComments(itemID);
                 GetInfo(itemID);
-                ownerName = ChatList.getUserName(""+OwnerID);
+                HashMap<String,String> usrInfo = ChatList.getUserName("" + OwnerID);
+                ownerName = usrInfo.get("usrName");
+                imgUrl = usrInfo.get("img");
+
                 /*
                 textView1.setText("用户："+OwnerID);
                 textView2.setText("描述："+Desc);
@@ -370,6 +379,9 @@ public class Buy extends Activity{
                         textView1.setText("用户："+ownerName);
                         textView2.setText("描述："+Desc);
                         textView3.setText("价格："+Price);
+
+                        if (!imgUrl.equals(""))
+                            ImageLoader.getInstance().displayImage(GlobalParameterApplication.imgSurl+imgUrl, headProtrait);
 
                         com_adapter=new SimpleAdapter(mContext,comment_list,R.layout.commentitem,new String[]{"comment","time"},new int[]{R.id.comment_text,R.id.comment_time});
                         com_adapter.setViewBinder(new SimpleAdapter.ViewBinder(){

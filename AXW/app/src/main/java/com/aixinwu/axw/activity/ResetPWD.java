@@ -1,20 +1,20 @@
 package com.aixinwu.axw.activity;
 
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.os.Bundle;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import butterknife.ButterKnife;
-import butterknife.Bind;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
@@ -25,14 +25,16 @@ import org.json.simple.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.InterfaceAddress;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class SignupActivity extends Activity {
-    private static final String TAG = "SignupActivity";
+public class ResetPWD extends ActionBarActivity {
+
+    private static final String TAG = "ResetPWD";
 
     @Bind(R.id.input_name)
     EditText _nameText;
@@ -42,8 +44,6 @@ public class SignupActivity extends Activity {
     EditText _passwordText;
     @Bind(R.id.btn_signup)
     Button _signupButton;
-    @Bind(R.id.link_login)
-    TextView _loginLink;
     @Bind(R.id.catchVerificationCode)
     Button _catchVerificationCode;
     @Bind(R.id.confirm_password)
@@ -66,7 +66,7 @@ public class SignupActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_reset_pwd);
         ButterKnife.bind(this);
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
@@ -76,25 +76,18 @@ public class SignupActivity extends Activity {
             }
         });
 
-        _loginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
-                finish();
-            }
-        });
 
         _catchVerificationCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"开始获取验证码……",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "开始获取验证码……", Toast.LENGTH_SHORT).show();
                 new Thread(new Runnable()
                 {
                     @Override
                     public void run()
                     {
                         String phone_number = _nameText.getText().toString();
-                        if (phone_number.length() == 11) {
+                        if (phone_number.length() == 11){
                             int code = catchVerficationCode(phone_number);
                             switch (code){
                                 case 8:
@@ -106,7 +99,6 @@ public class SignupActivity extends Activity {
                         }
                     }
                 }).start();
-
             }
         });
     }
@@ -121,10 +113,10 @@ public class SignupActivity extends Activity {
 
         _signupButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
+        final ProgressDialog progressDialog = new ProgressDialog(ResetPWD.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("创建账户中...");
+        progressDialog.setMessage("重置密码中...");
         progressDialog.show();
 
 
@@ -152,8 +144,15 @@ public class SignupActivity extends Activity {
                             // On complete call either onSignupSuccess or onSignupFailed
                             // depending on success
 
-
-                            onSignupSuccess();
+                            new  AlertDialog.Builder(ResetPWD.this)
+                                    .setTitle("消息")
+                                    .setMessage("密码重置成功!" )
+                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int ii) {
+                                            finish();
+                                        }
+                                    }).show();
                             // onSignupFailed();
                             progressDialog.dismiss();
                         }
@@ -161,11 +160,7 @@ public class SignupActivity extends Activity {
         }
         else{
             progressDialog.dismiss();
-            if (signUpStatus == 1){
-                Toast.makeText(getBaseContext(), "此手机号已注册", Toast.LENGTH_LONG).show();
-            }
-            else
-                Toast.makeText(getBaseContext(), "注册失败", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "重置失败", Toast.LENGTH_LONG).show();
 
 
         }
@@ -176,13 +171,13 @@ public class SignupActivity extends Activity {
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
-        Toast.makeText(getBaseContext(), "注册成功", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "重置成功", Toast.LENGTH_LONG).show();
         setResult(RESULT_OK, null);
         finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "注册失败", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "重置失败", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
@@ -227,9 +222,7 @@ public class SignupActivity extends Activity {
     }
 
     protected int catchVerficationCode(String phoneNumber){
-
         int code = -1;
-
         JSONObject phone = new JSONObject();
         phone.put("phone",phoneNumber);
         String jsonstr = phone.toJSONString();
@@ -271,16 +264,16 @@ public class SignupActivity extends Activity {
             }catch (JSONException e){
                 e.printStackTrace();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println(ostr);
 
         return code;
+
     }
 
-    protected int AddUser (String username, String verifyCode, String password){
+    protected int resetPWD (String username, String verifyCode, String password){
         //GlobalParameterApplication gpa = (GlobalParameterApplication) getApplicationContext();
 
         //String result = null;
@@ -294,10 +287,10 @@ public class SignupActivity extends Activity {
         userinfo.put("verification_code",verifyCode);
 
         String jsonstr = userinfo.toJSONString();
-        System.out.println("注册信息:"+jsonstr);
+        System.out.println("密码重置:"+jsonstr);
         URL url  = null;
         try {
-            url = new URL(GlobalParameterApplication.getSurl()+"/usr_add");
+            url = new URL(GlobalParameterApplication.getSurl()+"/usr_change_psw");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -337,7 +330,7 @@ public class SignupActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.print("注册");
+        System.out.print("重置");
         System.out.println(ostr);
 
         return 1;
@@ -355,12 +348,7 @@ public class SignupActivity extends Activity {
 
         @Override
         public void run(){
-            AddUser(phoneNumber,verifyCode, password);
+            resetPWD(phoneNumber, verifyCode, password);
         }
     }
-
 }
-
-
-
-

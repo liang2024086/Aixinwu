@@ -27,6 +27,7 @@ import com.aixinwu.axw.activity.MyCollection;
 import com.aixinwu.axw.activity.ShoppingCartActivity;
 import com.aixinwu.axw.activity.SettingActivity;
 import com.aixinwu.axw.activity.ItemRecord;
+import com.aixinwu.axw.activity.MyDonation;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.database.Sqlite;
 
@@ -68,6 +69,8 @@ public class UserInfo extends Fragment {
 
     private ImageView headImageView;
 
+    private TextView jobtitle;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -75,6 +78,7 @@ public class UserInfo extends Fragment {
         configImageLoader();
         userDbHelper = new Sqlite(getActivity());
         headImageView = (ImageView) view.findViewById(R.id.headImage);
+        jobtitle = (TextView) view.findViewById(R.id.jobtitle);
         return view;
     }
 
@@ -101,7 +105,7 @@ public class UserInfo extends Fragment {
             ly_logininfo.setVisibility(View.GONE);
             ly_personalinfo.setVisibility(View.VISIBLE);
             btn_logoff.setVisibility(View.VISIBLE);
-
+            
 
             new Thread(new Runnable() {
                 @Override
@@ -243,6 +247,16 @@ public class UserInfo extends Fragment {
             }
         });
 
+        RelativeLayout ly_myDonation = (RelativeLayout)getActivity().findViewById(R.id.myDonation);
+        ly_myDonation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==1){
+                    Intent intent = new Intent(getActivity(), MyDonation.class);
+                    startActivity(intent);}
+            }
+        });
+
         ly_message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -303,6 +317,9 @@ public Thread mThread = new Thread(new Runnable() {
                 TextView coinsText = (TextView) getActivity().findViewById(R.id.coins);
                 TextView usernameText = (TextView) getActivity().findViewById(R.id.username);
                 coinsText.setText("爱心币： " + coins);
+                if (GlobalParameterApplication.whtherBindJC == 1)
+            		jobtitle.setText("校园用户");
+            	else jobtitle.setText("社区用户");
                 usernameText.setText(username);
                 if (headProtrait.length() != 0)
                     ImageLoader.getInstance().displayImage(GlobalParameterApplication.imgSurl+headProtrait,headImageView);

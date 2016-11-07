@@ -78,11 +78,16 @@ public class MainActivity extends FragmentActivity{
     private List<ADInfo> infos = new ArrayList<ADInfo>();
     //private CycleViewPager cycleViewPager;
     private String surl = GlobalParameterApplication.getSurl();
-    private String[] imageUrls = {"http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
-            "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
-            "http://pic18.nipic.com/20111215/577405_080531548148_2.jpg",
-            "http://pic15.nipic.com/20110722/2912365_092519919000_2.jpg",
-            "http://pic.58pic.com/58pic/12/64/27/55U58PICrdX.jpg"};
+    private String[] imageUrls = {
+        	/*"http://aixinwu.sjtu.edu.cn/images/slider/p0.jpg",
+        	"http://aixinwu.sjtu.edu.cn/images/slider/p1.jpg",
+    		"http://aixinwu.sjtu.edu.cn/images/slider/p2.jpg",*/
+    		"http://aixinwu.sjtu.edu.cn/images/welcome/main0.jpg",
+            "http://aixinwu.sjtu.edu.cn/images/welcome/main1.jpg",
+            "http://aixinwu.sjtu.edu.cn/images/welcome/main2.jpg"/*,
+			"http://aixinwu.sjtu.edu.cn/images/slider/p3.jpg",
+			"http://aixinwu.sjtu.edu.cn/images/slider/p4.jpg",
+			"http://aixinwu.sjtu.edu.cn/images/slider/p5.jpg"*/};
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

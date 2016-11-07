@@ -46,12 +46,21 @@ public class LoginActivity extends Activity {
     @Bind(R.id.input_password) EditText _passwordText;
     @Bind(R.id.btn_login) Button _loginButton;
     @Bind(R.id.link_signup) TextView _signupLink;
+    @Bind(R.id.forgetPWD) TextView forgetPWD;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        forgetPWD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ResetPWD.class);
+                startActivity(intent);
+            }
+        });
 
 
         _loginButton.setOnClickListener(new View.OnClickListener() {
@@ -215,9 +224,11 @@ public class LoginActivity extends Activity {
                     outjson = new org.json.JSONObject(ostr);
                     int result = outjson.getJSONObject("userinfo").getInt("ID");
                     String jc = outjson.getJSONObject("userinfo").getString("jaccount");
-                    Log.i("LIANGYUDING",jc);
+                    Log.i("LIANGYUDING", jc);
                     if (jc.length() > 0)
                         GlobalParameterApplication.whtherBindJC = 1;
+                    else
+                        GlobalParameterApplication.whtherBindJC = 0;
                     GlobalParameterApplication.setJaccount(jc);
                     GlobalParameterApplication.setUserID(result);
                     GlobalParameterApplication.start(token);

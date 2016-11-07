@@ -105,9 +105,14 @@ public class SubmitThings extends Fragment {
             public void onClick(View view) {
 
                 if (GlobalParameterApplication.getLogin_status()==1){
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), SendToAXw.class);
-                startActivityForResult(intent,12);
+                    if (GlobalParameterApplication.whtherBindJC == 1){
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity(), SendToAXw.class);
+                        startActivityForResult(intent,12);
+                    }else {
+                        Toast.makeText(getActivity(),"请先绑定jaccount",Toast.LENGTH_SHORT).show();
+                    }
+
                 }
                 else {
                     Intent intent = new Intent();
@@ -166,20 +171,12 @@ public class SubmitThings extends Fragment {
         if (requestCode == 11){
             if (resultCode == Activity.RESULT_OK) {
                 Toast.makeText(getActivity(), "人人商品发布成功", Toast.LENGTH_LONG);
-                new  AlertDialog.Builder(getActivity())
-                        .setTitle("消息" )
-                        .setMessage("人人商品发布成功" )
-                        .setPositiveButton("确定",null)
-                        .show();
+
             }
 
         }    else if (requestCode==12){
             if (resultCode == Activity.RESULT_OK){
-                new  AlertDialog.Builder(getActivity())
-                        .setTitle("消息" )
-                        .setMessage("爱心屋捐赠成功" )
-                        .setPositiveButton("确定",null)
-                        .show();
+                
             Toast.makeText(getActivity(),"爱心屋捐赠成功",Toast.LENGTH_LONG);}
         }
 

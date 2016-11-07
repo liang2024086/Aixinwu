@@ -78,7 +78,7 @@ public class SendToPeople extends Activity {
     private int HowNew = 1;
 
     private EditText price;
-    private int money;
+    private double money;
 
     private ArrayAdapter<String> type;
     private ArrayAdapter<String> neworold;
@@ -120,7 +120,7 @@ public class SendToPeople extends Activity {
 
                     TypeName = "电子产品";
                     HowNew = 1;
-                    if (!price.getText().toString().isEmpty()) money = Integer.parseInt(price.getText().toString());
+                    if (!price.getText().toString().isEmpty()) money = Double.parseDouble(price.getText().toString());
                     if (imageItem.size() == 1) {
                         Toast.makeText(SendToPeople.this, "No Picture", Toast.LENGTH_SHORT).show();
                         return;
@@ -193,8 +193,11 @@ public class SendToPeople extends Activity {
         mGridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DeleteDialog(i);
-                ((SimpleAdapter)mGridView.getAdapter()).notifyDataSetChanged();
+                if ( i > 0){
+                    DeleteDialog(i);
+                    ((SimpleAdapter)mGridView.getAdapter()).notifyDataSetChanged();
+                }
+
                 return false;
             }
         });
@@ -227,9 +230,15 @@ public class SendToPeople extends Activity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 133:
-
-                    SendToPeople.this.setResult(RESULT_OK);
-                    finish();
+                    new  AlertDialog.Builder(SendToPeople.this)
+                            .setTitle("消息" )
+                            .setMessage("交易商品发布成功！" )
+                            .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int ii) {
+                                    finish();
+                                }
+                            }).show();
                     break;
                 case 134:
                     break;
@@ -253,10 +262,11 @@ public class SendToPeople extends Activity {
             map.put("itemImage", addbmp);
             map.put("pathImage", pathImage);
             imageItem.add(map);
-            SimpleAdapter simpleAdapter = new SimpleAdapter(this,
+            /*SimpleAdapter simpleAdapter = new SimpleAdapter(this,
 
                     imageItem, R.layout.griditem_addpic,
                     new String[] { "itemImage"}, new int[] { R.id.imageView1});
+
             //接口载入图片
             simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
                 @Override
@@ -271,7 +281,9 @@ public class SendToPeople extends Activity {
                     return false;
                 }
             });
-            mGridView.setAdapter(simpleAdapter);
+            mGridView.setAdapter(simpleAdapter);*/
+
+            SimpleAdapter simpleAdapter = (SimpleAdapter) mGridView.getAdapter();
             simpleAdapter.notifyDataSetChanged();
             //刷新后释放防止手机休眠后自动添加
             pathImage = null;
@@ -326,9 +338,9 @@ public class SendToPeople extends Activity {
 
     protected void DeleteDialog(final int position){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Can I delete the image?");
-        builder.setTitle("Watch out");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage("确定删除这张图片?");
+        builder.setTitle("提示");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -337,7 +349,7 @@ public class SendToPeople extends Activity {
 
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -534,7 +546,7 @@ public class SendToPeople extends Activity {
            builder.create().show();
 
        }
-    protected String AddItem(int Type, int Money, String Doc, String picstr, String caption){
+    protected String AddItem(int Type, double Money, String Doc, String picstr, String caption){
         String result = null;
         JSONObject matadata = new JSONObject();
 

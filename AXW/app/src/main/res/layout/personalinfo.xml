@@ -81,6 +81,22 @@
                         android:textColor="#3e3a39"
                         android:textSize="16sp"
                         android:textStyle="bold" />
+<!--
+                    <TextView
+                        android:id="@+id/changePWD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_toRightOf="@id/signup"
+                        android:layout_toEndOf="@id/signup"
+                        android:gravity="center"
+                        android:text="密码重置"
+                        android:textColor="#3e3a39"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                        -->
                 </RelativeLayout>
                 <!-- 登录后 -->
                 <RelativeLayout
@@ -160,7 +176,7 @@
                                 android:id="@+id/jobtitle"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="校园用户"
+                                android:text="社区用户"
                                 android:textColor="#3e3a39" />
 
                             <TextView
@@ -291,6 +307,39 @@
                                 android:layout_marginEnd="20dp"
                                 android:src="@drawable/android_list_idex" />
                         </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#eeefef"
+                        />
+
+                    <RelativeLayout style="@style/PersonalBottomStyle"
+                        android:id="@+id/myDonation">
+
+                        <ImageView
+                            android:id="@+id/donation_icon"
+                            style="@style/PersonalIconStyle"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="20dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/donate" />
+
+                        <TextView
+                            style="@style/PersonalTextStyle"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/donation_icon"
+                            android:layout_toEndOf="@id/donation_icon"
+                            android:text="我捐赠的" />
+
+                        <ImageView
+                            style="@style/PersonalRightIconStyle"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/android_list_idex" />
+                    </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"

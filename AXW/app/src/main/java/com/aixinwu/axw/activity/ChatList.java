@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.aixinwu.axw.R;
 import com.aixinwu.axw.model.Product;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.tools.talkmessage;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
@@ -70,7 +72,7 @@ public class ChatList extends Activity {
         refreshbutton = (Button)findViewById(R.id.refresh);
         chatitem.clear();
         mThread.start();
-        sim_adapter = new SimpleAdapter(this,chatitem,R.layout.chatlist_item,new String[]{"Name","Item","Doc","Time"},new int[]{R.id.name,R.id.itemid,R.id.product,R.id.messageTime});
+        sim_adapter = new SimpleAdapter(this,chatitem,R.layout.chatlist_item,new String[]{"Name","Item","Doc","Time","Img"},new int[]{R.id.name,R.id.itemid,R.id.product,R.id.messageTime,R.id.img_activity_product});
         sim_adapter.setViewBinder(new SimpleAdapter.ViewBinder(){
             @Override
             public boolean setViewValue(View view, Object o, String s) {
@@ -78,6 +80,12 @@ public class ChatList extends Activity {
                     TextView i = (TextView) view;
                     i.setText((String) o);
                     return true;
+                }
+                if (view instanceof ImageView && o instanceof String){
+                    ImageView img = (ImageView) view;
+                    String imgUrl = (String) o;
+                    if (!o.equals(""))
+                        ImageLoader.getInstance().displayImage(GlobalParameterApplication.imgSurl+imgUrl,img);
                 }
                 return false;
             }
@@ -132,9 +140,10 @@ public class ChatList extends Activity {
         }
     };
 
-    static public String getUserName(String userId){
+    static public HashMap<String,String> getUserName(String userId){
         //Product dbData = null;
         String usrName = "";
+        HashMap<String, String> output = new HashMap<>();
 
         try {
             URL url = new URL(GlobalParameterApplication.getSurl() + "/usr_get_by_id/"+userId);
@@ -166,6 +175,8 @@ public class ChatList extends Activity {
                         if (myNickName.length() == 0)
                             usrName = myUserName;
                         else usrName = myNickName;
+                        output.put("usrName",usrName);
+                        output.put("img",outjson.getString("image"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -181,7 +192,7 @@ public class ChatList extends Activity {
             e.printStackTrace();
         }
 
-        return usrName;
+        return output;
     }
 
 
@@ -209,9 +220,10 @@ public class ChatList extends Activity {
 
                 tt.put("usrId",ss.toString());
                 tt.put("Name", getNameThread.getUsrName());
-                tt.put("Item",String.valueOf(GlobalParameterApplication.query(ss)));
+                tt.put("Item", String.valueOf(GlobalParameterApplication.query(ss)));
                 tt.put("Doc",re0.getDoc());
                 tt.put("Time",re0.getTime());
+                tt.put("Img",getNameThread.getImgUrl());
                 chatitem.add(tt);
             }
         }
@@ -221,6 +233,7 @@ public class ChatList extends Activity {
 
         private String usrId;
         private String usrName;
+        private String imgUrl;
 
         public GetNameThread(String usrId){
             this.usrId = usrId;
@@ -228,6 +241,10 @@ public class ChatList extends Activity {
 
         public String getUsrName(){
             return this.usrName;
+        }
+
+        public String getImgUrl() {
+            return this.imgUrl;
         }
         @Override
         public void interrupt() {
@@ -237,7 +254,9 @@ public class ChatList extends Activity {
         @Override
         public void run(){
             try{
-                usrName = getUserName(usrId);
+                HashMap<String,String> info = getUserName(usrId);
+                usrName = info.get("usrName");
+                imgUrl = info.get("img");
             }catch (Exception e){
                 e.printStackTrace();
             }

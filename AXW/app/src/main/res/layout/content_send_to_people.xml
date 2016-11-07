@@ -170,6 +170,16 @@
                             android:gravity="center" >
                         </GridView>
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp"
+                            android:text="提示：长按删除图片"
+                            android:textSize="14sp"/>
+
+
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"

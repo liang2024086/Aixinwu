@@ -206,19 +206,29 @@ public class ProductDetailActivity extends Activity {
                 // 保存产品信息到数据库
 
                 String num = mTVNumber.getText().toString();
-                int num2 = Integer.valueOf(num);
-                if (num2 == 0){
-                    Toast.makeText(getApplication(), "商品数量不能为0~", Toast.LENGTH_LONG).show();
-                }else{
-                    queryDatabase();
+                if (GlobalParameterApplication.getLogin_status() == 1){
 
-                    Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
+                    if (num.length() == 0){
+                        Toast.makeText(getApplication(),"请输入商品数量",Toast.LENGTH_SHORT).show();
+                    }else{
+                        int num2 = Integer.valueOf(num);
+                        if (num2 == 0){
+                            Toast.makeText(getApplication(), "商品数量不能为0~", Toast.LENGTH_LONG).show();
+                        }else{
+                            queryDatabase();
 
-                    if (isPopOpened == true) {
-                        setWindowBehind(false);
-                        mPopupWindow.dismiss();
-                        isPopOpened = false;
+                            Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
+
+                            if (isPopOpened == true) {
+                                setWindowBehind(false);
+                                mPopupWindow.dismiss();
+                                isPopOpened = false;
+                            }
+                        }
                     }
+                }
+                else{
+                    Toast.makeText(getApplication(), "请您先登录~", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -590,6 +600,8 @@ public class ProductDetailActivity extends Activity {
             int stock = result.getJSONObject(0).getInt("stock");
             int limit = result.getJSONObject(0).getInt("limit");
             int already_buy = result.getJSONObject(0).getInt("already_buy");
+            if (limit == 0)
+                limit = stock;
 
             if ( imageurl[0].equals("") ) {
                 //If no images in database, show a default image.
@@ -599,7 +611,7 @@ public class ProductDetailActivity extends Activity {
                         productname,
                         productprice,
                         stock,
-                        "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
+                        "http://202.120.47.213:12300/img/121000239217360a3d2.jpg",
                         descdetail,
                         shortdesc,
                         despUrl,
@@ -612,14 +624,17 @@ public class ProductDetailActivity extends Activity {
                         productname,
                         productprice,
                         stock,
-                        "http://202.120.47.213:12345/"+imageurl[0],
+                        "http://202.120.47.213:12300/"+imageurl[0],
                         descdetail,
                         shortdesc,
                         despUrl,
                         limit,
                         already_buy
                 );
-            numOfCouldBuy = (limit - already_buy) > 0 ? (limit-already_buy) : 0;
+            if (limit == stock)
+                numOfCouldBuy = stock;
+            else
+                numOfCouldBuy = (limit - already_buy) > 0 ? (limit-already_buy) : 0;
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -679,7 +694,7 @@ public class ProductDetailActivity extends Activity {
                                     productname,
                                     productprice,
                                     stock,
-                                    "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
+                                    "http://202.120.47.213:12300/img/121000239217360a3d2.jpg",
                                     descdetail,
                                     shortdesc,
                                     despUrl
@@ -690,7 +705,7 @@ public class ProductDetailActivity extends Activity {
                                     productname,
                                     productprice,
                                     stock,
-                                    "http://202.120.47.213:12345/"+imageurl[0],
+                                    "http://202.120.47.213:12300/"+imageurl[0],
                                     descdetail,
                                     shortdesc,
                                     despUrl

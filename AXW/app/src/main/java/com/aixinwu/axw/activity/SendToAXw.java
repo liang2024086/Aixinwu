@@ -1,7 +1,10 @@
 package com.aixinwu.axw.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,6 +49,8 @@ public class SendToAXw extends Activity {
     private int itemnum;
     private EditText jaccount;
     private String JaccountID;
+    private String barcode;
+    private int code = -1;
     private final String surl = GlobalParameterApplication.getSurl();
     public  java.lang.String MyToken;
     @Override
@@ -114,13 +119,23 @@ public class SendToAXw extends Activity {
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("POST");
                     conn.setDoOutput(true);
+                    conn.setConnectTimeout(1000);
+                    conn.setReadTimeout(1000);
                     conn.setRequestProperty("Content-Type", "application/json");
                     conn.getOutputStream().write(data.toJSONString().getBytes());
                     java.lang.String oss = IOUtils.toString(conn.getInputStream());
-                    System.out.println(oss);
-                    Message msg = new Message();
-                    msg.what = 134;
-                    nHandler.sendMessage(msg);
+                    try{
+                        org.json.JSONObject res = new org.json.JSONObject(oss);
+                        code = res.getJSONObject("status").getInt("code");
+                        barcode = res.getJSONObject("item_info").getString("barcode");
+                        Message msg = new Message();
+                        msg.what = 134;
+                        nHandler.sendMessage(msg);
+                        System.out.println(oss);
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -136,9 +151,18 @@ public class SendToAXw extends Activity {
             super.handleMessage(msg);
             switch (msg.what){
                 case 134:
-                    SendToAXw.this.setResult(RESULT_OK);
-
-                    finish();
+                    if (code == 0){
+                        new  AlertDialog.Builder(SendToAXw.this)
+                                .setTitle("消息" )
+                                .setMessage("爱心屋捐赠成功\n"+"捐赠条码为："+barcode+"\n感谢您的捐赠!" )
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int ii) {
+                                        finish();
+                                    }
+                                }).show();
+                    }
+                    //SendToAXw.this.setResult(RESULT_OK);
                     break;
             }
         }
