@@ -176,8 +176,8 @@ public class LoginActivity extends Activity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("4-10个字符");
+        if (password.isEmpty()) {
+            _passwordText.setError("请输入密码");
             valid = false;
         } else {
             _passwordText.setError(null);
