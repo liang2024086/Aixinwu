@@ -2,6 +2,8 @@ package com.aixinwu.axw.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -44,6 +46,17 @@ public class WelcomeActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
+
+
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            String version = info.versionName;
+            //Toast.makeText(WelcomeActivity.this,version,Toast.LENGTH_SHORT).show();
+            GlobalParameterApplication.wetherHaveNewVersion = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
        /* time = (TextView)findViewById(R.id.time);
         time.setOnClickListener(new View.OnClickListener() {

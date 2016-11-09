@@ -360,11 +360,21 @@
                             android:src="@drawable/personal5" />
 
                         <TextView
+                            android:id="@+id/mySet"
                             style="@style/PersonalTextStyle"
                             android:layout_marginStart="20dp"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@id/personal_icon_05"
                             android:text="设置" />
+
+                        <View
+                            android:id="@+id/redDot"
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_toEndOf="@id/mySet"
+                            android:layout_toRightOf="@id/mySet"
+                            android:layout_alignParentTop="true"
+                            android:background="@drawable/a_red_dot"/>
 
                         <ImageView
                             style="@style/PersonalRightIconStyle"

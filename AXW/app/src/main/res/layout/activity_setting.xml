@@ -131,12 +131,46 @@
         android:textColor="#ea5404"/>
 
     <TextView
+        android:id="@+id/BindHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/reSet"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
         android:text="提示：手机号与默认收货人手机号一致才可绑定"/>
+
+    <View
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/BindHint"
+        android:background="#eeeeef"/>
+
+    <RelativeLayout
+        android:id="@+id/checkUpdate"
+        android:layout_below="@id/line3"
+        style="@style/PersonalTopStyle"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <TextView
+            android:id="@+id/checkVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="检查更新"/>
+
+        <View
+            android:id="@+id/redDot"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_toRightOf="@id/checkVersion"
+            android:layout_toEndOf="@id/checkVersion"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/a_red_dot"/>
+
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/submit"

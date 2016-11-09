@@ -39,6 +39,7 @@ public class GlobalParameterApplication extends Application{
     public static Queue<NotifyMessage> sentMessages = new LinkedList<NotifyMessage>();
     public static int nowchat = -1;
     public static int whtherBindJC = 0;
+    public static boolean wetherHaveNewVersion = false;
 
     public GlobalParameterApplication(){
         DataBaseM = new dbmessage(this);

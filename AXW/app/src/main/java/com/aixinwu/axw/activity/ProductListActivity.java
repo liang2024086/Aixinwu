@@ -244,7 +244,7 @@ public class ProductListActivity extends Activity {
                                     result.getJSONObject(i).getString("name"),
                                     result.getJSONObject(i).getDouble("price"),
                                     stock,
-                                    "http://202.120.47.213:12345/img/121000239217360a3d2.jpg",
+                                    "http://202.120.47.213:12300/img/121000239217360a3d2.jpg",
                                     descdetail,
                                     shortdesc,
                                     despUrl
@@ -255,7 +255,7 @@ public class ProductListActivity extends Activity {
                                     result.getJSONObject(i).getString("name"),
                                     result.getJSONObject(i).getDouble("price"),
                                     stock,
-                                    "http://202.120.47.213:12345/" + imageurl[0],
+                                    "http://202.120.47.213:12300/" + imageurl[0],
                                     descdetail,
                                     shortdesc,
                                     despUrl

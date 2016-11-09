@@ -87,6 +87,7 @@ public class ProductDetailActivity extends Activity {
     private TextView mProductCaption;
     private TextView StockNum;
     private TextView pastPriceText;
+    private TextView limitTextView;
     private Button mBtnAddToCart;
     private Button mBtnMinute;
     private Button mBtnPlus;
@@ -102,6 +103,7 @@ public class ProductDetailActivity extends Activity {
     private Button mBtnOK;
 
     private int numOfCouldBuy = 0;
+    private int originalLimit = 0;
 
     private Button cartBtn;
     /**
@@ -168,6 +170,8 @@ public class ProductDetailActivity extends Activity {
         initViews();
 
         pastPriceText = (TextView) findViewById(R.id.tv_activity_product_details_past_price);
+
+        limitTextView = (TextView) findViewById(R.id.limit);
 
         addListeners();
         cartBtn = (Button) findViewById(R.id.btn_activity_product_details_buy_now);
@@ -266,7 +270,7 @@ public class ProductDetailActivity extends Activity {
             public void onClick(View v) {
                 String num = mTVNumber.getText().toString();
                 number = Integer.valueOf(num);
-                if (number != 1) {
+                if (number > 0) {
                     number--;
                     mTVNumber.setText(number + "");
                 }
@@ -503,8 +507,11 @@ public class ProductDetailActivity extends Activity {
         ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgDetails);
         ImageLoader.getInstance().displayImage(entity.getImage_url(), mImgIcon);
 
-        pastPriceText.setText("爱心币："+pastPrice);
-
+        pastPriceText.setText("爱心币：" + pastPrice);
+        if (originalLimit != 0)
+            limitTextView.setText("限购："+originalLimit);
+        else
+            limitTextView.setText("限购：无");
 
         mProductCaption.setText(entity.getProduct_name());
         mTVDetails.setWebViewClient(new WebViewClient(){
@@ -600,6 +607,7 @@ public class ProductDetailActivity extends Activity {
             int stock = result.getJSONObject(0).getInt("stock");
             int limit = result.getJSONObject(0).getInt("limit");
             int already_buy = result.getJSONObject(0).getInt("already_buy");
+            originalLimit = limit;
             if (limit == 0)
                 limit = stock;
 

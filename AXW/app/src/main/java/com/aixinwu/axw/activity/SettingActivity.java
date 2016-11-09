@@ -2,7 +2,10 @@ package com.aixinwu.axw.activity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -31,20 +34,30 @@ import android.widget.Toast;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 import com.aixinwu.axw.tools.Tool;
+import com.aixinwu.axw.tools.DownloadTask;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import butterknife.Bind;
+
 public class SettingActivity extends Activity {
+
+    private View redDot;
+
+    private TextView checkVersion;
+    private RelativeLayout checkUpdate;
 
     private RelativeLayout personalInfo;
     private RelativeLayout headPortrait;
@@ -96,6 +109,40 @@ public class SettingActivity extends Activity {
         nickName = (EditText)findViewById(R.id.editNickName);
         myPic = (ImageView) findViewById(R.id.myPic);
         submit = (RelativeLayout) findViewById(R.id.submit);
+        redDot = findViewById(R.id.redDot);
+        checkVersion = (TextView) findViewById(R.id.checkVersion);
+        checkUpdate = (RelativeLayout) findViewById(R.id.checkUpdate);
+
+        if (GlobalParameterApplication.wetherHaveNewVersion){
+            redDot.setVisibility(View.VISIBLE);
+        }
+        else
+            redDot.setVisibility(View.GONE);
+
+        checkUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               if (GlobalParameterApplication.wetherHaveNewVersion){
+                   new  AlertDialog.Builder(SettingActivity.this)
+                           .setTitle("APK下载" )
+                           .setMessage("搜索到有新版本，是否下载？" )
+                           .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                               @Override
+                               public void onClick(DialogInterface dialogInterface, int ii) {
+                                   DownloadTask downloadTask = new DownloadTask(SettingActivity.this);
+                                   downloadTask.execute("http://salary.aixinwu.info/apk/axw.apk");
+                               }
+                           })
+                           .setNegativeButton("取消",null).show();
+               }
+                else{
+                   new  AlertDialog.Builder(SettingActivity.this)
+                           .setTitle("APK下载" )
+                           .setMessage("当前已经是最新版本" )
+                           .setPositiveButton("确定", null).show();
+               }
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -390,4 +437,73 @@ public class SettingActivity extends Activity {
         }
         return status;
     }
+
+    protected File downLoadFile(String httpUrl) {
+        // TODO Auto-generated method stub
+        final String fileName = "axw.apk";
+        File tmpFile = new File(Environment.getExternalStorageDirectory()+"/AXWupdate/");
+        if (!tmpFile.exists()) {
+            tmpFile.mkdir();
+        }
+        final File file = new File(Environment.getExternalStorageDirectory()+"/AXWupdate/" + fileName);
+
+        try {
+            URL url = new URL(httpUrl);
+            try {
+                HttpURLConnection conn = (HttpURLConnection) url
+                        .openConnection();
+                InputStream is = conn.getInputStream();
+                FileOutputStream fos = new FileOutputStream(file);
+                byte[] buf = new byte[256];
+                conn.connect();
+                double count = 0;
+                if (conn.getResponseCode() >= 400) {
+                    Toast.makeText(SettingActivity.this, "连接超时", Toast.LENGTH_SHORT)
+                            .show();
+                } else {
+                    while (count <= 100) {
+                        if (is != null) {
+                            int numRead = is.read(buf);
+                            if (numRead <= 0) {
+                                break;
+                            } else {
+                                fos.write(buf, 0, numRead);
+                            }
+
+                        } else {
+                            break;
+                        }
+
+                    }
+                }
+                openFile(file);
+                conn.disconnect();
+                fos.close();
+                is.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+
+            e.printStackTrace();
+        }
+
+        return file;
+    }
+//打开APK程序代码
+
+    private void openFile(File file) {
+        // TODO Auto-generated method stub
+        Log.e("OpenFile", file.getName());
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(android.content.Intent.ACTION_VIEW);
+        intent.setDataAndType(Uri.fromFile(file),
+                "application/vnd.android.package-archive");
+        startActivity(intent);
+    }
+
 }

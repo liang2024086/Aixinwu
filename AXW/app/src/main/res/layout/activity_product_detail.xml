@@ -92,17 +92,34 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tv_activity_product_details_stock"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="35dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:text="库存："
-                android:textColor="#ea5404"/>
+                android:layout_marginRight="20dp">
+
+                <TextView
+                    android:id="@+id/limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="限购："
+                    android:textColor="#ea5404"/>
+
+                <TextView
+                    android:id="@+id/tv_activity_product_details_stock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/limit"
+                    android:layout_marginTop="10dp"
+                    android:text="库存："
+                    android:textColor="#ea5404"/>
+
+            </RelativeLayout>
+
+
 
 <TextView
     android:layout_width="wrap_content"

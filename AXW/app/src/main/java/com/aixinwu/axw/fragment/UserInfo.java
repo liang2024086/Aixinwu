@@ -71,6 +71,8 @@ public class UserInfo extends Fragment {
 
     private TextView jobtitle;
 
+    private View redDot;
+
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -79,6 +81,13 @@ public class UserInfo extends Fragment {
         userDbHelper = new Sqlite(getActivity());
         headImageView = (ImageView) view.findViewById(R.id.headImage);
         jobtitle = (TextView) view.findViewById(R.id.jobtitle);
+        redDot = (View) view.findViewById(R.id.redDot);
+
+        if (GlobalParameterApplication.wetherHaveNewVersion)
+            redDot.setVisibility(View.VISIBLE);
+        else
+            redDot.setVisibility(View.GONE);
+        
         return view;
     }
 
