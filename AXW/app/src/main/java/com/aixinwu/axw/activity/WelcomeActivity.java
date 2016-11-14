@@ -20,12 +20,16 @@ import com.aixinwu.axw.R;
 import com.aixinwu.axw.tools.GlobalParameterApplication;
 
 import org.apache.commons.io.IOUtils;
+import org.json.JSONException;
 import org.json.simple.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
 /**
  * Created by liangyuding on 2016/4/25.
@@ -51,12 +55,26 @@ public class WelcomeActivity extends Activity {
         try {
             PackageManager manager = this.getPackageManager();
             PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-            String version = info.versionName;
+            GlobalParameterApplication.versionName = info.versionName;
             //Toast.makeText(WelcomeActivity.this,version,Toast.LENGTH_SHORT).show();
-            GlobalParameterApplication.wetherHaveNewVersion = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap<String , String> versionInfo = getVersionNumber();
+                String versionNumber = "";
+                if (versionInfo.get("versionCode") != null)
+                    versionNumber = versionInfo.get("versionCode");
+                int a = versionNumber.compareTo(GlobalParameterApplication.versionName);
+                if (versionNumber.compareTo(GlobalParameterApplication.versionName) > 0){
+                    GlobalParameterApplication.wetherHaveNewVersion = true;
+                }
+                else GlobalParameterApplication.wetherHaveNewVersion = false;
+            }
+        }).start();
 
        /* time = (TextView)findViewById(R.id.time);
         time.setOnClickListener(new View.OnClickListener() {
@@ -247,5 +265,54 @@ public class WelcomeActivity extends Activity {
         }
         conn.disconnect();
         return result;
+    }
+
+    public static HashMap<String , String> getVersionNumber(){
+        String versionNumber = "";
+        HashMap<String ,String> version = new HashMap<>();
+
+        try {
+            URL url = new URL(GlobalParameterApplication.getSurl() + "/version_code");
+            Log.i("Find product", "1");
+            try {
+                Log.i("LoveCoin", "getconnection");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setRequestProperty("Content-Type", "application/json");
+                java.lang.String ostr ;
+                org.json.JSONObject outjson = null;
+
+                if (conn.getResponseCode() == 200){
+
+                    ostr = IOUtils.toString(conn.getInputStream());
+                    /*
+                    InputStream is = conn.getInputStream();
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    int i;
+                    while ((i = is.read()) != -1) {
+                        baos.write(i);
+                    }
+                    ostr = baos.toString();*/
+                    try {
+                        org.json.JSONObject result = new org.json.JSONObject(ostr);
+                        version.put("versionCode",result.getString("version_code"));
+                        version.put("desp",result.getString("desp"));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return version;
     }
 }

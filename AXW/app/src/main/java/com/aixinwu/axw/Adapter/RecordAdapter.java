@@ -104,15 +104,15 @@ public class RecordAdapter extends BaseAdapter {
         for (int i = 0; i < imgUrls.length; ++i){
             switch (i){
                 case 0:
-                    ImageLoader.getInstance().displayImage("http://202.120.47.213:12300/"+imgUrls[i], holder.img1);
+                    ImageLoader.getInstance().displayImage(GlobalParameterApplication.axwUrl+imgUrls[i], holder.img1);
                     holder.img1.setVisibility(View.VISIBLE);
                     break;
                 case 1:
-                    ImageLoader.getInstance().displayImage("http://202.120.47.213:12300/"+imgUrls[i], holder.img2);
+                    ImageLoader.getInstance().displayImage(GlobalParameterApplication.axwUrl+imgUrls[i], holder.img2);
                     holder.img2.setVisibility(View.VISIBLE);
                     break;
                 case 2:
-                    ImageLoader.getInstance().displayImage("http://202.120.47.213:12300/"+imgUrls[i], holder.img3);
+                    ImageLoader.getInstance().displayImage(GlobalParameterApplication.axwUrl+imgUrls[i], holder.img3);
                     holder.img3.setVisibility(View.VISIBLE);
                     break;
             }
@@ -166,7 +166,7 @@ public class RecordAdapter extends BaseAdapter {
                 String imgSurl = imgLists.get(position);
 
                 img = (ImageView) convertView.findViewById(R.id.image);
-                ImageLoader.getInstance().displayImage("http://202.120.47.213:12300/"+imgSurl,img);
+                ImageLoader.getInstance().displayImage(GlobalParameterApplication.axwUrl+imgSurl,img);
 
             } else {
                 holder = (ViewHolder) convertView.getTag();

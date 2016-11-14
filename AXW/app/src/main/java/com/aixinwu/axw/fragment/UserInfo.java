@@ -83,10 +83,6 @@ public class UserInfo extends Fragment {
         jobtitle = (TextView) view.findViewById(R.id.jobtitle);
         redDot = (View) view.findViewById(R.id.redDot);
 
-        if (GlobalParameterApplication.wetherHaveNewVersion)
-            redDot.setVisibility(View.VISIBLE);
-        else
-            redDot.setVisibility(View.GONE);
         
         return view;
     }
@@ -102,7 +98,15 @@ public class UserInfo extends Fragment {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
 
+        if (GlobalParameterApplication.wetherHaveNewVersion)
+            redDot.setVisibility(View.VISIBLE);
+        else
+            redDot.setVisibility(View.GONE);
+    }
 
 
     @Override

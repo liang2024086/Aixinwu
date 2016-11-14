@@ -286,7 +286,7 @@ public class LoveCoin extends Fragment {
                                             result.getJSONObject(i).getString("name"),
                                             result.getJSONObject(i).getDouble("price"),
                                             stock,
-                                            "http://202.120.47.213:12300/img/121000239217360a3d2.jpg",
+                                            GlobalParameterApplication.imgSurl+"121000239217360a3d2.jpg",
                                             descdetail,
                                             shortdesc,
                                             despUrl
@@ -297,7 +297,7 @@ public class LoveCoin extends Fragment {
                                             result.getJSONObject(i).getString("name"),
                                             result.getJSONObject(i).getDouble("price"),
                                             stock,
-                                            "http://202.120.47.213:12300/"+imageurl[0],
+                                            GlobalParameterApplication.axwUrl+imageurl[0],
                                             descdetail,
                                             shortdesc,
                                             despUrl

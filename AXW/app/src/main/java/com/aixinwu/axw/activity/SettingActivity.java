@@ -39,6 +39,7 @@ import com.aixinwu.axw.tools.DownloadTask;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONException;
 import org.json.simple.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,11 +67,15 @@ public class SettingActivity extends Activity {
 
     private RelativeLayout submit;
 
+    private TextView newVersion;
+
     private ImageView myPic;
 
     private String pathImage="";
 
     private Tool am = new Tool();
+
+    private String updateDesp = "";
 
     private Handler dHandler = new Handler() {
         @Override
@@ -94,6 +99,37 @@ public class SettingActivity extends Activity {
                 case 285392:
                     Toast.makeText(SettingActivity.this,"绑定失败",Toast.LENGTH_SHORT).show();
                     break;
+                case 395923:
+                    if (GlobalParameterApplication.wetherHaveNewVersion){
+                        new  AlertDialog.Builder(SettingActivity.this)
+                                .setTitle("爱心屋APP下载" )
+                                .setMessage("搜索到有新版本，是否下载？\n"+updateDesp)
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int ii) {
+                                        DownloadTask downloadTask = new DownloadTask(SettingActivity.this);
+                                        downloadTask.execute("http://salary.aixinwu.info/apk/axw.apk");
+                                    }
+                                })
+                                .setNegativeButton("取消",null).show();
+                    }
+                    else{
+                        new  AlertDialog.Builder(SettingActivity.this)
+                                .setTitle("爱心屋APP下载" )
+                                .setMessage("当前已经是最新版本" )
+                                .setPositiveButton("确定", null).show();
+                    }
+
+                    if (GlobalParameterApplication.wetherHaveNewVersion){
+                        redDot.setVisibility(View.VISIBLE);
+                        newVersion.setText("(发现新版本)");
+                    }
+                    else{
+                        redDot.setVisibility(View.GONE);
+                        newVersion.setText("(已是最新版本)");
+                    }
+
+                    break;
             }
         };
     };
@@ -112,35 +148,65 @@ public class SettingActivity extends Activity {
         redDot = findViewById(R.id.redDot);
         checkVersion = (TextView) findViewById(R.id.checkVersion);
         checkUpdate = (RelativeLayout) findViewById(R.id.checkUpdate);
+        newVersion = (TextView) findViewById(R.id.newVersion);
 
-        if (GlobalParameterApplication.wetherHaveNewVersion){
-            redDot.setVisibility(View.VISIBLE);
-        }
-        else
-            redDot.setVisibility(View.GONE);
 
         checkUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               if (GlobalParameterApplication.wetherHaveNewVersion){
-                   new  AlertDialog.Builder(SettingActivity.this)
-                           .setTitle("APK下载" )
-                           .setMessage("搜索到有新版本，是否下载？" )
-                           .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                               @Override
-                               public void onClick(DialogInterface dialogInterface, int ii) {
-                                   DownloadTask downloadTask = new DownloadTask(SettingActivity.this);
-                                   downloadTask.execute("http://salary.aixinwu.info/apk/axw.apk");
-                               }
-                           })
-                           .setNegativeButton("取消",null).show();
-               }
-                else{
-                   new  AlertDialog.Builder(SettingActivity.this)
-                           .setTitle("APK下载" )
-                           .setMessage("当前已经是最新版本" )
-                           .setPositiveButton("确定", null).show();
-               }
+
+                if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(SettingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    //has permission, do operation directly
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HashMap<String , String> versionInfo = WelcomeActivity.getVersionNumber();
+                            String versionNumber = versionInfo.get("versionCode");
+                            updateDesp = versionInfo.get("desp");
+                            int a = versionNumber.compareTo(GlobalParameterApplication.versionName);
+                            if (versionNumber.compareTo(GlobalParameterApplication.versionName) > 0){
+                                GlobalParameterApplication.wetherHaveNewVersion = true;
+                            }
+                            else GlobalParameterApplication.wetherHaveNewVersion = false;
+
+                            Message msg = new Message();
+                            msg.what = 395923;
+                            dHandler.sendMessage(msg);
+                        }
+                    }).start();
+
+                } else {
+                    //do not have permission
+                    Log.i("DEBUG_TAG", "user do not have this permission!");
+
+                    // Should we show an explanation?
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(SettingActivity.this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                        Log.i("DEBUG_TAG", "we should explain why we need this permission!");
+                    } else {
+
+                        // No explanation needed, we can request the permission.
+                        Log.i("DEBUG_TAG", "==request the permission==");
+
+                        try {
+                            ActivityCompat.requestPermissions(SettingActivity.this,
+                                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                                    5698);
+                        } catch (Throwable e) {
+                            e.printStackTrace();
+                        }
+
+                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                        // app-defined int constant. The callback method gets the
+                        // result of the request.
+                    }
+                }
+
             }
         });
 
@@ -307,6 +373,40 @@ public class SettingActivity extends Activity {
                 }
                 return;
             }
+            case 5698: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            HashMap<String , String> versionInfo = WelcomeActivity.getVersionNumber();
+                            String versionNumber = versionInfo.get("versionCode");
+                            updateDesp = versionInfo.get("desp");
+                            int a = versionNumber.compareTo(GlobalParameterApplication.versionName);
+                            if (versionNumber.compareTo(GlobalParameterApplication.versionName) > 0){
+                                GlobalParameterApplication.wetherHaveNewVersion = true;
+                            }
+                            else GlobalParameterApplication.wetherHaveNewVersion = false;
+
+                            Message msg = new Message();
+                            msg.what = 395923;
+                            dHandler.sendMessage(msg);
+                        }
+                    }).start();
+                    Log.i("DEBUG_TAG", "user granted the permission!");
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Log.i("DEBUG_TAG", "user denied the permission!");
+                }
+                return;
+            }
 
             // other 'case' lines to check for other
             // permissions this app might request
@@ -338,6 +438,15 @@ public class SettingActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (GlobalParameterApplication.wetherHaveNewVersion){
+            redDot.setVisibility(View.VISIBLE);
+            newVersion.setText("(发现新版本)");
+        }
+        else{
+            redDot.setVisibility(View.GONE);
+            newVersion.setText("(已是最新版本)");
+        }
 
         BitmapFactory.Options cc = new BitmapFactory.Options();
         cc.inSampleSize=8;
@@ -391,7 +500,7 @@ public class SettingActivity extends Activity {
 
     private int changeUsrInfo(String nickName, String imgId){
         int status = -1;
-        String MyToken= GlobalParameterApplication.getToken();
+        String MyToken = GlobalParameterApplication.getToken();
         String surl = GlobalParameterApplication.getSurl();
         JSONObject orderrequest = new JSONObject();
 

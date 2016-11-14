@@ -221,8 +221,6 @@ public class ProductDetailActivity extends Activity {
                         }else{
                             queryDatabase();
 
-                            Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
-
                             if (isPopOpened == true) {
                                 setWindowBehind(false);
                                 mPopupWindow.dismiss();
@@ -384,24 +382,33 @@ public class ProductDetailActivity extends Activity {
      */
     private void updateDatabase(int sqlNumber) {
 
-        sqlNumber += number;// 购买数量
+        if (sqlNumber + number <= numOfCouldBuy){
+            sqlNumber += number;// 购买数量
 
-        // New value for one column
-        ContentValues values = new ContentValues();
-        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, sqlNumber + "");
-        values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK, numOfCouldBuy);
+            // New value for one column
+            ContentValues values = new ContentValues();
+            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_NUMBER, sqlNumber + "");
+            values.put(ProductReaderContract.ProductEntry.COLUMN_NAME_STOCK, numOfCouldBuy);
 
-        // Which row to update, based on the ID
-        String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(entity.getId())};
+            // Which row to update, based on the ID
+            String selection = ProductReaderContract.ProductEntry.COLUMN_NAME_ENTRY_ID + " LIKE ?";
+            String[] selectionArgs = {String.valueOf(entity.getId())};
 
-        int count = db.update(
-                ProductReaderContract.ProductEntry.TABLE_NAME,
-                values,
-                selection,
-                selectionArgs);
-        //Toast.makeText(getApplication(), "count = " + count + "\r\n number=" + sqlNumber, Toast
-          //      .LENGTH_LONG).show();
+            int count = db.update(
+                    ProductReaderContract.ProductEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
+            //Toast.makeText(getApplication(), "count = " + count + "\r\n number=" + sqlNumber, Toast
+            //      .LENGTH_LONG).show();
+
+            Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(ProductDetailActivity.this,"添加失败，购物车中已有此商品"+number+"件，您还可再添加"+(numOfCouldBuy-number)+"件商品",Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 
@@ -619,7 +626,7 @@ public class ProductDetailActivity extends Activity {
                         productname,
                         productprice,
                         stock,
-                        "http://202.120.47.213:12300/img/121000239217360a3d2.jpg",
+                        GlobalParameterApplication.imgSurl+"121000239217360a3d2.jpg",
                         descdetail,
                         shortdesc,
                         despUrl,
@@ -632,7 +639,7 @@ public class ProductDetailActivity extends Activity {
                         productname,
                         productprice,
                         stock,
-                        "http://202.120.47.213:12300/"+imageurl[0],
+                        GlobalParameterApplication.axwUrl+imageurl[0],
                         descdetail,
                         shortdesc,
                         despUrl,
@@ -702,7 +709,7 @@ public class ProductDetailActivity extends Activity {
                                     productname,
                                     productprice,
                                     stock,
-                                    "http://202.120.47.213:12300/img/121000239217360a3d2.jpg",
+                                    GlobalParameterApplication.imgSurl+"121000239217360a3d2.jpg",
                                     descdetail,
                                     shortdesc,
                                     despUrl
@@ -713,7 +720,7 @@ public class ProductDetailActivity extends Activity {
                                     productname,
                                     productprice,
                                     stock,
-                                    "http://202.120.47.213:12300/"+imageurl[0],
+                                    GlobalParameterApplication.axwUrl+imageurl[0],
                                     descdetail,
                                     shortdesc,
                                     despUrl

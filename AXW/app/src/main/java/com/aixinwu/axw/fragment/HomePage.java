@@ -275,7 +275,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
                                 if (rr[0]=="") {
                                     BitmapFactory.Options cc = new BitmapFactory.Options();
                                     cc.inSampleSize = 20;
-                                    dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),"http://202.120.47.213:12345/img/1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
+                                    dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),GlobalParameterApplication.imgSurl+"1B4B907678CCD423", result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
                                 } else
                                     dbData.add(new Bean(result.getJSONObject(i).getInt("ID"),GlobalParameterApplication.imgSurl+rr[0], result.getJSONObject(i).getString("caption"), result.getJSONObject(i).getString("description")));
                             }

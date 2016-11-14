@@ -29,8 +29,9 @@ public class GlobalParameterApplication extends Application{
     private static String token;
     private static boolean pause=true;
     private static String jaccount;
-    private static String surl = "http://202.120.47.213:12300/api";
-    public static String imgSurl = "http://202.120.47.213:12300/img/";
+    private static String surl = "http://202.120.47.213:12301/api";
+    public static String axwUrl = "http://202.120.47.213:12301/";
+    public static String imgSurl = "http://202.120.47.213:12301/img/";
     public  static Chat chat = null;
     public static dbmessage DataBaseM;
     private static HashMap<String,Integer> newOldStringToInt = new HashMap<String, Integer>();
@@ -40,6 +41,7 @@ public class GlobalParameterApplication extends Application{
     public static int nowchat = -1;
     public static int whtherBindJC = 0;
     public static boolean wetherHaveNewVersion = false;
+    public static String versionName = "";
 
     public GlobalParameterApplication(){
         DataBaseM = new dbmessage(this);

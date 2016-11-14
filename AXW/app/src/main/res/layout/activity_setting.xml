@@ -169,6 +169,16 @@
             android:layout_alignParentTop="true"
             android:background="@drawable/a_red_dot"/>
 
+        <TextView
+            android:id="@+id/newVersion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="(已是最新版本)"
+            android:textSize="12sp"
+            android:textColor="#909090"/>
+
     </RelativeLayout>
 
 

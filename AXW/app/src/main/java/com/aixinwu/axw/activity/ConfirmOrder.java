@@ -371,21 +371,25 @@ public class ConfirmOrder extends Activity {
                     String dialogContent = "";
                     if (orderid == 0)
                         dialogContent = "商品购买成功";
+                    else if(orderid == 5)
+                        dialogContent = "爱心币余额不足";
+                    else if (orderid == 10)
+                        dialogContent = "商品购买数量已达到限购上限，无法购买";
                     else
                         dialogContent = "商品购买失败";
                     new  AlertDialog.Builder(ConfirmOrder.this)
                             .setTitle("消息")
                             .setMessage(dialogContent)
-                            .setPositiveButton("确定",new DialogInterface.OnClickListener() {
+                            .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int ii) {
-                                    new Thread(){
+                                    new Thread() {
                                         @Override
-                                        public void run(){
+                                        public void run() {
                                             super.run();
 
                                             Intent intent = new Intent(getApplication(), MainActivity.class);
-                                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
 
                                         }

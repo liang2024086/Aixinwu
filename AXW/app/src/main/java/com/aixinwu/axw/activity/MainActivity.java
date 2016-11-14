@@ -71,8 +71,10 @@ public class MainActivity extends FragmentActivity{
     FragmentTransaction transaction;
     public SharedPreferences sharedPreferences;
     private  int mId;
-    //���ڵ������˳�
+ 
     private int mBackKeyPressedTimes = 0;
+
+    private View redDot;
 
     private List<ImageView> views = new ArrayList<ImageView>();
     private List<ADInfo> infos = new ArrayList<ADInfo>();
@@ -138,6 +140,18 @@ public class MainActivity extends FragmentActivity{
                                             .hide(mFragments[4]);
 
         transaction.show(mFragments[0]).commit();
+
+        redDot = findViewById(R.id.redDot);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        if (GlobalParameterApplication.wetherHaveNewVersion)
+            redDot.setVisibility(View.VISIBLE);
+        else
+            redDot.setVisibility(View.GONE);
     }
 
     @Override
@@ -355,9 +369,9 @@ public class MainActivity extends FragmentActivity{
         public void onImageClick(ADInfo info, int position, View imageView) {
             if (((CycleViewPager)mFragments[0]).isCycle()) {
                 position = position - 1;
-                Toast.makeText(MainActivity.this,
-                        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
-                        .show();
+                //Toast.makeText(MainActivity.this,
+                //        "position-->" + info.getContent(), Toast.LENGTH_SHORT)
+                //        .show();
             }
 
         }
