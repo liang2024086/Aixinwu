@@ -212,7 +212,7 @@ public class LoveCoin extends Fragment {
         }
     };
 
-    private List<Product> getDbData(String type){
+    static public List<Product> getDbData(String type){
         List<Product> dbData = new ArrayList<Product>();
         String MyToken= GlobalParameterApplication.getToken();
         String surl = GlobalParameterApplication.getSurl();
@@ -355,7 +355,9 @@ public class LoveCoin extends Fragment {
                                 signed,
                                 outjson.getJSONObject(i1).getDouble("workload"),
                                 outjson.getJSONObject(i1).getString("site"),
-                                outjson.getJSONObject(i1).getInt("joined")
+                                outjson.getJSONObject(i1).getInt("joined"),
+                                outjson.getJSONObject(i1).getString("about"),
+                                outjson.getJSONObject(i1).getString("content")
                         ));
                     }
 

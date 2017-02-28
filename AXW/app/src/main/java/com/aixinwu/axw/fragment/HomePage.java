@@ -29,10 +29,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.aixinwu.axw.Adapter.HomepageGuiedAdapter;
+import com.aixinwu.axw.Adapter.ProductAdapter;
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.Buy;
 import com.aixinwu.axw.activity.HelloWorld;
+import com.aixinwu.axw.activity.MainActivity;
 import com.aixinwu.axw.activity.ProductDetailActivity;
+import com.aixinwu.axw.activity.WelcomeActivity;
 import com.aixinwu.axw.model.HomepageGuide;
 import com.aixinwu.axw.model.Product;
 import com.aixinwu.axw.tools.Bean;
@@ -74,6 +77,7 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     private String surl = GlobalParameterApplication.getSurl();
     private String MyToken;
     private static List<Bean> dbData = new ArrayList<Bean>();
+    private static List<Product> dbDataProduct = new ArrayList<Product>();
     private String visitCounter = "" ;
     private String money = "" ;
     private String user = "" ;
@@ -149,9 +153,13 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
         searchHomePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
-                intent.putExtra("param1", "搜索");
-                getActivity().startActivity(intent);*/
+                GlobalParameterApplication.surl = "http://202.120.47.213:12300/api";
+                GlobalParameterApplication.axwUrl = "http://202.120.47.213:12300/";
+                GlobalParameterApplication.imgSurl = "http://202.120.47.213:12300/img/";
+                GlobalParameterApplication.login_status = 0;
+                Intent intent = new Intent(getActivity(), WelcomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                getActivity().startActivity(intent);
             }
         });
 
@@ -172,10 +180,15 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     }
 
     private void initializeGuide(View view){
-        for (int i = 0; i < dbData.size(); ++i){
+        /*for (int i = 0; i < dbData.size(); ++i){
             homepageGuides.add(new HomepageGuide(dbData.get(i).getItemId(),dbData.get(i).getPicId(),dbData.get(i).getType()));
-        }
+        }*/
 
+        int size = dbDataProduct.size();
+        for (int i = size - 1; i >=  0; --i){
+            if (size - 1 - i == 6) break;
+            homepageGuides.add(new HomepageGuide(dbDataProduct.get(i).getId(),dbDataProduct.get(i).getImage_url(),dbDataProduct.get(i).getProduct_name()));
+        }
 
         HomepageGuiedAdapter homepageGuiedAdapter = new HomepageGuiedAdapter(
                 getActivity(),
@@ -183,18 +196,25 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
                 homepageGuides);
 
         GridView guides = (GridView) getActivity().findViewById(R.id.homepage_guide);
-        guides.setAdapter (homepageGuiedAdapter);
+        //guides.setAdapter (homepageGuiedAdapter);
+        guides.setAdapter(homepageGuiedAdapter);
         guides.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 HomepageGuide guide = homepageGuides.get(i);
-                Intent intent = new Intent();
+                /*Intent intent = new Intent();
                 intent.putExtra("itemId", dbData.get(i).getItemId());
                 intent.putExtra("caption",dbData.get(i).getType());
                 intent.putExtra("pic_url",dbData.get(i).getPicId());
                 intent.putExtra("description",dbData.get(i).getDoc());
                 intent.setClass(getActivity(), Buy.class);
-                startActivity(intent);
+                startActivity(intent);*/
+
+                Intent intent = new Intent(getActivity(), ProductDetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("productId", dbDataProduct.get(dbDataProduct.size()-i-1).getId());
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
             }
         });
     }
@@ -207,7 +227,8 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
     private Thread mThread = new Thread(new Runnable() {
         @Override
         public void run() {
-            getDbData();
+            //getDbData();
+            dbDataProduct = LoveCoin.getDbData("exchange");
             getStaticData();
 
 

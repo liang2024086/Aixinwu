@@ -64,6 +64,8 @@ import java.util.List;
 
 public class ProductDetailActivity extends Activity {
 
+    public static ProductDetailActivity productDetailActivity = null;
+
     private static final int QUERY_YES = 0x100;
     private static final int QUERY_NO = 0x101;
 
@@ -143,6 +145,8 @@ public class ProductDetailActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+        productDetailActivity = this;
 
         //ActionBar actionBar = getSupportActionBar();
         //actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#33000000")));

@@ -60,7 +60,7 @@ public class ShoppingCartActivity extends Activity {
     private static final int MSG_TOTAL = 456;
     private ListView mListView;
 
-
+    public static ShoppingCartActivity shoppingCartActivity = null;
     //content of shoppingcart
     public ArrayList<Integer> CheckedProductId = new ArrayList<>();
     public ArrayList<ShoppingCartEntity> orderedDatas = new ArrayList<>();
@@ -140,6 +140,9 @@ public class ShoppingCartActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
+
+        shoppingCartActivity = this;
+
         initViews();
         initDatas();
     }

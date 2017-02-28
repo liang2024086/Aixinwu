@@ -154,6 +154,9 @@ public class LoginActivity extends Activity {
 
     public void onLoginSuccess() {
         _loginButton.setEnabled(true);
+        Intent intent = new Intent(getApplication(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
         finish();
     }
 
@@ -195,6 +198,7 @@ public class LoginActivity extends Activity {
             SQLiteDatabase db = userDbHelper.getWritableDatabase();
             db.execSQL("delete from AXWuser where userId = 1");
             db.execSQL("insert into AXWuser(userId,phoneNumber,pwd) values(1,'"+email+"','"+password+"')");
+            db.close();
         }
 
         @Override

@@ -17,8 +17,10 @@ public class VolunteerActivity implements Serializable {
     private double duration;
     private String site;
     private int joined;
+    private String about;
+    private String content;
 
-    public VolunteerActivity(int id,String img_url, String name, double payback, String time, int neededPeople, int signedPeople,double duration,String site,int joined){
+    public VolunteerActivity(int id,String img_url, String name, double payback, String time, int neededPeople, int signedPeople,double duration,String site,int joined, String about, String content){
         this.id = id;
         this.img_url = img_url;
         this.name = name;
@@ -29,6 +31,8 @@ public class VolunteerActivity implements Serializable {
         this.duration = duration;
         this.site = site;
         this.joined = joined;
+        this.about = about;
+        this.content = content;
     }
 
     public int getId(){
@@ -70,4 +74,8 @@ public class VolunteerActivity implements Serializable {
     public int getJoined(){
         return this.joined;
     }
+
+    public String getAbout() { return this.about; }
+
+    public String getContent() { return this.content; }
 }

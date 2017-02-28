@@ -534,7 +534,7 @@ public class UsedDeal extends CycleViewPager {
         MyToken=GlobalParameterApplication.getToken();
         JSONObject data = new JSONObject();
         data.put("startAt",start);
-        data.put("length",12);
+        data.put("length",30);
         {
 
             Log.i("UsedDeal", "get");

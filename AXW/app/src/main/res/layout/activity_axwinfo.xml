@@ -28,14 +28,65 @@
         android:layout_centerHorizontal="true"
         android:text="@string/axw_info"/>
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:layout_marginLeft="-10dp"
-        android:layout_marginStart="-10dp"
-        android:src="@drawable/aixinwulogo"
-        android:layout_below="@id/axw1"/>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/axw1"
+        android:layout_centerHorizontal="true">
+
+        <RelativeLayout
+            android:id="@+id/relativeQRWechat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/qrWechat"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/qrwechat"/>
+
+            <TextView
+                android:id="@+id/picWechat"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/qrWechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="爱心屋公众号"/>
+
+        </RelativeLayout>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/relativeQRWechat"
+            android:layout_toEndOf="@id/relativeQRWechat">
+
+            <ImageView
+                android:id="@+id/qrAPP"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/qrcode"/>
+
+            <TextView
+                android:id="@+id/picApp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/qrAPP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="爱心屋APP下载"/>
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

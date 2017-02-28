@@ -176,7 +176,8 @@ public class UserInfo extends Fragment {
                         // TODO Auto-generated method stub  
                         try{
                         SQLiteDatabase db = userDbHelper.getWritableDatabase();
-                        db.execSQL("delete from AXWuser where userId = 1"); }
+                        db.execSQL("delete from AXWuser where userId = 1"); 
+                    	db.close();}
                         catch(Throwable e){
                             e.printStackTrace();
                         }

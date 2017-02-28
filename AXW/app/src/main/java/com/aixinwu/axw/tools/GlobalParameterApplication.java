@@ -24,12 +24,12 @@ import io.nats.client.ConnectionFactory;
 import schoolapp.chat.Chat;
 
 public class GlobalParameterApplication extends Application{
-    private static int login_status = 0;
+    public static int login_status = 0;
     private static String user_name;
     private static String token;
     private static boolean pause=true;
     private static String jaccount;
-    private static String surl = "http://202.120.47.213:12301/api";
+    public static String surl = "http://202.120.47.213:12301/api";
     public static String axwUrl = "http://202.120.47.213:12301/";
     public static String imgSurl = "http://202.120.47.213:12301/img/";
     public  static Chat chat = null;

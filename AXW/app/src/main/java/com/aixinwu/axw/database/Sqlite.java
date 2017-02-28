@@ -59,6 +59,7 @@ public class Sqlite extends SQLiteOpenHelper {
         try{
             db.execSQL(SQL_CREATE_ENTRIES);
             db.execSQL(SQL_CREATE_COLLECT);
+            db.close();
         }catch (Throwable e){
             e.printStackTrace();
         }

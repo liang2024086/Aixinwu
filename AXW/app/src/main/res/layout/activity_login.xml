@@ -37,7 +37,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"
             android:textColorHint="#b5b5b5"
-            android:hint="用户名" />
+            android:hint="手机号" />
 
 
         <EditText android:id="@+id/input_password"

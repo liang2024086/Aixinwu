@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +53,9 @@ public class VolunteerApply extends AppCompatActivity {
     private Button submit;
     private int need;
     private int signed;
+    private TextView volAbout;
+    private TextView volContent;
+    private RelativeLayout content;
 
     private ImageView img;
     private String thisTime;
@@ -90,6 +95,17 @@ public class VolunteerApply extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         getPhoneNumber = (EditText) findViewById(R.id.phoneNumber);
         whetherJoined = (TextView) findViewById(R.id.whetherJoined);
+        volAbout = (TextView) findViewById(R.id.volAbout);
+        volContent = (TextView) findViewById(R.id.volContent);
+        content = (RelativeLayout) findViewById(R.id.content);
+
+        if (volunteerActivity.getAbout().length() != 0) {
+            volAbout.setText(volunteerActivity.getAbout());
+            volContent.setText(Html.fromHtml(volunteerActivity.getContent()));
+        }
+        else{
+            content.setVisibility(View.GONE);
+        }
 
         need = volunteerActivity.getNeededPeople();
         signed = volunteerActivity.getSignedPeople();
@@ -113,19 +129,25 @@ public class VolunteerApply extends AppCompatActivity {
         time.setText("时间："+thisTime.substring(5,10)+" "+thisTime.substring(11,16));
         site.setText("地址："+volunteerActivity.getSite());
 
-        if (need <= signed){
+        if (need <= signed && need != 0){
             submit.setEnabled(false);
             numberOfPeople.setText("人数已满："+signed+"/"+need);
             numberOfPeople.setTextColor(getResources().getColor(R.color.orangered));
         }
-        else
-            numberOfPeople.setText("人数："+signed+"/"+need);
+        else {
+            if (need == 0)
+                numberOfPeople.setText("人数：" + signed + "/∞");
+            else
+                numberOfPeople.setText("人数：" + signed + "/" + need);
+        }
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 telNumber = getPhoneNumber.getText().toString();
-                if (telNumber.length() == 11){
+                if (GlobalParameterApplication.getLogin_status() == 0)
+                    Toast.makeText(VolunteerApply.this,"请先登录",Toast.LENGTH_SHORT).show();
+                else if (telNumber.length() == 11){
                     new Thread(new Runnable() {
                         @Override
                         public void run() {

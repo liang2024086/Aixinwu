@@ -56,10 +56,12 @@ public class VolunteerAdapter extends ArrayAdapter<VolunteerActivity> {
         int need = product.getNeededPeople();
         int signed = product.getSignedPeople();
 
-        if (need <= signed)
+        if (need <= signed && need != 0)
             fullOrNot.setText("名额已满   " + signed+"/"+need);
         else{
-            if (need > signed)
+            if (need == 0)
+                fullOrNot.setText("欢迎报名   " + signed+"/∞");
+            else if (need > signed)
                 fullOrNot.setText("欢迎报名   " + signed+"/"+need);
         }
 

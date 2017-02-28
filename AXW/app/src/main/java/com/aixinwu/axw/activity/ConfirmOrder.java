@@ -388,9 +388,15 @@ public class ConfirmOrder extends Activity {
                                         public void run() {
                                             super.run();
 
-                                            Intent intent = new Intent(getApplication(), MainActivity.class);
+                                            /*Intent intent = new Intent(getApplication(), MainActivity.class);
                                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            startActivity(intent);
+                                            startActivity(intent);*/
+
+                                            if (ShoppingCartActivity.shoppingCartActivity != null)
+                                                ShoppingCartActivity.shoppingCartActivity.finish();
+                                            if (ProductDetailActivity.productDetailActivity != null)
+                                                ProductDetailActivity.productDetailActivity.finish();
+                                            finish();
 
                                         }
                                     }.start();

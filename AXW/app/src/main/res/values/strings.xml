@@ -56,5 +56,6 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_my_donation">MyDonation</string>
     <string name="title_activity_reset_pwd">ResetPWD</string>
+    <string name="title_activity_raw_picture">RawPictureActivity</string>
 
 </resources>
