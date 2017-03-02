@@ -153,11 +153,11 @@ public class HomePage extends CycleViewPager implements MyScrollView.ScrollViewL
         searchHomePage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GlobalParameterApplication.surl = "http://202.120.47.213:12300/api";
-                GlobalParameterApplication.axwUrl = "http://202.120.47.213:12300/";
-                GlobalParameterApplication.imgSurl = "http://202.120.47.213:12300/img/";
-                GlobalParameterApplication.login_status = 0;
-                Intent intent = new Intent(getActivity(), WelcomeActivity.class);
+                GlobalParameterApplication.surl = "http://202.120.47.213:12301/api";
+                GlobalParameterApplication.axwUrl = "http://202.120.47.213:12301/";
+                GlobalParameterApplication.imgSurl = "http://202.120.47.213:12301/img/";
+                //GlobalParameterApplication.login_status = 0;
+                Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 getActivity().startActivity(intent);
             }

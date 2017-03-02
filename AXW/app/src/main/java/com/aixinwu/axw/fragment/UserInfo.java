@@ -16,6 +16,7 @@ import android.widget.*;
 
 import com.aixinwu.axw.R;
 import com.aixinwu.axw.activity.AXWInfo;
+import com.aixinwu.axw.activity.CashTransfer;
 import com.aixinwu.axw.activity.ChatList;
 import com.aixinwu.axw.activity.ItemList;
 import com.aixinwu.axw.activity.LoginActivity;
@@ -206,8 +207,15 @@ public class UserInfo extends Fragment {
 
         });*/
 
-
-
+        RelativeLayout transfer_coin = (RelativeLayout) getActivity().findViewById(R.id.transfer);
+        transfer_coin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (GlobalParameterApplication.getLogin_status()==1){
+                    Intent intent = new Intent(getActivity(), CashTransfer.class);
+                    startActivity(intent);}
+            }
+        });
 
 
         RelativeLayout ly_message = (RelativeLayout)getActivity().findViewById(R.id.message);

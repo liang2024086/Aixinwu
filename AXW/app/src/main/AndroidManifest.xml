@@ -89,6 +89,8 @@
             android:name=".activity.RawPictureActivity"
             android:label="@string/title_activity_raw_picture" >
         </activity>
+        <activity android:name=".activity.CashTransfer" >
+        </activity>
     </application>
 
 </manifest>

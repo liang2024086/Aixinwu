@@ -188,8 +188,8 @@ public class MainActivity extends FragmentActivity{
    //     SharedPreferences.Editor editor = sharedPreferences.edit();
   //      editor.putInt("Chat_Num"+GlobalParameterApplication.getUserID(),GlobalParameterApplication.getChat_Num());
    //     editor.commit();
-        GlobalParameterApplication.setPause(false);
-        GlobalParameterApplication.stop();
+        //GlobalParameterApplication.setPause(false);
+        //GlobalParameterApplication.stop();
     }
 
     public Handler NotifyHandler = new Handler(){

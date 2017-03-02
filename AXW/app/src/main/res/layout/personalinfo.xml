@@ -214,6 +214,39 @@
                             android:background="#eeefef"
                             android:layout_marginTop="5dp"
                             />
+
+                    <RelativeLayout style="@style/PersonalNormalStyle"
+                        android:id="@+id/transfer">
+
+                        <ImageView
+                            android:id="@+id/cash_transfer_pic"
+                            style="@style/PersonalIconStyle"
+                            android:layout_width="20dp"
+                            android:layout_height="18dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/coin_2" />
+
+                        <TextView
+                            style="@style/PersonalTextStyle"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_toRightOf="@id/cash_transfer_pic"
+                            android:text="爱心币转移" />
+
+                        <ImageView
+                            style="@style/PersonalRightIconStyle"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/android_list_idex" />
+                    </RelativeLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#eeefef"
+                        />
                     
                         <RelativeLayout style="@style/PersonalNormalStyle"
                             android:id="@+id/myitem">
