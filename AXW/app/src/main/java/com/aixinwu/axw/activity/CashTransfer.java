@@ -63,10 +63,11 @@ public class CashTransfer extends Activity {
                     @Override
                     public void run() {
 
-                        if (validate)
-                            transfer_cash(_enter_jaccount,_amount);
-                        Toast.makeText(getApplicationContext(), "默认的Toast", Toast.LENGTH_SHORT).show();
-                        finish();
+                        if (validate) {
+                            transfer_cash(_enter_jaccount, _amount);
+                            Toast.makeText(getApplicationContext(), "默认的Toast", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     }
                 }).start();
             }
@@ -84,6 +85,9 @@ public class CashTransfer extends Activity {
         cashTransfer.put("jaccount_id",jaccount);
         cashTransfer.put("cash",amount);
 
+        cashTransfer.put("receiver_name","");
+        cashTransfer.put("receiver_id","");
+
         try {
             URL url = new URL(surl + "/AixinwuCashTransfer");
             try {
@@ -97,6 +101,7 @@ public class CashTransfer extends Activity {
                 conn.getOutputStream().write(cashTransfer.toJSONString().getBytes());
 
                 java.lang.String ostr = IOUtils.toString(conn.getInputStream());
+                Log.i("CashTransfer_ostr", ostr);
                 org.json.JSONObject outjson = null;
                 try{
                     outjson = new org.json.JSONObject(ostr);
