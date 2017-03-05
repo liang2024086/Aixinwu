@@ -1,18 +1,129 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/white"
     tools:context="com.aixinwu.axw.activity.CashTransfer">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:text="爱心币转移"
+        android:textColor="#3e3a39"
+        android:background="#eeeeef"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="0dp" />
+
+    <RelativeLayout
+        android:id="@+id/jaccount"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="cash transfer"/>
+        android:paddingRight="5dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
+
+        <TextView
+            android:id="@+id/nickName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:text="对方jaccount："
+            android:textColor="#ea5404"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/enter_jaccount"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/nickName1"
+            android:layout_toEndOf="@id/nickName1"
+            android:enabled="true"
+            android:focusable="true"
+            android:inputType="text"
+            android:background="@color/white"/>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/jaccount"
+        android:background="#eeeeef"/>
+
+    <RelativeLayout
+        android:id="@+id/coin"
+        android:layout_below="@id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="5dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="5dp"
+        android:paddingBottom="20dp"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp">
+
+        <TextView
+            android:id="@+id/love_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:text="转账数目："
+            android:textColor="#ea5404"
+            android:textSize="14sp"/>
+
+        <EditText
+            android:id="@+id/enter_coin"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/love_coin"
+            android:layout_toEndOf="@id/love_coin"
+            android:enabled="true"
+            android:focusable="true"
+            android:inputType="numberDecimal"
+            android:background="@color/white"/>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/coin"
+        android:background="#eeeeef"/>
+
+
+    <RelativeLayout
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="#eeefef">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"
+            android:text="确定转账"
+            android:textSize="16sp"
+            android:textColor="#3e3a39"/>
+    </RelativeLayout>
+
 
 </RelativeLayout>
