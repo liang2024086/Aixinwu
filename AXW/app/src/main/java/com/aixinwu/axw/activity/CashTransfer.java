@@ -1,6 +1,10 @@
 package com.aixinwu.axw.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +34,9 @@ public class CashTransfer extends Activity {
     private Boolean validate = true;
     private String _enter_jaccount;
     private String _amount;
+
+    private int transfer_status = -1;
+    private String transfer_desp = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +71,10 @@ public class CashTransfer extends Activity {
                     public void run() {
 
                         if (validate) {
-                            transfer_cash(_enter_jaccount, _amount);
-                            Toast.makeText(getApplicationContext(), "默认的Toast", Toast.LENGTH_SHORT).show();
-                            finish();
+                            transfer_status = transfer_cash(_enter_jaccount, Double.valueOf(_amount));
+                            Message msg = new Message();
+                            msg.what = 134;
+                            nHandler.sendMessage(msg);
                         }
                     }
                 }).start();
@@ -74,7 +82,40 @@ public class CashTransfer extends Activity {
         });
     }
 
-    private int transfer_cash(String jaccount, String amount){
+    public Handler nHandler = new Handler(){
+        public void handleMessage(Message msg){
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 134:
+                    if (transfer_status == 0){
+                        new  AlertDialog.Builder(CashTransfer.this)
+                                .setTitle("消息" )
+                                .setMessage("转账成功，感谢您的使用!" )
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int ii) {
+                                        finish();
+                                    }
+                                }).show();
+                    }
+                    else{
+                        new  AlertDialog.Builder(CashTransfer.this)
+                                .setTitle("消息" )
+                                .setMessage(transfer_status + " " + transfer_desp)
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int ii) {
+
+                                    }
+                                }).show();
+                    }
+                    //SendToAXw.this.setResult(RESULT_OK);
+                    break;
+            }
+        }
+    };
+
+    private int transfer_cash(String jaccount, double amount){
         int status = -1;
         String MyToken = GlobalParameterApplication.getToken();
         String surl = GlobalParameterApplication.getSurl();
@@ -85,8 +126,8 @@ public class CashTransfer extends Activity {
         cashTransfer.put("jaccount_id",jaccount);
         cashTransfer.put("cash",amount);
 
-        cashTransfer.put("receiver_name","");
-        cashTransfer.put("receiver_id","");
+        //cashTransfer.put("receiver_name","");
+        //cashTransfer.put("receiver_id","");
 
         try {
             URL url = new URL(surl + "/AixinwuCashTransfer");
@@ -106,7 +147,7 @@ public class CashTransfer extends Activity {
                 try{
                     outjson = new org.json.JSONObject(ostr);
                     status = outjson.getJSONObject("status").getInt("code");
-                    String desc = outjson.getJSONObject("status").getString("description");
+                    transfer_desp = outjson.getJSONObject("status").getString("description");
                     System.out.println(outjson);
                 }catch (JSONException e) {
                     e.printStackTrace();
