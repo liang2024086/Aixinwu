@@ -73,7 +73,10 @@ public class CashTransfer extends Activity {
                         if (validate) {
                             transfer_status = transfer_cash(_enter_jaccount, Double.valueOf(_amount));
                             Message msg = new Message();
-                            msg.what = 134;
+                            if (transfer_status == 0)
+                                msg.what = 134;
+                            else
+                                msg.what = 135;
                             nHandler.sendMessage(msg);
                         }
                     }
@@ -98,8 +101,9 @@ public class CashTransfer extends Activity {
                                     }
                                 }).show();
                     }
-                    else{
-                        new  AlertDialog.Builder(CashTransfer.this)
+                    break;
+                case 135:
+                    new  AlertDialog.Builder(CashTransfer.this)
                                 .setTitle("消息" )
                                 .setMessage(transfer_status + " " + transfer_desp)
                                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -108,7 +112,7 @@ public class CashTransfer extends Activity {
 
                                     }
                                 }).show();
-                    }
+
                     //SendToAXw.this.setResult(RESULT_OK);
                     break;
             }
