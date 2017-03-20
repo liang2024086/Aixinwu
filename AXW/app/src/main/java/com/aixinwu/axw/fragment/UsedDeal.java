@@ -559,6 +559,7 @@ public class UsedDeal extends CycleViewPager {
                         if (result.getJSONObject(i).getInt("status")==0)
                         {
                             String[] rr = result.getJSONObject(i).getString("images").split(",");
+                            Log.i("LIANGYUDING",rr.toString());
                             if (rr[0]=="") {
                                 BitmapFactory.Options cc = new BitmapFactory.Options();
                                 cc.inSampleSize = 20;

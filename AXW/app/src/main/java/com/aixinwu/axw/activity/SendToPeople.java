@@ -120,7 +120,8 @@ public class SendToPeople extends Activity {
 
                     TypeName = "电子产品";
                     HowNew = 1;
-                    if (!price.getText().toString().isEmpty()) money = Double.parseDouble(price.getText().toString());
+                    String now_price = price.getText().toString();
+                    if (!now_price.toString().isEmpty()) money = Double.parseDouble(now_price.toString());
                     if (imageItem.size() == 1) {
                         Toast.makeText(SendToPeople.this, "No Picture", Toast.LENGTH_SHORT).show();
                         return;
@@ -135,7 +136,8 @@ public class SendToPeople extends Activity {
                         return;
                     }
 
-
+                    Toast.makeText(getApplicationContext(), money+"",
+                            Toast.LENGTH_SHORT).show();
                     // String itemID = AddItem(TypeName,money,Descrip,YesorNo);
 
                     final ProgressDialog progressDialog = new ProgressDialog(SendToPeople.this,
