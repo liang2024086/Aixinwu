@@ -240,7 +240,7 @@ public class SendToPeople extends Activity {
                                 public void onClick(DialogInterface dialogInterface, int ii) {
                                     finish();
                                 }
-                            }).show();
+                            }).setCancelable(false).show();
                     break;
                 case 134:
                     break;

@@ -401,7 +401,7 @@ public class ConfirmOrder extends Activity {
                                         }
                                     }.start();
                                 }
-                            })
+                            }).setCancelable(false)
                             .show();
             }
         }

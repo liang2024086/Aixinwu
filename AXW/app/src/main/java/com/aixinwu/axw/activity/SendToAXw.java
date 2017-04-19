@@ -152,15 +152,17 @@ public class SendToAXw extends Activity {
             switch (msg.what){
                 case 134:
                     if (code == 0){
-                        new  AlertDialog.Builder(SendToAXw.this)
-                                .setTitle("消息" )
-                                .setMessage("爱心屋捐赠成功\n"+"捐赠条码为："+barcode+"\n感谢您的捐赠!" )
+                        AlertDialog.Builder dialogA = new  AlertDialog.Builder(SendToAXw.this)
+                                .setTitle("消息")
+                                .setMessage("爱心屋捐赠成功\n" + "捐赠条码为：" + barcode + "\n感谢您的捐赠!")
                                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int ii) {
                                         finish();
                                     }
-                                }).show();
+                                });
+                        dialogA.setCancelable(false);
+                        dialogA.show();
                     }
                     //SendToAXw.this.setResult(RESULT_OK);
                     break;
