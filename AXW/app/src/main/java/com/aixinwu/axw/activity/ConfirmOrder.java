@@ -2,6 +2,7 @@ package com.aixinwu.axw.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -213,6 +214,14 @@ public class ConfirmOrder extends Activity {
                 }
                 //====
                 //send order request to the server
+
+                final ProgressDialog progressDialog = new ProgressDialog(ConfirmOrder.this,
+                        R.style.AppTheme_Dark_Dialog);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setMessage("结算中...");
+                progressDialog.setCancelable(false);
+                progressDialog.show();
+
                 oThread.start();
             }
         });
