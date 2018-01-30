@@ -419,7 +419,7 @@ public class ProductDetailActivity extends Activity {
             Toast.makeText(getApplication(), "您已经成功添加到购物车~", Toast.LENGTH_LONG).show();
         }
         else{
-            Toast.makeText(ProductDetailActivity.this,"添加失败，购物车中已有此商品"+number+"件，您还可再添加"+(numOfCouldBuy-number)+"件商品",Toast.LENGTH_SHORT).show();
+            Toast.makeText(ProductDetailActivity.this,"添加失败，购物车中已有此商品"+sqlNumber+"件，您还可再添加"+(numOfCouldBuy-sqlNumber)+"件商品",Toast.LENGTH_SHORT).show();
         }
 
 

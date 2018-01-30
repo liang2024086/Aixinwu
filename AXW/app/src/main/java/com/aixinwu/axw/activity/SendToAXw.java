@@ -85,6 +85,7 @@ public class SendToAXw extends Activity {
                                 R.style.AppTheme_Dark_Dialog);
                                 progressDialog.setIndeterminate(true);
                                 progressDialog.setMessage("发布中...");
+                                progressDialog.setCancelable(false);
                                 progressDialog.show();
 
                         new Thread(runnable1).start();

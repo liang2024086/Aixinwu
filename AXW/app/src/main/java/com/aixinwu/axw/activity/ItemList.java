@@ -238,7 +238,8 @@ public class ItemList extends Activity {
                         result = outjson.getJSONArray("items");
                         upData.clear();
                         //downData.clear();
-                        for (int i = 0; i < result.length(); i++) {
+                        //for (int i = 0; i < result.length(); i++) {
+                        for (int i = result.length()-1; i >= 0 ; i--) {
                             String[] rr = result.getJSONObject(i).getString("images").split(",");
                             if (result.getJSONObject(i).getInt("status")==0) {
                                 if (rr[0] == "") {
