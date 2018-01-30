@@ -81,9 +81,15 @@ public class ConfirmOrder extends Activity {
                     Toast.makeText(ConfirmOrder.this,"请检查输入信息是否正确",Toast.LENGTH_SHORT).show();
                     break;
                 case 234567:
-                    consigneeName.setText(commonConsigne.getName());
-                    stuId.setText(commonConsigne.getStuId());
-                    phone.setText(commonConsigne.getPhoneNumber());
+                    if (commonConsigne == null){
+                        consigneeName.setText("");
+                        stuId.setText("");
+                        phone.setText("");
+                    }else {
+                        consigneeName.setText(commonConsigne.getName());
+                        stuId.setText(commonConsigne.getStuId());
+                        phone.setText(commonConsigne.getPhoneNumber());
+                    }
                     break;
                 case 234242 :
                     Toast.makeText(ConfirmOrder.this,"修改成功",Toast.LENGTH_SHORT).show();
@@ -430,6 +436,8 @@ public class ConfirmOrder extends Activity {
                 org.json.JSONArray outt=null;
                 outt=outjson.getJSONArray("address");
 
+                boolean flag = true;
+
                 for (int i = 0; i < outt.length(); ++i){
                     consignees.add(new Consignee(
                             outt.getJSONObject(i).getString("consignee"),
@@ -442,6 +450,7 @@ public class ConfirmOrder extends Activity {
                     ));
 
                     if (outt.getJSONObject(i).getInt("is_default")==1){
+                        flag = false;
                         commonConsigne = new Consignee(
                                 outt.getJSONObject(i).getString("consignee"),
                                 outt.getJSONObject(i).getString("snum"),
@@ -452,6 +461,20 @@ public class ConfirmOrder extends Activity {
                                 outt.getJSONObject(i).getInt("is_default")
                         );
                     }
+
+                    if(flag){
+                        commonConsigne = new Consignee(
+                                outt.getJSONObject(i).getString("consignee"),
+                                outt.getJSONObject(i).getString("snum"),
+                                outt.getJSONObject(i).getString("mobile"),
+                                outt.getJSONObject(i).getInt("id"),
+                                outt.getJSONObject(i).getInt("customer_id"),
+                                outt.getJSONObject(i).getString("email"),
+                                outt.getJSONObject(i).getInt("is_default")
+                        );
+                    }
+
+
                 }
                 System.out.println("GOOD\n"+outt.toString());
 

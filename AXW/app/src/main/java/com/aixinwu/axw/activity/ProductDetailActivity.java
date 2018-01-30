@@ -257,12 +257,17 @@ public class ProductDetailActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                String num = mTVNumber.getText().toString();
-                number = Integer.valueOf(num);
-                if (number < entity.getStock()) {
-                    ++number;
+                if (GlobalParameterApplication.getLogin_status() != 1){
+                    Toast.makeText(ProductDetailActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
                 }
-                mTVNumber.setText(number + "");
+                else {
+                    String num = mTVNumber.getText().toString();
+                    number = Integer.valueOf(num);
+                    if (number < entity.getStock()) {
+                        ++number;
+                    }
+                    mTVNumber.setText(number + "");
+                }
             }
         });
 
@@ -270,11 +275,16 @@ public class ProductDetailActivity extends Activity {
         mBtnMinute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String num = mTVNumber.getText().toString();
-                number = Integer.valueOf(num);
-                if (number > 0) {
-                    number--;
-                    mTVNumber.setText(number + "");
+                if (GlobalParameterApplication.getLogin_status() != 1){
+                    Toast.makeText(ProductDetailActivity.this,"请先登录",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    String num = mTVNumber.getText().toString();
+                    number = Integer.valueOf(num);
+                    if (number > 0) {
+                        number--;
+                        mTVNumber.setText(number + "");
+                    }
                 }
             }
         });

@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.support.v4.BuildConfig;
+import android.support.v4.content.FileProvider;
 import android.widget.Toast;
 
 import java.io.File;
@@ -135,15 +138,29 @@ public class DownloadTask extends AsyncTask<String, Integer, String> {
         else
             new  AlertDialog.Builder(context)
                     .setTitle("APK下载" )
-                    .setMessage("新版本成功下载到"+filePath+"，是否安装？" )
+                    .setMessage("新版本成功下载到 AXWupdate/axw.apk，是否安装？" )
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int ii) {
                             Intent intent = new Intent();
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            /*intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.setAction(android.content.Intent.ACTION_VIEW);
                             intent.setDataAndType(Uri.fromFile(file),
-                                    "application/vnd.android.package-archive");
+                                    "application/vnd.android.package-archive");*/
+
+
+                            //判断是否是AndroidN以及更高的版本
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                System.out.println("ASDF "+BuildConfig.APPLICATION_ID );
+                                //Uri contentUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileProvider", file);
+                                Uri contentUri = FileProvider.getUriForFile(context, "com.aixinwu.axw.fileProvider", file);
+                                intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                            } else {
+                                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            }
+
                             context.startActivity(intent);
                         }
                     })

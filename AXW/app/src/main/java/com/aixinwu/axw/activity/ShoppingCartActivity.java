@@ -213,6 +213,8 @@ public class ShoppingCartActivity extends Activity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    CheckedProductId.clear();
+                    orderedDatas.clear();
                     mTotalChecked = 0;
                     mTotalMoney = 0;
                     for (int i = 0; i < mDatas.size(); ++i) {

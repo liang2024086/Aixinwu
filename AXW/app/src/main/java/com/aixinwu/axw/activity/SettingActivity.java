@@ -602,8 +602,8 @@ public class SettingActivity extends Activity {
 
         return file;
     }
-//打开APK程序代码
 
+//打开APK程序代码
     private void openFile(File file) {
         // TODO Auto-generated method stub
         Log.e("OpenFile", file.getName());
